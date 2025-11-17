@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { type MouseEvent, useEffect, useMemo, useState } from "react";
 import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
@@ -16,107 +16,126 @@ interface MediaItem {
   equipmentId?: string;
 }
 
+const galleryMedia: MediaItem[] = [
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1633430480411-9b0e11d8202e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Pool Biking Session",
+    category: "Training",
+    equipmentId: "aquacycle-rehab"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1614954553401-811f9df3f9be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Group Class",
+    category: "Classes",
+    equipmentId: "aquacycle-classic"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1760863329482-aa37dba2fd9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Premium Equipment",
+    category: "Equipment",
+    equipmentId: "aquacycle-pro"
+  },
+  {
+    type: "video",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Aquatic Fitness Demo",
+    category: "Training",
+    equipmentId: "aquacycle-studio"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Underwater Training",
+    category: "Training",
+    equipmentId: "aquacycle-elite"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Modern Facility",
+    category: "Facilities",
+    equipmentId: "aquacycle-studio"
+  },
+  {
+    type: "video",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "How to Use Poolbike",
+    category: "Tutorial",
+    equipmentId: "aquacycle-classic"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Advanced Techniques",
+    category: "Training",
+    equipmentId: "aquacycle-sport"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1576610616656-d3aa5d1f4534?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Pool Setup",
+    category: "Facilities",
+    equipmentId: "aquacycle-compact"
+  },
+  {
+    type: "video",
+    src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    thumbnail: "https://images.unsplash.com/photo-1560089000-7433a4ebbd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Benefits of Aquatic Cycling",
+    category: "Education",
+    equipmentId: "aquacycle-rehab"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1560089000-7433a4ebbd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Rehabilitation Session",
+    category: "Therapy",
+    equipmentId: "aquacycle-balance"
+  },
+  {
+    type: "image",
+    src: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
+    title: "Team Training",
+    category: "Classes",
+    equipmentId: "aquacycle-studio"
+  }
+];
+
 export function GalleryPage() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [galleryRef, galleryInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(() => galleryMedia[0] ?? null);
   const [filter, setFilter] = useState<"all" | "image" | "video">("all");
 
-  const media: MediaItem[] = [
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1633430480411-9b0e11d8202e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Pool Biking Session",
-      category: "Training",
-      equipmentId: "aquacycle-rehab"
-    },
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1614954553401-811f9df3f9be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Group Class",
-      category: "Classes",
-      equipmentId: "aquacycle-classic"
-    },
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1760863329482-aa37dba2fd9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Premium Equipment",
-      category: "Equipment",
-      equipmentId: "aquacycle-pro"
-    },
-    {
-      type: "video",
-      src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnail: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Aquatic Fitness Demo",
-      category: "Training",
-      equipmentId: "aquacycle-studio"
-    },
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Underwater Training",
-      category: "Training",
-      equipmentId: "aquacycle-elite"
-    },
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Modern Facility",
-      category: "Facilities",
-      equipmentId: "aquacycle-studio"
-    },
-    {
-      type: "video",
-      src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnail: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "How to Use Poolbike",
-      category: "Tutorial",
-      equipmentId: "aquacycle-classic"
-    },
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Advanced Techniques",
-      category: "Training",
-      equipmentId: "aquacycle-sport"
-    },
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1576610616656-d3aa5d1f4534?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Pool Setup",
-      category: "Facilities",
-      equipmentId: "aquacycle-compact"
-    },
-    {
-      type: "video",
-      src: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-      thumbnail: "https://images.unsplash.com/photo-1560089000-7433a4ebbd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Benefits of Aquatic Cycling",
-      category: "Education",
-      equipmentId: "aquacycle-rehab"
-    },
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1560089000-7433a4ebbd64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Rehabilitation Session",
-      category: "Therapy",
-      equipmentId: "aquacycle-balance"
-    },
-    {
-      type: "image",
-      src: "https://images.unsplash.com/photo-1605296867304-46d5465a13f1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080",
-      title: "Team Training",
-      category: "Classes",
-      equipmentId: "aquacycle-studio"
-    }
-  ];
+  const handleEquipmentLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.stopPropagation();
+  };
 
-  const filteredMedia = media.filter(item => 
-    filter === "all" ? true : item.type === filter
-  );
+  const filteredMedia = useMemo(() => {
+    return galleryMedia.filter((item) => (filter === "all" ? true : item.type === filter));
+  }, [filter]);
+
+  useEffect(() => {
+    if (!filteredMedia.length) {
+      setSelectedMedia(null);
+      return;
+    }
+
+    if (!selectedMedia || !filteredMedia.includes(selectedMedia)) {
+      setSelectedMedia(filteredMedia[0]);
+    }
+  }, [filteredMedia, selectedMedia]);
 
   const categories = ["all", "image", "video"];
+
+  const selectedEquipment = selectedMedia?.equipmentId
+    ? equipmentData.find((equipment) => equipment.id === selectedMedia.equipmentId)
+    : undefined;
 
   // Water bubble animation component
   const WaterBubble = ({ delay = 0, duration = 4, x = 0 }: { delay?: number; duration?: number; x?: number }) => (
@@ -225,253 +244,179 @@ export function GalleryPage() {
             ))}
           </motion.div>
 
-          {/* Gallery Grid */}
-          <motion.div
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            {filteredMedia.map((item, index) => (
-              <motion.div
-                key={`${item.type}-${index}`}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={galleryInView ? { opacity: 1, scale: 1 } : {}}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.5, delay: index * 0.05 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="relative group cursor-pointer rounded-lg overflow-hidden shadow-lg"
-                onClick={() => setSelectedMedia(item)}
-              >
-                <div className="aspect-video relative">
-                  <ImageWithFallback
-                    src={item.type === "video" ? (item.thumbnail || item.src) : item.src}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-center justify-center"
-                  >
-                    {item.type === "video" && (
-                      <motion.div
-                        whileHover={{ scale: 1.2 }}
-                        className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center"
-                      >
-                        <Play className="h-8 w-8 text-blue-600 ml-1" />
-                      </motion.div>
-                    )}
-                  </motion.div>
-                  
-                  {/* Type badge */}
-                  <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm flex items-center gap-1">
-                    {item.type === "video" ? (
-                      <Video className="h-3 w-3" />
-                    ) : (
-                      <ImageIcon className="h-3 w-3" />
-                    )}
-                    <span className="capitalize">{item.type}</span>
-                  </div>
-
-                  {/* Equipment tag */}
-                  {item.equipmentId && (() => {
-                    const equipment = equipmentData.find(e => e.id === item.equipmentId);
-                    return equipment ? (
-                      <Link 
-                        to={`/equipment/${item.equipmentId}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="absolute top-3 left-3"
-                      >
-                        <motion.div
-                          whileHover={{ scale: 1.1 }}
-                          className="bg-blue-600/90 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm flex items-center gap-1 hover:bg-blue-700 transition"
-                        >
-                          <Tag className="h-3 w-3" />
-                          <span>{equipment.name}</span>
-                        </motion.div>
-                      </Link>
-                    ) : null;
-                  })()}
-                </div>
-
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  whileHover={{ y: 0, opacity: 1 }}
-                  className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 to-transparent text-white"
-                >
-                  <h3 className="text-lg mb-1">{item.title}</h3>
-                  <p className="text-sm text-gray-300">{item.category}</p>
-                  {item.equipmentId && (() => {
-                    const equipment = equipmentData.find(e => e.id === item.equipmentId);
-                    return equipment ? (
-                      <Link 
-                        to={`/equipment/${item.equipmentId}`}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <motion.p 
-                          whileHover={{ x: 5 }}
-                          className="text-xs text-blue-300 mt-1 flex items-center gap-1 hover:text-blue-200"
-                        >
-                          <Tag className="h-3 w-3" />
-                          Featured: {equipment.name}
-                        </motion.p>
-                      </Link>
-                    ) : null;
-                  })()}
-                </motion.div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* No results message */}
-          {filteredMedia.length === 0 && (
+          {/* Gallery + Detail Layout */}
+          <div className="lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] gap-8 items-start">
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20"
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
             >
-              <p className="text-2xl text-gray-500">No {filter}s found</p>
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      {/* Side Panel Modal */}
-      {selectedMedia && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
-          onClick={() => setSelectedMedia(null)}
-        >
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25 }}
-            className="absolute right-0 top-0 h-full w-full md:w-[500px] bg-white shadow-2xl overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setSelectedMedia(null)}
-              className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-gray-100 transition"
-            >
-              <X className="h-6 w-6 text-gray-700" />
-            </motion.button>
-
-            {/* Media Display */}
-            <div className="relative">
-              {selectedMedia.type === "video" ? (
-                <div className="aspect-square bg-gray-900">
-                  <iframe
-                    src={selectedMedia.src}
-                    className="w-full h-full"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                </div>
+              {filteredMedia.length === 0 ? (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="col-span-full text-center py-16 bg-white rounded-2xl border border-dashed border-gray-200"
+                >
+                  <p className="text-2xl text-gray-500">No {filter}s found</p>
+                </motion.div>
               ) : (
-                <div className="aspect-square bg-gray-100">
-                  <ImageWithFallback
-                    src={selectedMedia.src}
-                    alt={selectedMedia.title}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-            </div>
+                filteredMedia.map((item: MediaItem, index: number) => {
+                  const equipment = item.equipmentId ? equipmentData.find((eq) => eq.id === item.equipmentId) : undefined;
+                  const isSelected = selectedMedia === item;
 
-            {/* Content */}
-            <div className="p-6">
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 }}
-              >
-                <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedMedia.title}</h2>
-                <p className="text-gray-600 mb-6">{selectedMedia.category}</p>
-
-                {/* Equipment Information */}
-                {selectedMedia.equipmentId && (() => {
-                  const equipment = equipmentData.find(e => e.id === selectedMedia.equipmentId);
-                  return equipment ? (
+                  return (
                     <motion.div
-                      initial={{ y: 20, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                      className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 mb-6 border border-blue-100"
+                      key={`${item.type}-${index}`}
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={galleryInView ? { opacity: 1, scale: 1 } : {}}
+                      transition={{ duration: 0.4, delay: index * 0.05 }}
+                      whileHover={{ y: -6 }}
+                      className={`group rounded-2xl overflow-hidden border bg-white shadow-lg transition cursor-pointer ${
+                        isSelected ? "border-blue-500 shadow-blue-100" : "border-transparent hover:border-blue-200"
+                      }`}
+                      onClick={() => setSelectedMedia(item)}
                     >
-                      <div className="flex items-start gap-3 mb-4">
-                        <div className="bg-blue-600 p-2 rounded-lg">
-                          <Tag className="h-5 w-5 text-white" />
+                      <div className="aspect-square relative">
+                        <ImageWithFallback
+                          src={item.type === "video" ? item.thumbnail || item.src : item.src}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition" />
+
+                        {/* Type badge */}
+                        <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs flex items-center gap-1">
+                          {item.type === "video" ? <Video className="h-3 w-3" /> : <ImageIcon className="h-3 w-3" />}
+                          <span className="capitalize">{item.type}</span>
                         </div>
-                        <div>
-                          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
-                            Featured Equipment
-                          </h3>
-                          <h4 className="text-2xl font-bold text-gray-900">{equipment.name}</h4>
+
+                        {/* Equipment tag */}
+                        {equipment && (
+                          <Link
+                            to={`/equipment/${equipment.id}`}
+                            onClick={handleEquipmentLinkClick}
+                            className="absolute top-3 left-3"
+                          >
+                            <motion.div
+                              whileHover={{ scale: 1.05 }}
+                              className="bg-blue-600/90 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs flex items-center gap-1"
+                            >
+                              <Tag className="h-3 w-3" />
+                              <span>{equipment.name}</span>
+                            </motion.div>
+                          </Link>
+                        )}
+
+                        {item.type === "video" && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center">
+                              <Play className="h-7 w-7 text-blue-600 ml-1" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <p className="text-sm uppercase tracking-wide text-blue-600">{item.category}</p>
+                        <h3 className="text-xl font-semibold text-gray-900">{item.title}</h3>
+                        {equipment && (
+                          <Link
+                            to={`/equipment/${equipment.id}`}
+                            onClick={handleEquipmentLinkClick}
+                            className="text-sm text-blue-600 flex items-center gap-1 mt-2 hover:underline"
+                          >
+                            <Tag className="h-3 w-3" />
+                            {equipment.name}
+                          </Link>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })
+              )}
+            </motion.div>
+
+            <div className="mt-12 lg:mt-0">
+              {selectedMedia ? (
+                <motion.div
+                  key={`${selectedMedia.type}-${selectedMedia.src}`}
+                  initial={{ opacity: 0, x: 30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="bg-white rounded-3xl border border-gray-100 shadow-xl lg:sticky lg:top-24 overflow-hidden"
+                >
+                  <div className="aspect-square bg-gray-50">
+                    {selectedMedia.type === "video" ? (
+                      <iframe
+                        src={selectedMedia.src}
+                        title={selectedMedia.title}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <ImageWithFallback
+                        src={selectedMedia.src}
+                        alt={selectedMedia.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div className="p-6 space-y-6">
+                    <div>
+                      <p className="text-sm uppercase tracking-wide text-blue-600">{selectedMedia.category}</p>
+                      <h2 className="text-3xl font-bold text-gray-900">{selectedMedia.title}</h2>
+                    </div>
+
+                    {selectedEquipment ? (
+                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-5 border border-blue-100 space-y-4">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-blue-600 p-2 rounded-xl">
+                            <Tag className="h-5 w-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="text-xs uppercase tracking-wide text-blue-600">Featured Equipment</p>
+                            <h3 className="text-2xl font-semibold text-gray-900">{selectedEquipment.name}</h3>
+                          </div>
                         </div>
-                      </div>
-
-                      <p className="text-gray-700 mb-4">{equipment.shortDescription}</p>
-
-                      <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
-                        <span className="font-semibold">{equipment.category}</span>
-                        <span>•</span>
-                        <span>${equipment.price.toLocaleString()}</span>
-                      </div>
-
-                      <div className="space-y-2 mb-4">
-                        <h5 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Key Features:</h5>
-                        <ul className="space-y-1">
-                          {equipment.features.slice(0, 3).map((feature, idx) => (
-                            <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
-                              <span className="text-blue-600 mt-1">✓</span>
+                        <p className="text-sm text-gray-700">{selectedEquipment.shortDescription}</p>
+                        <div className="flex items-center gap-3 text-sm text-gray-600">
+                          <span className="font-semibold">{selectedEquipment.category}</span>
+                          <span>•</span>
+                          <span>${selectedEquipment.price.toLocaleString()}</span>
+                        </div>
+                        <ul className="space-y-1 text-sm text-gray-700">
+                          {selectedEquipment.features.slice(0, 3).map((feature, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="text-blue-600">✓</span>
                               <span>{feature}</span>
                             </li>
                           ))}
                         </ul>
+                        <Link to={`/equipment/${selectedEquipment.id}`}>
+                          <Button className="w-full mt-2">View Product Details</Button>
+                        </Link>
                       </div>
-
-                      <Link to={`/equipment/${equipment.id}`}>
-                        <motion.button
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                          className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2"
-                        >
-                          View Full Details
-                          <motion.span
-                            animate={{ x: [0, 5, 0] }}
-                            transition={{ repeat: Infinity, duration: 1.5 }}
-                          >
-                            →
-                          </motion.span>
-                        </motion.button>
-                      </Link>
-                    </motion.div>
-                  ) : null;
-                })()}
-
-                {/* Additional Info */}
-                <div className="border-t pt-4">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    {selectedMedia.type === "video" ? (
-                      <Video className="h-4 w-4" />
                     ) : (
-                      <ImageIcon className="h-4 w-4" />
+                      <div className="rounded-2xl border border-dashed border-gray-200 p-5 text-sm text-gray-500">
+                        No equipment tagged for this media.
+                      </div>
                     )}
-                    <span className="capitalize">{selectedMedia.type}</span>
+
+                    <div className="flex items-center gap-2 text-sm text-gray-500 border-t pt-4">
+                      {selectedMedia.type === "video" ? <Video className="h-4 w-4" /> : <ImageIcon className="h-4 w-4" />}
+                      <span className="capitalize">{selectedMedia.type}</span>
+                    </div>
                   </div>
+                </motion.div>
+              ) : (
+                <div className="bg-white rounded-3xl border border-dashed border-gray-200 p-6 text-center text-gray-500">
+                  Select a media item to view equipment details.
                 </div>
-              </motion.div>
+              )}
             </div>
-          </motion.div>
-        </motion.div>
-      )}
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-cyan-600 text-white">
