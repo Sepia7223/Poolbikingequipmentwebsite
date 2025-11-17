@@ -109,7 +109,7 @@ const galleryMedia: MediaItem[] = [
 export function GalleryPage() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [galleryRef, galleryInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(() => galleryMedia[0] ?? null);
+  const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
   const [filter, setFilter] = useState<"all" | "image" | "video">("all");
 
   const handleEquipmentLinkClick = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -126,10 +126,10 @@ export function GalleryPage() {
       return;
     }
 
-    if (!selectedMedia || !filteredMedia.includes(selectedMedia)) {
-      setSelectedMedia(filteredMedia[0]);
+    if (selectedMedia && !filteredMedia.includes(selectedMedia)) {
+      setSelectedMedia(null);
     }
-  }, [filteredMedia]);
+  }, [filteredMedia, selectedMedia]);
 
   const categories = ["all", "image", "video"];
 
@@ -367,13 +367,13 @@ export function GalleryPage() {
                         }
                       }}
                     >
-                      <div className="aspect-square relative">
+                      <div className="aspect-square relative overflow-hidden">
                         <ImageWithFallback
                           src={item.type === "video" ? item.thumbnail || item.src : item.src}
                           alt={item.title}
                           className="w-full h-full object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition" />
 
                         {/* Type badge */}
                         <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full text-white text-xs flex items-center gap-1">
