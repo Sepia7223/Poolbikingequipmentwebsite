@@ -27,6 +27,7 @@ export function Navigation() {
     { name: "Rental", path: "/rental" },
     { name: "Sales", path: "/sales" },
     { name: "About", path: "/about" },
+    { name: "Gallery", path: "/gallery" },
     { name: "Contact", path: "/contact" }
   ];
 

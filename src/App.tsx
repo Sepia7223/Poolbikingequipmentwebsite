@@ -8,6 +8,7 @@ import { RentalPage } from "./pages/RentalPage";
 import { SalesPage } from "./pages/SalesPage";
 import { AboutPage } from "./pages/AboutPage";
 import { ContactPage } from "./pages/ContactPage";
+import { GalleryPage } from "./pages/GalleryPage";
 import { Toaster } from "./components/ui/sonner";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
             <Route path="/rental" element={<RentalPage />} />
             <Route path="/sales" element={<SalesPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/gallery" element={<GalleryPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>
