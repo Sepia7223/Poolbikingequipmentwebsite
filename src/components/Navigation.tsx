@@ -33,6 +33,7 @@ export function Navigation() {
   ];
 
   const serviceLinks = [
+    { name: "Browse Equipment", path: "/equipment" },
     { name: "Equipment Rental", path: "/rental" },
     { name: "Equipment Sales", path: "/sales" },
     { name: "Maintenance", path: "/services/maintenance" },
