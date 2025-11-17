@@ -9,6 +9,10 @@ import { SalesPage } from "./pages/SalesPage";
 import { AboutPage } from "./pages/AboutPage";
 import { ContactPage } from "./pages/ContactPage";
 import { GalleryPage } from "./pages/GalleryPage";
+import { MaintenancePage } from "./pages/MaintenancePage";
+import { TrainingPage } from "./pages/TrainingPage";
+import { CustomSolutionsPage } from "./pages/CustomSolutionsPage";
+import { SupportPage } from "./pages/SupportPage";
 import { Toaster } from "./components/ui/sonner";
 
 export default function App() {
@@ -25,6 +29,10 @@ export default function App() {
             <Route path="/sales" element={<SalesPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/services/maintenance" element={<MaintenancePage />} />
+            <Route path="/services/training" element={<TrainingPage />} />
+            <Route path="/services/custom-solutions" element={<CustomSolutionsPage />} />
+            <Route path="/services/support" element={<SupportPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>

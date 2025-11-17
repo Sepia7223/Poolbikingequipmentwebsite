@@ -65,21 +65,21 @@ export function Footer() {
             <h4 className="text-white mb-4">Services</h4>
             <ul className="space-y-2">
               {[
-                "Equipment Rental",
-                "Equipment Sales",
-                "Maintenance",
-                "Training Programs",
-                "Custom Solutions",
-                "Support"
+                { name: "Equipment Rental", path: "/rental" },
+                { name: "Equipment Sales", path: "/sales" },
+                { name: "Maintenance", path: "/services/maintenance" },
+                { name: "Training Programs", path: "/services/training" },
+                { name: "Custom Solutions", path: "/services/custom-solutions" },
+                { name: "Support", path: "/services/support" }
               ].map((service, index) => (
                 <motion.li
                   key={index}
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <a href="#" className="hover:text-blue-500 transition">
-                    {service}
-                  </a>
+                  <Link to={service.path} className="hover:text-blue-500 transition">
+                    {service.name}
+                  </Link>
                 </motion.li>
               ))}
             </ul>

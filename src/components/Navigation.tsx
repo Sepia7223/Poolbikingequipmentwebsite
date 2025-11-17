@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from "motion/react";
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -19,16 +21,24 @@ export function Navigation() {
 
   useEffect(() => {
     setIsOpen(false);
+    setServicesOpen(false);
+    setMobileServicesOpen(false);
   }, [location]);
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Equipment", path: "/equipment" },
-    { name: "Rental", path: "/rental" },
-    { name: "Sales", path: "/sales" },
     { name: "About", path: "/about" },
     { name: "Gallery", path: "/gallery" },
     { name: "Contact", path: "/contact" }
+  ];
+
+  const serviceLinks = [
+    { name: "Equipment Rental", path: "/rental" },
+    { name: "Equipment Sales", path: "/sales" },
+    { name: "Maintenance", path: "/services/maintenance" },
+    { name: "Training Programs", path: "/services/training" },
+    { name: "Custom Solutions", path: "/services/custom-solutions" },
+    { name: "Support", path: "/services/support" }
   ];
 
   return (
@@ -74,6 +84,50 @@ export function Navigation() {
                 )}
               </Link>
             ))}
+            
+            {/* Services Dropdown */}
+            <div 
+              className="relative"
+              onMouseEnter={() => setServicesOpen(true)}
+              onMouseLeave={() => setServicesOpen(false)}
+            >
+              <button className={`transition ${
+                serviceLinks.some(s => location.pathname === s.path) ? "text-blue-600" : "hover:text-blue-600"
+              }`}>
+                Services ▾
+              </button>
+              
+              <AnimatePresence>
+                {servicesOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 py-2 z-50"
+                  >
+                    {serviceLinks.map((service, index) => (
+                      <motion.div
+                        key={service.path}
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.05 }}
+                      >
+                        <Link
+                          to={service.path}
+                          className={`block px-4 py-2 transition hover:bg-blue-50 ${
+                            location.pathname === service.path ? "text-blue-600 bg-blue-50" : "text-gray-700"
+                          }`}
+                        >
+                          {service.name}
+                        </Link>
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             <Link to="/contact">
               <Button className="group">
                 Get Started
@@ -128,6 +182,59 @@ export function Navigation() {
                     </Link>
                   </motion.div>
                 ))}
+                
+                {/* Mobile Services Dropdown */}
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: navLinks.length * 0.1 }}
+                >
+                  <button
+                    onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
+                    className="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition flex items-center justify-between"
+                  >
+                    <span>Services</span>
+                    <motion.span
+                      animate={{ rotate: mobileServicesOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      ▾
+                    </motion.span>
+                  </button>
+                  
+                  <AnimatePresence>
+                    {mobileServicesOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        {serviceLinks.map((service, idx) => (
+                          <motion.div
+                            key={service.path}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.05 }}
+                          >
+                            <Link
+                              to={service.path}
+                              className={`block pl-8 pr-4 py-2 text-sm rounded transition ${
+                                location.pathname === service.path
+                                  ? "bg-blue-50 text-blue-600"
+                                  : "hover:bg-gray-100"
+                              }`}
+                            >
+                              {service.name}
+                            </Link>
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+
                 <div className="px-4 pt-2">
                   <Link to="/contact">
                     <Button className="w-full">Get Started</Button>
