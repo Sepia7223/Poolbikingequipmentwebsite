@@ -336,74 +336,139 @@ export function GalleryPage() {
         </div>
       </section>
 
-      {/* Lightbox Modal */}
+      {/* Side Panel Modal */}
       {selectedMedia && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
           onClick={() => setSelectedMedia(null)}
         >
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            whileHover={{ scale: 1.1, rotate: 90 }}
-            transition={{ duration: 0.2 }}
-            onClick={() => setSelectedMedia(null)}
-            className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
-          >
-            <X className="h-8 w-8" />
-          </motion.button>
-
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", duration: 0.5 }}
-            className="max-w-6xl w-full"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", damping: 25 }}
+            className="absolute right-0 top-0 h-full w-full md:w-[500px] bg-white shadow-2xl overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            {selectedMedia.type === "video" ? (
-              <div className="aspect-video">
-                <iframe
-                  src={selectedMedia.src}
-                  className="w-full h-full rounded-lg"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            ) : (
-              <div className="relative">
-                <ImageWithFallback
-                  src={selectedMedia.src}
-                  alt={selectedMedia.title}
-                  className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-                />
-              </div>
-            )}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="mt-4 text-white text-center"
+            {/* Close button */}
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setSelectedMedia(null)}
+              className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm p-2 rounded-full shadow-lg hover:bg-gray-100 transition"
             >
-              <h3 className="text-2xl mb-2">{selectedMedia.title}</h3>
-              <p className="text-gray-400 mb-2">{selectedMedia.category}</p>
-              {selectedMedia.equipmentId && (() => {
-                const equipment = equipmentData.find(e => e.id === selectedMedia.equipmentId);
-                return equipment ? (
-                  <Link to={`/equipment/${selectedMedia.equipmentId}`}>
+              <X className="h-6 w-6 text-gray-700" />
+            </motion.button>
+
+            {/* Media Display */}
+            <div className="relative">
+              {selectedMedia.type === "video" ? (
+                <div className="aspect-square bg-gray-900">
+                  <iframe
+                    src={selectedMedia.src}
+                    className="w-full h-full"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <div className="aspect-square bg-gray-100">
+                  <ImageWithFallback
+                    src={selectedMedia.src}
+                    alt={selectedMedia.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Content */}
+            <div className="p-6">
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.1 }}
+              >
+                <h2 className="text-3xl font-bold text-gray-900 mb-2">{selectedMedia.title}</h2>
+                <p className="text-gray-600 mb-6">{selectedMedia.category}</p>
+
+                {/* Equipment Information */}
+                {selectedMedia.equipmentId && (() => {
+                  const equipment = equipmentData.find(e => e.id === selectedMedia.equipmentId);
+                  return equipment ? (
                     <motion.div
-                      whileHover={{ scale: 1.05 }}
-                      className="inline-flex items-center gap-2 bg-blue-600/80 backdrop-blur-sm px-4 py-2 rounded-full text-white text-sm hover:bg-blue-700 transition mt-2"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                      className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-lg p-6 mb-6 border border-blue-100"
                     >
-                      <Tag className="h-4 w-4" />
-                      <span>Featured Model: {equipment.name}</span>
+                      <div className="flex items-start gap-3 mb-4">
+                        <div className="bg-blue-600 p-2 rounded-lg">
+                          <Tag className="h-5 w-5 text-white" />
+                        </div>
+                        <div>
+                          <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-1">
+                            Featured Equipment
+                          </h3>
+                          <h4 className="text-2xl font-bold text-gray-900">{equipment.name}</h4>
+                        </div>
+                      </div>
+
+                      <p className="text-gray-700 mb-4">{equipment.shortDescription}</p>
+
+                      <div className="flex items-center gap-4 mb-4 text-sm text-gray-600">
+                        <span className="font-semibold">{equipment.category}</span>
+                        <span>•</span>
+                        <span>${equipment.price.toLocaleString()}</span>
+                      </div>
+
+                      <div className="space-y-2 mb-4">
+                        <h5 className="font-semibold text-gray-900 text-sm uppercase tracking-wide">Key Features:</h5>
+                        <ul className="space-y-1">
+                          {equipment.features.slice(0, 3).map((feature, idx) => (
+                            <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
+                              <span className="text-blue-600 mt-1">✓</span>
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <Link to={`/equipment/${equipment.id}`}>
+                        <motion.button
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition flex items-center justify-center gap-2"
+                        >
+                          View Full Details
+                          <motion.span
+                            animate={{ x: [0, 5, 0] }}
+                            transition={{ repeat: Infinity, duration: 1.5 }}
+                          >
+                            →
+                          </motion.span>
+                        </motion.button>
+                      </Link>
                     </motion.div>
-                  </Link>
-                ) : null;
-              })()}
-            </motion.div>
+                  ) : null;
+                })()}
+
+                {/* Additional Info */}
+                <div className="border-t pt-4">
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    {selectedMedia.type === "video" ? (
+                      <Video className="h-4 w-4" />
+                    ) : (
+                      <ImageIcon className="h-4 w-4" />
+                    )}
+                    <span className="capitalize">{selectedMedia.type}</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       )}
