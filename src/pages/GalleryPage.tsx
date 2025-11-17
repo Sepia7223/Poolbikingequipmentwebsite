@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Play, X, Image as ImageIcon, Video, Tag } from "lucide-react";
+import { Play, Image as ImageIcon, Video, Tag } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { equipmentData } from "../data/equipment";
 
@@ -129,7 +129,7 @@ export function GalleryPage() {
     if (!selectedMedia || !filteredMedia.includes(selectedMedia)) {
       setSelectedMedia(filteredMedia[0]);
     }
-  }, [filteredMedia, selectedMedia]);
+  }, [filteredMedia]);
 
   const categories = ["all", "image", "video"];
 
@@ -246,9 +246,91 @@ export function GalleryPage() {
 
           {/* Gallery + Detail Layout */}
           <div className="lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] gap-8 items-start">
+            {/* Detail Panel - First on mobile, second on desktop */}
+            <div className="order-1 lg:order-2 mb-8 lg:mb-0">
+              {selectedMedia ? (
+                <motion.div
+                  key={selectedMedia.src}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="bg-white rounded-3xl border border-gray-100 shadow-xl lg:sticky lg:top-24 overflow-hidden"
+                >
+                  <div className="aspect-square bg-gray-50">
+                    {selectedMedia.type === "video" ? (
+                      <iframe
+                        src={selectedMedia.src}
+                        title={selectedMedia.title}
+                        className="w-full h-full"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <ImageWithFallback
+                        src={selectedMedia.src}
+                        alt={selectedMedia.title}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <div className="p-6 space-y-4">
+                    <div>
+                      <p className="text-sm uppercase tracking-wide text-blue-600">{selectedMedia.category}</p>
+                      <h2 className="text-3xl font-bold text-gray-900">{selectedMedia.title}</h2>
+                    </div>
+
+                    {selectedEquipment ? (
+                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-5 border border-blue-100 space-y-4">
+                        <div className="flex items-center gap-3">
+                          <div className="bg-blue-600 p-2 rounded-xl">
+                            <Tag className="h-5 w-5 text-white" />
+                          </div>
+                          <div>
+                            <p className="text-xs uppercase tracking-wide text-blue-600">Featured Equipment</p>
+                            <h3 className="text-2xl font-semibold text-gray-900">{selectedEquipment.name}</h3>
+                          </div>
+                        </div>
+                        <p className="text-sm text-gray-700">{selectedEquipment.shortDescription}</p>
+                        <div className="flex items-center gap-3 text-sm text-gray-600">
+                          <span className="font-semibold">{selectedEquipment.category}</span>
+                          <span>•</span>
+                          <span>${selectedEquipment.price.toLocaleString()}</span>
+                        </div>
+                        <ul className="space-y-1 text-sm text-gray-700">
+                          {selectedEquipment.features.slice(0, 3).map((feature, idx) => (
+                            <li key={idx} className="flex items-start gap-2">
+                              <span className="text-blue-600">✓</span>
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <Link to={`/equipment/${selectedEquipment.id}`}>
+                          <Button className="w-full mt-2">View Product Details</Button>
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="rounded-2xl border border-dashed border-gray-200 p-5 text-sm text-gray-500">
+                        No equipment tagged for this media.
+                      </div>
+                    )}
+
+                    <div className="flex items-center gap-2 text-sm text-gray-500 border-t pt-4">
+                      {selectedMedia.type === "video" ? <Video className="h-4 w-4" /> : <ImageIcon className="h-4 w-4" />}
+                      <span className="capitalize">{selectedMedia.type}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              ) : (
+                <div className="bg-white rounded-3xl border border-dashed border-gray-200 p-6 text-center text-gray-500">
+                  Select a media item to view equipment details.
+                </div>
+              )}
+            </div>
+
+            {/* Gallery Grid */}
             <motion.div
               layout
-              className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
+              className="order-2 lg:order-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {filteredMedia.length === 0 ? (
                 <motion.div
@@ -265,7 +347,7 @@ export function GalleryPage() {
 
                   return (
                     <motion.div
-                      key={`${item.type}-${index}`}
+                      key={`${item.src}-${item.title}`}
                       layout
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={galleryInView ? { opacity: 1, scale: 1 } : {}}
@@ -275,6 +357,15 @@ export function GalleryPage() {
                         isSelected ? "border-blue-500 shadow-blue-100" : "border-transparent hover:border-blue-200"
                       }`}
                       onClick={() => setSelectedMedia(item)}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`View ${item.title} details`}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setSelectedMedia(item);
+                        }
+                      }}
                     >
                       <div className="aspect-square relative">
                         <ImageWithFallback
@@ -334,86 +425,6 @@ export function GalleryPage() {
                 })
               )}
             </motion.div>
-
-            <div className="mt-12 lg:mt-0">
-              {selectedMedia ? (
-                <motion.div
-                  key={`${selectedMedia.type}-${selectedMedia.src}`}
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-white rounded-3xl border border-gray-100 shadow-xl lg:sticky lg:top-24 overflow-hidden"
-                >
-                  <div className="aspect-square bg-gray-50">
-                    {selectedMedia.type === "video" ? (
-                      <iframe
-                        src={selectedMedia.src}
-                        title={selectedMedia.title}
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    ) : (
-                      <ImageWithFallback
-                        src={selectedMedia.src}
-                        alt={selectedMedia.title}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
-                  <div className="p-6 space-y-6">
-                    <div>
-                      <p className="text-sm uppercase tracking-wide text-blue-600">{selectedMedia.category}</p>
-                      <h2 className="text-3xl font-bold text-gray-900">{selectedMedia.title}</h2>
-                    </div>
-
-                    {selectedEquipment ? (
-                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-5 border border-blue-100 space-y-4">
-                        <div className="flex items-center gap-3">
-                          <div className="bg-blue-600 p-2 rounded-xl">
-                            <Tag className="h-5 w-5 text-white" />
-                          </div>
-                          <div>
-                            <p className="text-xs uppercase tracking-wide text-blue-600">Featured Equipment</p>
-                            <h3 className="text-2xl font-semibold text-gray-900">{selectedEquipment.name}</h3>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-700">{selectedEquipment.shortDescription}</p>
-                        <div className="flex items-center gap-3 text-sm text-gray-600">
-                          <span className="font-semibold">{selectedEquipment.category}</span>
-                          <span>•</span>
-                          <span>${selectedEquipment.price.toLocaleString()}</span>
-                        </div>
-                        <ul className="space-y-1 text-sm text-gray-700">
-                          {selectedEquipment.features.slice(0, 3).map((feature, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <span className="text-blue-600">✓</span>
-                              <span>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <Link to={`/equipment/${selectedEquipment.id}`}>
-                          <Button className="w-full mt-2">View Product Details</Button>
-                        </Link>
-                      </div>
-                    ) : (
-                      <div className="rounded-2xl border border-dashed border-gray-200 p-5 text-sm text-gray-500">
-                        No equipment tagged for this media.
-                      </div>
-                    )}
-
-                    <div className="flex items-center gap-2 text-sm text-gray-500 border-t pt-4">
-                      {selectedMedia.type === "video" ? <Video className="h-4 w-4" /> : <ImageIcon className="h-4 w-4" />}
-                      <span className="capitalize">{selectedMedia.type}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              ) : (
-                <div className="bg-white rounded-3xl border border-dashed border-gray-200 p-6 text-center text-gray-500">
-                  Select a media item to view equipment details.
-                </div>
-              )}
-            </div>
           </div>
         </div>
       </section>
