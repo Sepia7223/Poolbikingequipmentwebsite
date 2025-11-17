@@ -1,9 +1,9 @@
 import { type MouseEvent, useEffect, useMemo, useState } from "react";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import { Link } from "react-router-dom";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Play, Image as ImageIcon, Video, Tag } from "lucide-react";
+import { Play, Image as ImageIcon, Video, Tag, X } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { equipmentData } from "../data/equipment";
 
@@ -244,94 +244,11 @@ export function GalleryPage() {
             ))}
           </motion.div>
 
-          {/* Gallery + Detail Layout */}
-          <div className="lg:grid lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] gap-8 items-start">
-            {/* Detail Panel - First on mobile, second on desktop */}
-            <div className="order-1 lg:order-2 mb-8 lg:mb-0">
-              {selectedMedia ? (
-                <motion.div
-                  key={selectedMedia.src}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="bg-white rounded-3xl border border-gray-100 shadow-xl lg:sticky lg:top-24 overflow-hidden"
-                >
-                  <div className="aspect-square bg-gray-50">
-                    {selectedMedia.type === "video" ? (
-                      <iframe
-                        src={selectedMedia.src}
-                        title={selectedMedia.title}
-                        className="w-full h-full"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
-                    ) : (
-                      <ImageWithFallback
-                        src={selectedMedia.src}
-                        alt={selectedMedia.title}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
-                  <div className="p-6 space-y-4">
-                    <div>
-                      <p className="text-sm uppercase tracking-wide text-blue-600">{selectedMedia.category}</p>
-                      <h2 className="text-3xl font-bold text-gray-900">{selectedMedia.title}</h2>
-                    </div>
-
-                    {selectedEquipment ? (
-                      <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-5 border border-blue-100 space-y-4">
-                        <div className="flex items-center gap-3">
-                          <div className="bg-blue-600 p-2 rounded-xl">
-                            <Tag className="h-5 w-5 text-white" />
-                          </div>
-                          <div>
-                            <p className="text-xs uppercase tracking-wide text-blue-600">Featured Equipment</p>
-                            <h3 className="text-2xl font-semibold text-gray-900">{selectedEquipment.name}</h3>
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-700">{selectedEquipment.shortDescription}</p>
-                        <div className="flex items-center gap-3 text-sm text-gray-600">
-                          <span className="font-semibold">{selectedEquipment.category}</span>
-                          <span>•</span>
-                          <span>${selectedEquipment.price.toLocaleString()}</span>
-                        </div>
-                        <ul className="space-y-1 text-sm text-gray-700">
-                          {selectedEquipment.features.slice(0, 3).map((feature, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <span className="text-blue-600">✓</span>
-                              <span>{feature}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <Link to={`/equipment/${selectedEquipment.id}`}>
-                          <Button className="w-full mt-2">View Product Details</Button>
-                        </Link>
-                      </div>
-                    ) : (
-                      <div className="rounded-2xl border border-dashed border-gray-200 p-5 text-sm text-gray-500">
-                        No equipment tagged for this media.
-                      </div>
-                    )}
-
-                    <div className="flex items-center gap-2 text-sm text-gray-500 border-t pt-4">
-                      {selectedMedia.type === "video" ? <Video className="h-4 w-4" /> : <ImageIcon className="h-4 w-4" />}
-                      <span className="capitalize">{selectedMedia.type}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              ) : (
-                <div className="bg-white rounded-3xl border border-dashed border-gray-200 p-6 text-center text-gray-500">
-                  Select a media item to view equipment details.
-                </div>
-              )}
-            </div>
-
-            {/* Gallery Grid */}
-            <motion.div
-              layout
-              className="order-2 lg:order-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            >
+          {/* Gallery Grid */}
+          <motion.div
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
               {filteredMedia.length === 0 ? (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -428,6 +345,115 @@ export function GalleryPage() {
           </div>
         </div>
       </section>
+
+      {/* Modal for Media Details */}
+      <AnimatePresence>
+        {selectedMedia && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+              onClick={() => setSelectedMedia(null)}
+            />
+            
+            {/* Modal Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, type: "spring", damping: 25 }}
+              className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-full md:max-w-4xl md:max-h-[90vh] bg-white rounded-3xl shadow-2xl z-50 overflow-hidden"
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedMedia(null)}
+                className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm p-2 rounded-full hover:bg-white transition shadow-lg"
+                aria-label="Close modal"
+              >
+                <X className="h-6 w-6 text-gray-900" />
+              </button>
+
+              <div className="overflow-y-auto max-h-[90vh]">
+                {/* Media Preview */}
+                <div className="aspect-video bg-gray-50 relative">
+                  {selectedMedia.type === "video" ? (
+                    <iframe
+                      src={selectedMedia.src}
+                      title={selectedMedia.title}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <ImageWithFallback
+                      src={selectedMedia.src}
+                      alt={selectedMedia.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="p-6 md:p-8 space-y-6">
+                  <div>
+                    <p className="text-sm uppercase tracking-wide text-blue-600 mb-2">{selectedMedia.category}</p>
+                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900">{selectedMedia.title}</h2>
+                  </div>
+
+                  {selectedEquipment ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-100 space-y-4"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="bg-blue-600 p-3 rounded-xl">
+                          <Tag className="h-6 w-6 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-xs uppercase tracking-wide text-blue-600">Featured Equipment</p>
+                          <h3 className="text-2xl md:text-3xl font-semibold text-gray-900">{selectedEquipment.name}</h3>
+                        </div>
+                      </div>
+                      <p className="text-gray-700">{selectedEquipment.shortDescription}</p>
+                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <span className="font-semibold">{selectedEquipment.category}</span>
+                        <span>•</span>
+                        <span className="text-lg font-bold text-blue-600">${selectedEquipment.price.toLocaleString()}</span>
+                      </div>
+                      <ul className="space-y-2 text-gray-700">
+                        {selectedEquipment.features.slice(0, 4).map((feature, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-blue-600 font-bold">✓</span>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <Link to={`/equipment/${selectedEquipment.id}`} onClick={() => setSelectedMedia(null)}>
+                        <Button className="w-full mt-4" size="lg">View Full Product Details</Button>
+                      </Link>
+                    </motion.div>
+                  ) : (
+                    <div className="rounded-2xl border border-dashed border-gray-200 p-6 text-center text-gray-500">
+                      No equipment tagged for this media.
+                    </div>
+                  )}
+
+                  <div className="flex items-center gap-2 text-sm text-gray-500 pt-4 border-t">
+                    {selectedMedia.type === "video" ? <Video className="h-4 w-4" /> : <ImageIcon className="h-4 w-4" />}
+                    <span className="capitalize">{selectedMedia.type}</span>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-blue-600 to-cyan-600 text-white">

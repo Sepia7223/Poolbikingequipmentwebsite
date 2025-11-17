@@ -207,18 +207,13 @@ export function RentalPage() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={inView ? { opacity: 1, scale: 1 } : {}}
                   transition={{ duration: 0.5, delay: 0.8 + (index * 0.1) }}
-                  whileHover={{ scale: 1.05 }}
                   className="text-center"
                 >
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                    className="inline-block mb-4"
-                  >
+                  <div className="inline-block mb-4">
                     <div className="h-16 w-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto">
                       <benefit.icon className="h-8 w-8 text-white" />
                     </div>
-                  </motion.div>
+                  </div>
                   <h4 className="text-xl mb-2">{benefit.title}</h4>
                   <p className="text-gray-600">{benefit.description}</p>
                 </motion.div>

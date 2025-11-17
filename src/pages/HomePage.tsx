@@ -255,15 +255,11 @@ export function HomePage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={featuresInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
                 className="bg-white p-6 rounded-lg shadow-sm hover:shadow-xl transition-shadow"
               >
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                >
+                <div>
                   <feature.icon className="h-12 w-12 text-blue-600 mb-4" />
-                </motion.div>
+                </div>
                 <h3 className="text-xl mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>
               </motion.div>
