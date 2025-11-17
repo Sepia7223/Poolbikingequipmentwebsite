@@ -342,7 +342,6 @@ export function GalleryPage() {
                 })
               )}
             </motion.div>
-          </div>
         </div>
       </section>
 
