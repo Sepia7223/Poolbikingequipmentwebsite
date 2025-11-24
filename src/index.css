@@ -2151,18 +2151,6 @@ html {
   font-size: var(--font-size);
 }
 
-:root {
-  --color-blue-50: #0088be;
-  --color-blue-100: #0088be;
-  --color-blue-200: #0088be;
-  --color-blue-500: #0088be;
-  --color-blue-600: #0088be;
-  --color-blue-700: #0088be;
-  --color-blue-900: #0088be;
-  --color-cyan-600: #0088be;
-  --color-cyan-900: #0088be;
-}
-
 @property --tw-translate-x {
   syntax: "*";
   inherits: false;
