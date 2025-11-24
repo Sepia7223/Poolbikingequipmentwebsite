@@ -1,12 +1,12 @@
-import berlinImg from "../content/Pictures Poolbiking Equipment/Poolbiking Berlin.jpg";
-import one20Img from "../content/Pictures Poolbiking Equipment/Poolbiking One 2.0.jpg";
-import onePlusImg from "../content/Pictures Poolbiking Equipment/Poolbiking One Plus.jpg";
-import evolutionImg from "../content/Pictures Poolbiking Equipment/Poolbiking Evolution.jpg";
-import ibizaImg from "../content/Pictures Poolbiking Equipment/Poolbiking Ibiza.jpg";
-import coreImg from "../content/Pictures Poolbiking Equipment/Poolbiking Core.jpg";
-import poolmatImg from "../content/Pictures Poolbiking Equipment/Poolmat.jpg";
-import poolJumpingImg from "../content/Pictures Poolbiking Equipment/Pool Jumping.jpg";
-import poolbagImg from "../content/Pictures Poolbiking Equipment/Poolbag.jpg";
+import berlinImg from "../content/Poolbiking New Pictures/poolbiking_berlin2021.jpg.jpeg";
+import one20Img from "../content/Poolbiking New Pictures/poolbiking_one2015_aquabike.jpg.jpeg";
+import onePlusImg from "../content/Poolbiking New Pictures/poolbiking_oneplus2015_aquabike.jpg.jpeg";
+import evolutionImg from "../content/Poolbiking New Pictures/poolbiking_evolution40_aquabike.jpg.jpeg";
+import ibizaImg from "../content/Poolbiking New Pictures/poolbiking_ibiza40_aquabike.jpg.jpeg";
+import coreImg from "../content/Poolbiking New Pictures/poolbiking_core_aquabiking_aquabike.jpg.jpeg";
+import poolmatImg from "../content/Poolbiking New Pictures/poolmat.jpg.jpeg";
+import poolJumpingImg from "../content/Poolbiking New Pictures/pooljumping.jpg.jpeg";
+import poolbagImg from "../content/Poolbiking New Pictures/poolbag_20_q.jpg.jpeg";
 import poolballImg from "../content/Pictures Poolbiking Equipment/poolball.jpg";
 
 export interface Equipment {
