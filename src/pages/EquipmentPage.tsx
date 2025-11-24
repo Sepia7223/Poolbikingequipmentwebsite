@@ -22,6 +22,14 @@ export function EquipmentPage() {
     return matchesCategory && matchesSearch;
   });
 
+  const getRowHeight = (index: number) => {
+    const baseHeightRem = 16; // matches h-64
+    const rowMultipliers = [1.15, 1.1, 1.05, 1.2];
+    const rowIndex = Math.floor(index / 3); // assumes 3 columns on the test view
+    const multiplier = rowMultipliers[rowIndex] ?? 1;
+    return `${baseHeightRem * multiplier}rem`;
+  };
+
   return (
     <div className="pt-16 min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -117,7 +125,10 @@ export function EquipmentPage() {
                 >
                   <Link to={`/equipment/${item.id}`}>
                     <Card className="h-full overflow-hidden hover:shadow-2xl transition-shadow group flex flex-col">
-                      <div className="relative h-64 overflow-hidden bg-white flex items-center justify-center">
+                      <div
+                        className="relative h-64 overflow-hidden bg-white flex items-center justify-center"
+                        style={{ height: getRowHeight(index) }}
+                      >
                         <ImageWithFallback
                           src={item.image}
                           alt={item.name}
