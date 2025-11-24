@@ -9,7 +9,7 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Badge } from "../components/ui/badge";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "../components/ui/input";
-import heroBg from "../content/Marketing/formació Melia 076 poolbiking.jpg";
+import heroBg from "../content/Marketing/formacio-melia-076-poolbiking.jpg";
 import warranty2Logo from "../content/Waranty Logo/garantia-2_en.svg";
 import warranty3Logo from "../content/Waranty Logo/garantia-3_en.svg";
 import warranty4Logo from "../content/Waranty Logo/garantia-4_en.svg";

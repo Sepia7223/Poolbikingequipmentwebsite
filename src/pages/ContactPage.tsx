@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../co
 import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
 import { toast } from "sonner@2.0.3";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import heroBg from "../content/Marketing/formació Melia 076 poolbiking.jpg";
+import heroBg from "../content/Marketing/formacio-melia-076-poolbiking.jpg";
 
 export function ContactPage() {
   const [formData, setFormData] = useState({

@@ -6,7 +6,7 @@ import { Button } from "../components/ui/button";
 import { Check, Calendar, Truck, Wrench, HeadphonesIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import heroBg from "../content/Marketing/formació Melia 076 poolbiking.jpg";
+import heroBg from "../content/Marketing/formacio-melia-076-poolbiking.jpg";
 
 export function RentalPage() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
