@@ -8,9 +8,10 @@ import heroImage from "../content/Marketing/IMG_3066retocado.jpg";
 import fitnessImage from "../content/Marketing/IMG_3053.JPG";
 import hotelsImage from "../content/Marketing/IMG_3055.JPG";
 import rehabImage from "../content/Marketing/IMG_3056retocado.jpg";
-import ceLogo from "../content/Logo's/CE logo.jpg";
+import ceLogo from "../content/Logo's/sello_fabricacion_eng.tif";
 import pedalLogo from "../content/Logo's/segell_pedal_230_en.png";
 import proEquipLogo from "../content/Logo's/poolbiking_professional_equipment.svg";
+import warrantyGroupLogo from "../content/Logo's/garantia_en_grup.svg";
 import geometryLogo from "../content/Logo's/poolbiking_perfect_geometry.png";
 import ultraStrongLogo from "../content/Logo's/ultra_strong.svg";
 
@@ -41,7 +42,7 @@ export function HomePage() {
     { title: "Spa Gym Corner", embed: "https://www.youtube.com/embed/tAGnKpE4NCI" }
   ];
 
-  const logoStrip = [ceLogo, pedalLogo, proEquipLogo, geometryLogo, ultraStrongLogo];
+  const logoStrip = [ceLogo, pedalLogo, proEquipLogo, warrantyGroupLogo, geometryLogo, ultraStrongLogo];
 
   // Water bubble component
   const WaterBubble = ({ delay = 0, duration = 4, x = 0 }: { delay?: number; duration?: number; x?: number }) => (
@@ -294,7 +295,7 @@ export function HomePage() {
       {/* Logos Strip */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-center gap-6">
+          <div className="flex flex-wrap items-center justify-center gap-4">
             {logoStrip.map((logoSrc, idx) => (
               <motion.div
                 key={idx}
@@ -304,7 +305,12 @@ export function HomePage() {
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
                 className="p-3 bg-white rounded-lg shadow-sm border border-gray-200"
               >
-                <img src={logoSrc} alt="Poolbiking credential" className="h-16 w-auto object-contain" />
+                <img
+                  src={logoSrc}
+                  alt="Poolbiking credential"
+                  className="object-contain"
+                  style={{ width: "18rem", height: "9.5rem" }}
+                />
               </motion.div>
             ))}
           </div>
