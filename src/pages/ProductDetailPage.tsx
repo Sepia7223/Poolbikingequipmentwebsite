@@ -84,7 +84,7 @@ export function ProductDetailPage() {
                     src={getWarrantyLogo(product.warrantyYears)}
                     alt={`${product.warrantyYears}-year warranty`}
                     className="object-contain select-none pointer-events-none"
-                    style={{ height: "3.675rem", width: "3.675rem" }} // 5% larger than previous 3.5rem
+                    style={{ height: "4.0425rem", width: "4.0425rem" }} // +10%
                   />
                 </div>
               )}
@@ -228,7 +228,7 @@ export function ProductDetailPage() {
                               src={getWarrantyLogo(item.warrantyYears)}
                               alt={`${item.warrantyYears}-year warranty`}
                               className="object-contain select-none pointer-events-none"
-                              style={{ height: "3.15rem", width: "3.15rem" }} // 5% larger than previous 3rem
+                              style={{ height: "3.465rem", width: "3.465rem" }} // +10%
                             />
                           </div>
                         )}

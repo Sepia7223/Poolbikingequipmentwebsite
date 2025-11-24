@@ -167,7 +167,7 @@ export function EquipmentPage() {
                             src={getWarrantyLogo(item.warrantyYears)}
                             alt={`${item.warrantyYears}-year warranty`}
                             className="absolute left-4 top-1/2 -translate-y-1/2 object-contain select-none pointer-events-none"
-                            style={{ height: "3.15rem", width: "3.15rem" }} // 5% larger than previous 3rem
+                            style={{ height: "3.465rem", width: "3.465rem" }} // +10%
                           />
                         )}
                         <div className="absolute top-4 right-4">
