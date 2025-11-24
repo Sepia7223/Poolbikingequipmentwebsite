@@ -3,43 +3,45 @@ import { Button } from "../components/ui/button";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
-import { Droplets, Heart, Users, Award, ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import heroImage from "../content/Marketing/IMG_3066retocado.jpg";
+import fitnessImage from "../content/Marketing/IMG_3053.JPG";
+import hotelsImage from "../content/Marketing/IMG_3055.JPG";
+import rehabImage from "../content/Marketing/IMG_3056retocado.jpg";
+import ceLogo from "../content/Logo's/CE logo.jpg";
+import progressiveLogo from "../content/Logo's/full_progressive_resistance.jpg";
+import geometryLogo from "../content/Logo's/grafic_res_prog_trassat_en.png";
+import coreLogo from "../content/Logo's/logo_core_polbiking - copia.JPG";
+import warranty7 from "../content/Waranty Logo/garantia-7_en.svg";
 
 export function HomePage() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [featuresRef, featuresInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [statsRef, statsInView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
-  const features = [
+  const pillars = [
     {
-      icon: Droplets,
-      title: "Aquatic Excellence",
-      description: "Professional-grade equipment designed specifically for pool environments"
+      title: "Fitness",
+      body: "Poolbiking is shaking up aquabike with innovative, high-quality equipment engineered for results.",
+      image: fitnessImage
     },
     {
-      icon: Heart,
-      title: "Low Impact",
-      description: "Gentle on joints while providing intense cardiovascular workouts"
+      title: "Hotels",
+      body: "Resorts worldwide choose Poolbiking to deliver unforgettable fitness, sport, fun and health experiences.",
+      image: hotelsImage
     },
     {
-      icon: Users,
-      title: "For Everyone",
-      description: "Perfect for fitness centers, rehabilitation facilities, and private pools"
-    },
-    {
-      icon: Award,
-      title: "Premium Quality",
-      description: "Durable, corrosion-resistant materials built to last"
+      title: "Rehabilitation",
+      body: "Weightless resistance makes aquatic rehab gentle and effective—developed with clinicians and technicians.",
+      image: rehabImage
     }
   ];
 
-  const stats = [
-    { number: "15+", label: "Equipment Models" },
-    { number: "1000+", label: "Happy Customers" },
-    { number: "50+", label: "Countries Worldwide" },
-    { number: "24/7", label: "Customer Support" }
+  const videos = [
+    { title: "Poolmat Activity", embed: "https://www.youtube.com/embed/6cVIo8i6w4g" },
+    { title: "MasterClass Benidorm", embed: "https://www.youtube.com/embed/9VgY3NQ0qS0" },
+    { title: "Spa Gym Corner", embed: "https://www.youtube.com/embed/kPX8mM2mtrE" }
   ];
+
+  const logoStrip = [ceLogo, progressiveLogo, geometryLogo, coreLogo, warranty7];
 
   // Water bubble component
   const WaterBubble = ({ delay = 0, duration = 4, x = 0 }: { delay?: number; duration?: number; x?: number }) => (
@@ -228,102 +230,84 @@ export function HomePage() {
         </motion.div>
       </section>
 
-      {/* Features Section */}
-      <section ref={featuresRef} className="py-20 bg-gray-50">
+      {/* Pillars Section */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl mb-4">
-              Why Choose Poolbiking?
-            </h2>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl mb-4">Poolbiking for Every Need</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Poolbiking combines the benefits of cycling with the resistance of water
+              Fitness, hotels, and rehabilitation—tailored aquatic solutions for every environment.
             </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {pillars.map((pillar, index) => (
               <motion.div
-                key={index}
+                key={pillar.title}
                 initial={{ opacity: 0, y: 30 }}
-                animate={featuresInView ? { opacity: 1, y: 0 } : {}}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white p-6 rounded-lg shadow-sm hover:shadow-xl transition-shadow"
+                className="relative overflow-hidden rounded-xl shadow-xl"
               >
-                <div>
-                  <feature.icon className="h-12 w-12 text-blue-600 mb-4" />
+                <ImageWithFallback src={pillar.image} alt={pillar.title} className="w-full h-80 object-cover" />
+                <div className="absolute inset-0 bg-black/35" />
+                <div className="absolute inset-x-0 bottom-0 p-6 bg-white/75 backdrop-blur-sm">
+                  <h3 className="text-2xl font-semibold mb-2 text-gray-900">{pillar.title}</h3>
+                  <p className="text-gray-700 text-sm leading-relaxed">{pillar.body}</p>
                 </div>
-                <h3 className="text-xl mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section ref={statsRef} className="py-20 bg-blue-900 text-white">
+      {/* Videos Section */}
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+          <div className="text-center mb-10">
+            <h2 className="text-4xl md:text-5xl mb-3">See Poolbiking in Action</h2>
+            <p className="text-lg text-gray-600">Real sessions across fitness, hotels, and rehabilitation settings.</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {videos.map((video, index) => (
               <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={statsInView ? { opacity: 1, scale: 1 } : {}}
+                key={video.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="text-center"
+                className="overflow-hidden rounded-xl shadow-lg bg-black"
               >
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={statsInView ? { opacity: 1 } : {}}
-                  transition={{ duration: 1, delay: index * 0.2 }}
-                  className="text-5xl md:text-6xl mb-2"
-                >
-                  {stat.number}
-                </motion.div>
-                <div className="text-xl text-blue-200">{stat.label}</div>
+                <iframe
+                  title={video.title}
+                  src={video.embed}
+                  className="w-full aspect-video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-cyan-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-4xl md:text-5xl mb-6">
-              Ready to Get Started?
-            </h2>
-            <p className="text-xl mb-8 text-blue-100">
-              Explore our full range of equipment or contact us for personalized recommendations
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/equipment">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button size="lg" className="bg-white text-blue-900 hover:bg-gray-100">
-                    Browse Equipment
-                  </Button>
-                </motion.div>
-              </Link>
-              <Link to="/contact">
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button size="lg" className="bg-blue-900 text-white hover:bg-blue-800">
-                    Contact Us
-                  </Button>
-                </motion.div>
-              </Link>
-            </div>
-          </motion.div>
+      {/* Logos Strip */}
+      <section className="py-12 bg-gray-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-items-center">
+            {logoStrip.map((logoSrc, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                className="p-3 bg-white rounded-lg shadow-sm"
+              >
+                <img src={logoSrc} alt="Poolbiking credential" className="h-16 w-auto object-contain" />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
     </div>
