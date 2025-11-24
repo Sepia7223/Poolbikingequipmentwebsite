@@ -82,7 +82,8 @@ export function ProductDetailPage() {
                 <img
                   src={getWarrantyLogo(product.warrantyYears)}
                   alt={`${product.warrantyYears}-year warranty`}
-                  className="absolute left-6 top-1/2 -translate-y-1/2 h-14 w-14 object-contain select-none pointer-events-none"
+                  className="absolute left-6 top-1/2 -translate-y-1/2 object-contain select-none pointer-events-none"
+                  style={{ height: "3.675rem", width: "3.675rem" }} // 5% larger than previous 3.5rem
                 />
               )}
               <div className="absolute top-4 right-4 flex gap-2">
@@ -223,7 +224,8 @@ export function ProductDetailPage() {
                           <img
                             src={getWarrantyLogo(item.warrantyYears)}
                             alt={`${item.warrantyYears}-year warranty`}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 object-contain select-none pointer-events-none"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 object-contain select-none pointer-events-none"
+                            style={{ height: "3.15rem", width: "3.15rem" }} // 5% larger than previous 3rem
                           />
                         )}
                       </div>
