@@ -132,7 +132,7 @@ export function EquipmentPage() {
                         <ImageWithFallback
                           src={item.image}
                           alt={item.name}
-                          className="h-full w-full object-contain p-4"
+                          className="max-h-full max-w-full object-contain p-4"
                         />
                         <div className="absolute top-4 right-4">
                           <Badge className="bg-blue-600">{item.category}</Badge>

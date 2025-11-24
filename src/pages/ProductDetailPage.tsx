@@ -54,7 +54,7 @@ export function ProductDetailPage() {
               <ImageWithFallback
                 src={product.image}
                 alt={product.name}
-                className="h-full w-full object-contain p-6"
+                className="max-h-full max-w-full object-contain p-6"
               />
               <div className="absolute top-4 right-4 flex gap-2">
                 <Badge className="bg-blue-600">{product.category}</Badge>
@@ -188,7 +188,7 @@ export function ProductDetailPage() {
                         <ImageWithFallback
                           src={item.image}
                           alt={item.name}
-                          className="h-full w-full object-contain p-3"
+                          className="max-h-full max-w-full object-contain p-3"
                         />
                       </div>
                       <CardContent className="pt-4">
