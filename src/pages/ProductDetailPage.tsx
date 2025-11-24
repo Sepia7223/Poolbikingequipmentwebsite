@@ -5,7 +5,7 @@ import { Button } from "../components/ui/button";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Card, CardContent } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
-import { Check, ArrowLeft, ShoppingCart, Calendar } from "lucide-react";
+import { Check, ArrowLeft } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 
 export function ProductDetailPage() {
@@ -76,54 +76,22 @@ export function ProductDetailPage() {
 
             {/* Pricing */}
             <div className="mb-8">
-              <h3 className="text-2xl mb-4">Pricing Options</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="text-sm text-gray-600 mb-1">Purchase</div>
-                    <div className="text-3xl mb-2">${product.price.toLocaleString()}</div>
-                    <Link to="/sales">
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button className="w-full group">
-                          <ShoppingCart className="mr-2 h-4 w-4" />
-                          Buy Now
-                        </Button>
-                      </motion.div>
-                    </Link>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardContent className="pt-6">
-                    <div className="text-sm text-gray-600 mb-1">Rental from</div>
-                    <div className="text-3xl mb-2">${product.rentalPrice.daily}/day</div>
-                    <Link to="/rental">
-                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                        <Button variant="outline" className="w-full group">
-                          <Calendar className="mr-2 h-4 w-4" />
-                          Rent Now
-                        </Button>
-                      </motion.div>
-                    </Link>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <div className="text-sm mb-2">Rental Rates:</div>
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-xl">${product.rentalPrice.daily}</div>
-                    <div className="text-sm text-gray-600">Daily</div>
-                  </div>
-                  <div>
-                    <div className="text-xl">${product.rentalPrice.weekly}</div>
-                    <div className="text-sm text-gray-600">Weekly</div>
-                  </div>
-                  <div>
-                    <div className="text-xl">${product.rentalPrice.monthly}</div>
-                    <div className="text-sm text-gray-600">Monthly</div>
-                  </div>
+              <div className="p-6 bg-blue-50 rounded-lg">
+                <h3 className="text-2xl mb-2">Pricing available on request</h3>
+                <p className="text-gray-700 mb-4">
+                  Contact our team to buy or rent this equipment. We’ll tailor a quote to your project.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  <Link to="/sales">
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button className="w-full group">Contact Sales</Button>
+                    </motion.div>
+                  </Link>
+                  <Link to="/rental">
+                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                      <Button variant="outline" className="w-full group">Rental Inquiry</Button>
+                    </motion.div>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -228,7 +196,7 @@ export function ProductDetailPage() {
                       <CardContent className="pt-4">
                         <h4 className="text-xl mb-2">{item.name}</h4>
                         <p className="text-gray-600 mb-2">{item.shortDescription}</p>
-                        <div className="text-lg">From ${item.rentalPrice.daily}/day</div>
+                        <div className="text-sm text-blue-600">View details →</div>
                       </CardContent>
                     </Card>
                   </Link>

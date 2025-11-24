@@ -40,7 +40,7 @@ export function EquipmentPage() {
           >
             <h1 className="text-5xl md:text-6xl mb-6">Our Equipment</h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Discover our comprehensive range of 16 premium poolbiking models
+              Browse 10 Poolbiking bikes, platforms, and accessories built for aquatic fitness and rehab
             </p>
           </motion.div>
         </div>
@@ -148,22 +148,15 @@ export function EquipmentPage() {
                         <CardDescription>{item.shortDescription}</CardDescription>
                       </CardHeader>
                       <CardContent>
-                        <div className="flex justify-between items-center mb-4">
-                          <div>
-                            <div className="text-sm text-gray-600">Starting at</div>
-                            <div className="text-2xl">${item.rentalPrice.daily}/day</div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-sm text-gray-600">Purchase</div>
-                            <div className="text-2xl">${item.price.toLocaleString()}</div>
-                          </div>
+                        <div className="text-sm text-gray-600 mb-4">
+                          Pricing available on request for purchase or rental.
                         </div>
                         <motion.div
                           whileHover={{ x: 5 }}
                           className="text-blue-600 flex items-center gap-2"
                         >
                           View Details
-                          <span>→</span>
+                          <span>&rarr;</span>
                         </motion.div>
                       </CardContent>
                     </Card>
