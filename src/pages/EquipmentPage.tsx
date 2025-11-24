@@ -116,8 +116,8 @@ export function EquipmentPage() {
                   layout
                 >
                   <Link to={`/equipment/${item.id}`}>
-                    <Card className="h-full overflow-hidden hover:shadow-2xl transition-shadow group">
-                      <div className="relative aspect-[4/3] overflow-hidden bg-white flex items-center justify-center">
+                    <Card className="h-full overflow-hidden hover:shadow-2xl transition-shadow group flex flex-col">
+                      <div className="relative h-64 overflow-hidden bg-white flex items-center justify-center">
                         <ImageWithFallback
                           src={item.image}
                           alt={item.name}
@@ -136,13 +136,13 @@ export function EquipmentPage() {
                           </motion.div>
                         )}
                       </div>
-                      <CardHeader>
+                      <CardHeader className="flex-1 pb-2">
                         <CardTitle className="group-hover:text-blue-600 transition">
                           {item.name}
                         </CardTitle>
                         <CardDescription>{item.shortDescription}</CardDescription>
                       </CardHeader>
-                      <CardContent>
+                      <CardContent className="pt-0">
                         <div className="text-sm text-gray-600 mb-4">
                           Pricing available on request for purchase or rental.
                         </div>
