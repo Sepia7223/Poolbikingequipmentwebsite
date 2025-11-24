@@ -117,7 +117,7 @@ export function EquipmentPage() {
                 >
                   <Link to={`/equipment/${item.id}`}>
                     <Card className="h-full overflow-hidden hover:shadow-2xl transition-shadow group">
-                      <div className="h-64 overflow-hidden relative">
+                      <div className="h-64 overflow-hidden relative bg-white flex items-center justify-center">
                         <motion.div
                           whileHover={{ scale: 1.1 }}
                           transition={{ duration: 0.4 }}
@@ -125,7 +125,7 @@ export function EquipmentPage() {
                           <ImageWithFallback
                             src={item.image}
                             alt={item.name}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full object-contain p-4"
                           />
                         </motion.div>
                         <div className="absolute top-4 right-4">
