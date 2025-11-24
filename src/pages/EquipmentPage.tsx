@@ -22,6 +22,11 @@ export function EquipmentPage() {
     return matchesCategory && matchesSearch;
   });
 
+  const getBoxHeight = () => {
+    const baseHeightRem = 16; // matches h-64
+    return `${baseHeightRem * 1.1}rem`; // +10%
+  };
+
   const getRowHeight = (index: number) => {
     const baseHeightRem = 16; // matches h-64
     const rowMultipliers = [1.15, 1.1, 1.05, 1.2];
@@ -127,7 +132,7 @@ export function EquipmentPage() {
                     <Card className="h-full overflow-hidden hover:shadow-2xl transition-shadow group flex flex-col">
                       <div
                         className="relative h-64 overflow-hidden bg-white flex items-center justify-center"
-                        style={{ height: getRowHeight(index) }}
+                        style={{ height: getBoxHeight() }}
                       >
                         <ImageWithFallback
                           src={item.image}
@@ -138,13 +143,9 @@ export function EquipmentPage() {
                           <Badge className="bg-blue-600">{item.category}</Badge>
                         </div>
                         {item.inStock && (
-                          <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileHover={{ opacity: 1, x: 0 }}
-                            className="absolute top-4 left-4"
-                          >
+                          <div className="absolute top-4 left-4 opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">
                             <Badge className="bg-green-600">In Stock</Badge>
-                          </motion.div>
+                          </div>
                         )}
                       </div>
                       <CardHeader className="flex-1 pb-2">
