@@ -84,7 +84,7 @@ export function ProductDetailPage() {
                     src={getWarrantyLogo(product.warrantyYears)}
                     alt={`${product.warrantyYears}-year warranty`}
                     className="object-contain select-none pointer-events-none"
-                    style={{ height: "7rem", width: "7rem" }}
+                    style={{ height: "6.5rem", width: "6.5rem" }}
                   />
                 </div>
               )}
@@ -228,7 +228,7 @@ export function ProductDetailPage() {
                               src={getWarrantyLogo(item.warrantyYears)}
                               alt={`${item.warrantyYears}-year warranty`}
                               className="object-contain select-none pointer-events-none"
-                              style={{ height: "6rem", width: "6rem" }}
+                              style={{ height: "4.5rem", width: "4.5rem" }}
                             />
                           </div>
                         )}
