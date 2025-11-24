@@ -9,10 +9,10 @@ import fitnessImage from "../content/Marketing/IMG_3053.JPG";
 import hotelsImage from "../content/Marketing/IMG_3055.JPG";
 import rehabImage from "../content/Marketing/IMG_3056retocado.jpg";
 import ceLogo from "../content/Logo's/CE logo.jpg";
-import progressiveLogo from "../content/Logo's/full_progressive_resistance.jpg";
-import geometryLogo from "../content/Logo's/grafic_res_prog_trassat_en.png";
-import coreLogo from "../content/Logo's/logo_core_polbiking - copia.JPG";
-import warranty7 from "../content/Waranty Logo/garantia-7_en.svg";
+import pedalLogo from "../content/Logo's/segell_pedal_230_en.png";
+import proEquipLogo from "../content/Logo's/poolbiking_professional_equipment.svg";
+import geometryLogo from "../content/Logo's/poolbiking_perfect_geometry.png";
+import ultraStrongLogo from "../content/Logo's/ultra_strong.svg";
 
 export function HomePage() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -36,12 +36,12 @@ export function HomePage() {
   ];
 
   const videos = [
-    { title: "Poolmat Activity", embed: "https://www.youtube.com/embed/6cVIo8i6w4g" },
-    { title: "MasterClass Benidorm", embed: "https://www.youtube.com/embed/9VgY3NQ0qS0" },
-    { title: "Spa Gym Corner", embed: "https://www.youtube.com/embed/kPX8mM2mtrE" }
+    { title: "Poolmat Activity", embed: "https://www.youtube.com/embed/UF8uR6Z6KLc" },
+    { title: "MasterClass", embed: "https://www.youtube.com/embed/J---aiyznGQ" },
+    { title: "Spa Gym Corner", embed: "https://www.youtube.com/embed/tAGnKpE4NCI" }
   ];
 
-  const logoStrip = [ceLogo, progressiveLogo, geometryLogo, coreLogo, warranty7];
+  const logoStrip = [ceLogo, pedalLogo, proEquipLogo, geometryLogo, ultraStrongLogo];
 
   // Water bubble component
   const WaterBubble = ({ delay = 0, duration = 4, x = 0 }: { delay?: number; duration?: number; x?: number }) => (
@@ -247,13 +247,13 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="relative overflow-hidden rounded-xl shadow-xl"
+                className="relative overflow-hidden rounded-xl shadow-2xl"
               >
-                <ImageWithFallback src={pillar.image} alt={pillar.title} className="w-full h-80 object-cover" />
-                <div className="absolute inset-0 bg-black/35" />
-                <div className="absolute inset-x-0 bottom-0 p-6 bg-white/75 backdrop-blur-sm">
-                  <h3 className="text-2xl font-semibold mb-2 text-gray-900">{pillar.title}</h3>
-                  <p className="text-gray-700 text-sm leading-relaxed">{pillar.body}</p>
+                <ImageWithFallback src={pillar.image} alt={pillar.title} className="w-full h-96 object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6 bg-white/80 backdrop-blur">
+                  <h3 className="text-2xl font-semibold mb-2 text-gray-900 uppercase tracking-wide">{pillar.title}</h3>
+                  <p className="text-gray-800 text-sm leading-relaxed">{pillar.body}</p>
                 </div>
               </motion.div>
             ))}
@@ -276,7 +276,7 @@ export function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="overflow-hidden rounded-xl shadow-lg bg-black"
+                className="overflow-hidden rounded-xl shadow-xl bg-black border border-gray-200"
               >
                 <iframe
                   title={video.title}
@@ -294,7 +294,7 @@ export function HomePage() {
       {/* Logos Strip */}
       <section className="py-12 bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 items-center justify-items-center">
+          <div className="flex flex-wrap items-center justify-center gap-6">
             {logoStrip.map((logoSrc, idx) => (
               <motion.div
                 key={idx}
@@ -302,7 +302,7 @@ export function HomePage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="p-3 bg-white rounded-lg shadow-sm"
+                className="p-3 bg-white rounded-lg shadow-sm border border-gray-200"
               >
                 <img src={logoSrc} alt="Poolbiking credential" className="h-16 w-auto object-contain" />
               </motion.div>
