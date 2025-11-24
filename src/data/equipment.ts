@@ -44,6 +44,7 @@ export interface Equipment {
     resistanceLevels: string;
   };
   inStock: boolean;
+  warrantyYears?: number;
 }
 
 export const equipmentData: Equipment[] = [
@@ -68,7 +69,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Designed for public-pool riders (1.50-2.00 m)",
       resistanceLevels: "Progressive pedal drag"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 4
   },
   {
     id: "poolbiking-one-2-0",
@@ -91,7 +93,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Rider height 1.50-2.00 m",
       resistanceLevels: "Progressive pedal drag"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 4
   },
   {
     id: "poolbiking-one-plus",
@@ -114,7 +117,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Rider height 1.50-2.00 m",
       resistanceLevels: "Progressive pedal drag"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 4
   },
   {
     id: "poolbiking-evolution",
@@ -137,7 +141,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Reinforced for heavy-duty users",
       resistanceLevels: "Progressive pedal drag"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 7
   },
   {
     id: "poolbiking-ibiza",
@@ -160,7 +165,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Beach/sea use; rider heights 1.50-2.00 m",
       resistanceLevels: "Progressive pedal drag"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 4
   },
   {
     id: "poolbiking-core",
@@ -183,7 +189,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Upright/balance training (height-flexible)",
       resistanceLevels: "Progressive pedal drag"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 2
   },
   {
     id: "poolmat-set",
@@ -294,7 +301,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Rider height flexible via dual saddle travel",
       resistanceLevels: "Exponential progressive resistance via HIT pedals"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 2
   },
   {
     id: "poolbiking-orbital",
@@ -317,7 +325,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Optimized for varied rider heights",
       resistanceLevels: "Exponential progressive resistance with plate drag"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 2
   },
   {
     id: "poolbiking-paris",
@@ -340,7 +349,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Fits a wide rider height range",
       resistanceLevels: "Blade-enhanced progressive resistance"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 7
   },
   {
     id: "poolbiking-tenerife",
@@ -363,7 +373,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Designed for varied rider heights",
       resistanceLevels: "Exponential progressive resistance"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 4
   },
   {
     id: "poolbiking-veracruz",
@@ -386,7 +397,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Built for intensive public-pool use",
       resistanceLevels: "Exponential progressive resistance"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 7
   },
   {
     id: "poolfit-basic",
@@ -409,7 +421,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Supports multiple users (strength station)",
       resistanceLevels: "Bodyweight and band resistance (user-defined)"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 2
   },
   {
     id: "poolfit-premium",
@@ -432,7 +445,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Supports multiple users (strength station)",
       resistanceLevels: "Bodyweight and band resistance (user-defined)"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 2
   },
   {
     id: "pooltrekking-acapulco",
@@ -455,7 +469,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Supports typical fitness-center users",
       resistanceLevels: "Self-paced belt resistance in water"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 4
   },
   {
     id: "pooltrekking-medical",
@@ -478,7 +493,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Supports rehab and fitness users",
       resistanceLevels: "Self-paced belt resistance in water"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 4
   },
   {
     id: "pooltrekking-miami",
@@ -501,7 +517,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Supports typical pool users",
       resistanceLevels: "Self-paced belt resistance in water"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 4
   },
   {
     id: "meta-400",
@@ -524,7 +541,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Load capacity 120-150 kg",
       resistanceLevels: "Motorized lift speed <0.1 m/s"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 5
   },
   {
     id: "meta-pk",
@@ -547,7 +565,8 @@ export const equipmentData: Equipment[] = [
       maxUserWeight: "Load capacity up to 150 kg",
       resistanceLevels: "Hydraulic lift motion (pressure-dependent)"
     },
-    inStock: true
+    inStock: true,
+    warrantyYears: 3
   },
   {
     id: "pool-step",

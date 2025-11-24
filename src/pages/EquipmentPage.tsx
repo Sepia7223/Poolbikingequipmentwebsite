@@ -9,6 +9,11 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { Badge } from "../components/ui/badge";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { Input } from "../components/ui/input";
+import warranty2Logo from "../content/Waranty Logo/garantia-2_en.svg";
+import warranty3Logo from "../content/Waranty Logo/garantia-3_en.svg";
+import warranty4Logo from "../content/Waranty Logo/garantia-4_en.svg";
+import warranty5Logo from "../content/Waranty Logo/garantia-5_en.svg";
+import warranty7Logo from "../content/Waranty Logo/garantia-7_en.svg";
 
 export function EquipmentPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -27,12 +32,21 @@ export function EquipmentPage() {
     return `${baseHeightRem * 1.35}rem`; // +35%
   };
 
-  const getRowHeight = (index: number) => {
-    const baseHeightRem = 16; // matches h-64
-    const rowMultipliers = [1.15, 1.1, 1.05, 1.2];
-    const rowIndex = Math.floor(index / 3); // assumes 3 columns on the test view
-    const multiplier = rowMultipliers[rowIndex] ?? 1;
-    return `${baseHeightRem * multiplier}rem`;
+  const getWarrantyLogo = (years?: number) => {
+    switch (years) {
+      case 2:
+        return warranty2Logo;
+      case 3:
+        return warranty3Logo;
+      case 4:
+        return warranty4Logo;
+      case 5:
+        return warranty5Logo;
+      case 7:
+        return warranty7Logo;
+      default:
+        return undefined;
+    }
   };
 
   return (
@@ -139,6 +153,13 @@ export function EquipmentPage() {
                           alt={item.name}
                           className="max-h-full max-w-full object-contain p-4"
                         />
+                        {item.warrantyYears && getWarrantyLogo(item.warrantyYears) && (
+                          <img
+                            src={getWarrantyLogo(item.warrantyYears)}
+                            alt={`${item.warrantyYears}-year warranty`}
+                            className="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 object-contain select-none pointer-events-none"
+                          />
+                        )}
                         <div className="absolute top-4 right-4">
                           <Badge className="bg-blue-600">{item.category}</Badge>
                         </div>
