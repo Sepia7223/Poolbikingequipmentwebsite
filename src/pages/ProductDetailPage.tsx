@@ -50,11 +50,11 @@ export function ProductDetailPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="relative aspect-square rounded-lg overflow-hidden shadow-2xl bg-white flex items-center justify-center">
+            <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-2xl bg-white flex items-center justify-center">
               <ImageWithFallback
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-contain p-8"
+                className="w-full h-full object-contain p-6"
               />
               <div className="absolute top-4 right-4 flex gap-2">
                 <Badge className="bg-blue-600">{product.category}</Badge>
@@ -185,13 +185,11 @@ export function ProductDetailPage() {
                   <Link to={`/equipment/${item.id}`}>
                     <Card className="overflow-hidden hover:shadow-xl transition">
                       <div className="h-48 overflow-hidden bg-white flex items-center justify-center">
-                        <motion.div whileHover={{ scale: 1.1 }} transition={{ duration: 0.4 }}>
-                          <ImageWithFallback
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-contain p-3"
-                          />
-                        </motion.div>
+                        <ImageWithFallback
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-contain p-3"
+                        />
                       </div>
                       <CardContent className="pt-4">
                         <h4 className="text-xl mb-2">{item.name}</h4>

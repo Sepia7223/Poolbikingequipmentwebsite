@@ -117,17 +117,12 @@ export function EquipmentPage() {
                 >
                   <Link to={`/equipment/${item.id}`}>
                     <Card className="h-full overflow-hidden hover:shadow-2xl transition-shadow group">
-                      <div className="h-64 overflow-hidden relative bg-white flex items-center justify-center">
-                        <motion.div
-                          whileHover={{ scale: 1.1 }}
-                          transition={{ duration: 0.4 }}
-                        >
-                          <ImageWithFallback
-                            src={item.image}
-                            alt={item.name}
-                            className="w-full h-full object-contain p-4"
-                          />
-                        </motion.div>
+                      <div className="relative aspect-[4/3] overflow-hidden bg-white flex items-center justify-center">
+                        <ImageWithFallback
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-contain p-4"
+                        />
                         <div className="absolute top-4 right-4">
                           <Badge className="bg-blue-600">{item.category}</Badge>
                         </div>
