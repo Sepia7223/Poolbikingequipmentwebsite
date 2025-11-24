@@ -7,6 +7,8 @@ import { Label } from "../components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
 import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
 import { toast } from "sonner@2.0.3";
+import { ImageWithFallback } from "../components/figma/ImageWithFallback";
+import heroBg from "../content/Marketing/formació Melia 076 poolbiking.jpg";
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
@@ -80,9 +82,13 @@ export function ContactPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="bg-gradient-to-r from-blue-900 to-cyan-900 text-white py-20"
+        className="relative text-white py-20 overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="absolute inset-0">
+          <ImageWithFallback src={heroBg} alt="Contact Poolbiking" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/65 to-cyan-900/45" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
