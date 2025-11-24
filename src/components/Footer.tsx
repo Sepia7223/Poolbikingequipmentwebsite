@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { Waves, Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import logo from "../content/Logo's/Poolbiking CW.png";
 
 export function Footer() {
   return (
@@ -9,10 +10,8 @@ export function Footer() {
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <motion.div whileHover={{ rotate: 360 }} transition={{ duration: 0.6 }}>
-                <Waves className="h-8 w-8 text-blue-500" />
-              </motion.div>
-              <span className="text-xl text-white">AquaCycle Pro</span>
+              <img src={logo} alt="Poolbiking Caribbean" className="h-9 w-auto" />
+              <span className="text-xl text-white">Poolbiking Caribbean</span>
             </Link>
             <p className="text-gray-400 mb-4">
               Leading provider of premium poolbiking equipment for fitness centers, rehabilitation facilities, and private pools.
@@ -87,7 +86,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-          <p>&copy; 2025 AquaCycle Pro. All rights reserved.</p>
+          <p>&copy; 2025 Poolbiking Caribbean. All rights reserved.</p>
         </div>
       </div>
     </footer>

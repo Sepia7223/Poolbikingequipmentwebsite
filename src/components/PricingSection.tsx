@@ -45,7 +45,7 @@ export function PricingSection() {
 
   const purchasePlans = [
     {
-      name: "AquaCycle Classic",
+      name: "Poolbiking Caribbean Classic",
       price: "$2,500",
       features: [
         "2-year warranty",
@@ -55,7 +55,7 @@ export function PricingSection() {
       ]
     },
     {
-      name: "AquaCycle Pro",
+      name: "Poolbiking Caribbean Pro",
       price: "$4,200",
       features: [
         "3-year warranty",
@@ -67,7 +67,7 @@ export function PricingSection() {
       popular: true
     },
     {
-      name: "AquaCycle Rehab",
+      name: "Poolbiking Caribbean Rehab",
       price: "$3,500",
       features: [
         "3-year warranty",

@@ -88,7 +88,7 @@ export function AboutPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-5xl md:text-6xl mb-4"
           >
-            About AquaCycle Pro
+            About Poolbiking Caribbean
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 30 }}
@@ -113,7 +113,7 @@ export function AboutPage() {
               <h2 className="text-4xl md:text-5xl mb-6">Who We Are</h2>
               <div className="space-y-4 text-lg text-gray-700">
                 <p>
-                  AquaCycle Pro is the world's leading manufacturer and supplier of premium poolbiking equipment. Since 2010, we've been passionate about making fitness accessible and enjoyable through innovative aquatic exercise solutions.
+                  Poolbiking Caribbean is the world's leading manufacturer and supplier of premium poolbiking equipment. Since 2010, we've been passionate about making fitness accessible and enjoyable through innovative aquatic exercise solutions.
                 </p>
                 <p>
                   Our team of engineers, fitness experts, and aquatic specialists work together to create equipment that combines cutting-edge technology with proven biomechanics, ensuring every workout is safe, effective, and enjoyable.

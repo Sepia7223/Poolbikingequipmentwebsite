@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Waves } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { motion, AnimatePresence } from "motion/react";
+import logo from "../content/Logo's/Poolbiking CW.png";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +13,7 @@ export function Navigation() {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -27,19 +26,15 @@ export function Navigation() {
 
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
+    { name: "Products", path: "/equipment" },
     { name: "Gallery", path: "/gallery" },
-    { name: "Contact", path: "/contact" }
+    { name: "About", path: "/about" }
   ];
 
   const serviceLinks = [
-    { name: "Browse Equipment", path: "/equipment" },
-    { name: "Equipment Rental", path: "/rental" },
-    { name: "Equipment Sales", path: "/sales" },
-    { name: "Maintenance", path: "/services/maintenance" },
-    { name: "Training Programs", path: "/services/training" },
-    { name: "Custom Solutions", path: "/services/custom-solutions" },
-    { name: "Support", path: "/services/support" }
+    { name: "Hotels", path: "/contact#hotels" },
+    { name: "Rehabilitation", path: "/contact#rehabilitation" },
+    { name: "Fitness", path: "/contact#fitness" }
   ];
 
   return (
@@ -54,26 +49,19 @@ export function Navigation() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-2 group">
-            <motion.div
-              whileHover={{ rotate: 360 }}
-              transition={{ duration: 0.6 }}
-            >
-              <Waves className="h-8 w-8 text-blue-600" />
-            </motion.div>
-            <span className="text-xl group-hover:text-blue-600 transition">AquaCycle Pro</span>
+            <img src={logo} alt="Poolbiking Caribbean" className="h-10 w-auto" />
+            <span className="text-xl group-hover:text-blue-600 transition">Poolbiking Caribbean</span>
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="relative group"
-              >
-                <span className={`transition ${
-                  location.pathname === link.path ? "text-blue-600" : "hover:text-blue-600"
-                }`}>
+              <Link key={link.path} to={link.path} className="relative group">
+                <span
+                  className={`transition ${
+                    location.pathname === link.path ? "text-blue-600" : "hover:text-blue-600"
+                  }`}
+                >
                   {link.name}
                 </span>
                 {location.pathname === link.path && (
@@ -85,19 +73,23 @@ export function Navigation() {
                 )}
               </Link>
             ))}
-            
+
             {/* Services Dropdown */}
-            <div 
+            <div
               className="relative"
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
-              <button className={`transition ${
-                serviceLinks.some(s => location.pathname === s.path) ? "text-blue-600" : "hover:text-blue-600"
-              }`}>
-                Services ▾
+              <button
+                className={`transition ${
+                  serviceLinks.some((s) => location.hash && location.hash.includes(s.path.split("#")[1]))
+                    ? "text-blue-600"
+                    : "hover:text-blue-600"
+                }`}
+              >
+                Services
               </button>
-              
+
               <AnimatePresence>
                 {servicesOpen && (
                   <motion.div
@@ -132,23 +124,15 @@ export function Navigation() {
             <Link to="/contact">
               <Button className="group">
                 Get Started
-                <motion.span
-                  className="inline-block ml-1"
-                  initial={{ x: 0 }}
-                  whileHover={{ x: 5 }}
-                >
-                  →
+                <motion.span className="inline-block ml-1" initial={{ x: 0 }} whileHover={{ x: 5 }}>
+                  ➜
                 </motion.span>
               </Button>
             </Link>
           </div>
 
           {/* Mobile menu button */}
-          <motion.button
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2"
-          >
+          <motion.button whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2">
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </motion.button>
         </div>
@@ -174,35 +158,26 @@ export function Navigation() {
                     <Link
                       to={link.path}
                       className={`block px-4 py-2 rounded transition ${
-                        location.pathname === link.path
-                          ? "bg-blue-50 text-blue-600"
-                          : "hover:bg-gray-100"
+                        location.pathname === link.path ? "bg-blue-50 text-blue-600" : "hover:bg-gray-100"
                       }`}
                     >
                       {link.name}
                     </Link>
                   </motion.div>
                 ))}
-                
+
                 {/* Mobile Services Dropdown */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navLinks.length * 0.1 }}
-                >
+                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: navLinks.length * 0.1 }}>
                   <button
                     onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
                     className="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition flex items-center justify-between"
                   >
                     <span>Services</span>
-                    <motion.span
-                      animate={{ rotate: mobileServicesOpen ? 180 : 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      ▾
+                    <motion.span animate={{ rotate: mobileServicesOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
+                      ➜
                     </motion.span>
                   </button>
-                  
+
                   <AnimatePresence>
                     {mobileServicesOpen && (
                       <motion.div
@@ -221,11 +196,7 @@ export function Navigation() {
                           >
                             <Link
                               to={service.path}
-                              className={`block pl-8 pr-4 py-2 text-sm rounded transition ${
-                                location.pathname === service.path
-                                  ? "bg-blue-50 text-blue-600"
-                                  : "hover:bg-gray-100"
-                              }`}
+                              className="block pl-8 pr-4 py-2 text-sm rounded transition hover:bg-gray-100"
                             >
                               {service.name}
                             </Link>

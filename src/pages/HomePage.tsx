@@ -4,6 +4,7 @@ import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import { motion } from "motion/react";
 import { useInView } from "react-intersection-observer";
 import { Droplets, Heart, Users, Award, ArrowRight, Sparkles } from "lucide-react";
+import heroImage from "../content/Marketing/IMG_3066retocado.jpg";
 
 export function HomePage() {
   const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
@@ -70,11 +71,7 @@ export function HomePage() {
           transition={{ duration: 1.5 }}
           className="absolute inset-0 z-0"
         >
-          <ImageWithFallback
-            src="https://images.unsplash.com/photo-1633430480411-9b0e11d8202e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080"
-            alt="Pool biking"
-            className="w-full h-full object-cover"
-          />
+          <ImageWithFallback src={heroImage} alt="Pool biking" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-cyan-900/70" />
         </motion.div>
 
@@ -201,7 +198,7 @@ export function HomePage() {
             </Link>
             <Link to="/rental">
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700">
                   Rental Options
                 </Button>
               </motion.div>
@@ -320,7 +317,7 @@ export function HomePage() {
               </Link>
               <Link to="/contact">
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                  <Button size="lg" className="bg-blue-900 text-white hover:bg-blue-800">
                     Contact Us
                   </Button>
                 </motion.div>

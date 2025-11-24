@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 export function EquipmentSection() {
   const equipment = [
     {
-      name: "AquaCycle Classic",
+      name: "Poolbiking Caribbean Classic",
       description: "Our standard poolbike, perfect for group classes and personal training",
       image: "https://images.unsplash.com/photo-1614954553401-811f9df3f9be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzd2ltbWluZyUyMHBvb2wlMjBmaXRuZXNzfGVufDF8fHx8MTc2MzMxNzM2N3ww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       features: [
@@ -17,7 +17,7 @@ export function EquipmentSection() {
       ]
     },
     {
-      name: "AquaCycle Pro",
+      name: "Poolbiking Caribbean Pro",
       description: "Premium model with advanced features for serious athletes",
       image: "https://images.unsplash.com/photo-1760863329482-aa37dba2fd9f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXRlciUyMGN5Y2xpbmclMjBlcXVpcG1lbnR8ZW58MXx8fHwxNzYzMzE3MzY4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       features: [
@@ -28,7 +28,7 @@ export function EquipmentSection() {
       ]
     },
     {
-      name: "AquaCycle Rehab",
+      name: "Poolbiking Caribbean Rehab",
       description: "Therapeutic model designed for rehabilitation and recovery",
       image: "https://images.unsplash.com/photo-1633430480411-9b0e11d8202e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcXVhJTIwYmlrZSUyMHBvb2x8ZW58MXx8fHwxNzYzMzE3MzY3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
       features: [
