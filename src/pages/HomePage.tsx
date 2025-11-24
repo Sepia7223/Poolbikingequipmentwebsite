@@ -72,7 +72,7 @@ export function HomePage() {
           className="absolute inset-0 z-0"
         >
           <ImageWithFallback src={heroImage} alt="Pool biking" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/90 to-cyan-900/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/75 to-cyan-900/55" />
         </motion.div>
 
         {/* Animated water bubbles */}
