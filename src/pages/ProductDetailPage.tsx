@@ -79,12 +79,14 @@ export function ProductDetailPage() {
                 className="max-h-full max-w-full object-contain p-6"
               />
               {product.warrantyYears && getWarrantyLogo(product.warrantyYears) && (
-                <img
-                  src={getWarrantyLogo(product.warrantyYears)}
-                  alt={`${product.warrantyYears}-year warranty`}
-                  className="absolute left-6 top-1/2 -translate-y-1/2 object-contain select-none pointer-events-none"
-                  style={{ height: "3.675rem", width: "3.675rem" }} // 5% larger than previous 3.5rem
-                />
+                <div className="absolute inset-y-0 left-4 md:left-6 flex items-center">
+                  <img
+                    src={getWarrantyLogo(product.warrantyYears)}
+                    alt={`${product.warrantyYears}-year warranty`}
+                    className="object-contain select-none pointer-events-none"
+                    style={{ height: "3.675rem", width: "3.675rem" }} // 5% larger than previous 3.5rem
+                  />
+                </div>
               )}
               <div className="absolute top-4 right-4 flex gap-2">
                 <Badge className="bg-blue-600">{product.category}</Badge>
@@ -221,12 +223,14 @@ export function ProductDetailPage() {
                           className="max-h-full max-w-full object-contain p-3"
                         />
                         {item.warrantyYears && getWarrantyLogo(item.warrantyYears) && (
-                          <img
-                            src={getWarrantyLogo(item.warrantyYears)}
-                            alt={`${item.warrantyYears}-year warranty`}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 object-contain select-none pointer-events-none"
-                            style={{ height: "3.15rem", width: "3.15rem" }} // 5% larger than previous 3rem
-                          />
+                          <div className="absolute inset-y-0 left-3 md:left-4 flex items-center">
+                            <img
+                              src={getWarrantyLogo(item.warrantyYears)}
+                              alt={`${item.warrantyYears}-year warranty`}
+                              className="object-contain select-none pointer-events-none"
+                              style={{ height: "3.15rem", width: "3.15rem" }} // 5% larger than previous 3rem
+                            />
+                          </div>
                         )}
                       </div>
                       <CardContent className="pt-4">
