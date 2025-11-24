@@ -24,7 +24,7 @@ export function EquipmentPage() {
 
   const getBoxHeight = () => {
     const baseHeightRem = 16; // matches h-64
-    return `${baseHeightRem * 1.3}rem`; // +30%
+    return `${baseHeightRem * 1.35}rem`; // +35%
   };
 
   const getRowHeight = (index: number) => {
