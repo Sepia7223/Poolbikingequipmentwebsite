@@ -1,222 +1,80 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { Button } from "./ui/button";
-import { motion, AnimatePresence } from "motion/react";
 import logo from "../content/Logo's/Poolbiking CW.png";
 
+const links = [
+  { label: "Products", to: "/equipment" },
+  { label: "Solutions", to: "/#solutions" },
+  { label: "Gallery", to: "/gallery" },
+  { label: "About", to: "/about" },
+];
+
 export function Navigation() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 18);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    setIsOpen(false);
-    setServicesOpen(false);
-    setMobileServicesOpen(false);
-  }, [location]);
+    setOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [location.pathname]);
 
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Products", path: "/equipment" },
-    { name: "Gallery", path: "/gallery" },
-    { name: "About", path: "/about" }
-  ];
-
-  const serviceLinks = [
-    { name: "Hotels", path: "/contact#hotels" },
-    { name: "Rehabilitation", path: "/contact#rehabilitation" },
-    { name: "Fitness", path: "/contact#fitness" }
-  ];
+  const isHome = location.pathname === "/";
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-white/90 backdrop-blur-sm"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="flex items-center gap-2 group">
-            <img src={logo} alt="Poolbiking Caribbean" className="h-10 w-auto" />
-            <span className="text-xl group-hover:text-blue-600 transition">Poolbiking Caribbean</span>
-          </Link>
+    <nav className={`pb-nav ${!isHome ? "is-solid" : ""} ${scrolled ? "is-scrolled" : ""}`}>
+      <div className="pb-container pb-nav-inner">
+        <Link to="/" className="pb-brand" aria-label="Poolbiking Caribbean home">
+          <img src={logo} alt="Poolbiking Caribbean" />
+          <span className="pb-brand-copy">
+            <strong>Poolbiking Caribbean</strong>
+            <span>Professional aquatic fitness</span>
+          </span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <Link key={link.path} to={link.path} className="relative group">
-                <span
-                  className={`transition ${
-                    location.pathname === link.path ? "text-blue-600" : "hover:text-blue-600"
-                  }`}
-                >
-                  {link.name}
-                </span>
-                {location.pathname === link.path && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-blue-600"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </Link>
-            ))}
-
-            {/* Services Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
+        <div className="pb-nav-links">
+          {links.map((link) => (
+            <Link
+              key={link.label}
+              to={link.to}
+              className={location.pathname === link.to ? "is-active" : ""}
             >
-              <button
-                className={`transition ${
-                  serviceLinks.some((s) => location.hash && location.hash.includes(s.path.split("#")[1]))
-                    ? "text-blue-600"
-                    : "hover:text-blue-600"
-                }`}
-              >
-                Services
-              </button>
-
-              <AnimatePresence>
-                {servicesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-2xl border border-gray-100 py-2 z-50"
-                  >
-                    {serviceLinks.map((service, index) => (
-                      <motion.div
-                        key={service.path}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                      >
-                        <Link
-                          to={service.path}
-                          className={`block px-4 py-2 transition hover:bg-blue-50 ${
-                            location.pathname === service.path ? "text-blue-600 bg-blue-50" : "text-gray-700"
-                          }`}
-                        >
-                          {service.name}
-                        </Link>
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            <Link to="/contact">
-              <Button className="group">
-                Get Started
-                <motion.span className="inline-block ml-1" initial={{ x: 0 }} whileHover={{ x: 5 }}>
-                  ➜
-                </motion.span>
-              </Button>
+              {link.label}
             </Link>
-          </div>
-
-          {/* Mobile menu button */}
-          <motion.button whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(!isOpen)} className="md:hidden p-2">
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </motion.button>
+          ))}
+          <Link to="/contact" className="pb-button pb-button-aqua">
+            Request a quote
+          </Link>
         </div>
 
-        {/* Mobile Navigation */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="py-4 space-y-2">
-                {navLinks.map((link, index) => (
-                  <motion.div
-                    key={link.path}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Link
-                      to={link.path}
-                      className={`block px-4 py-2 rounded transition ${
-                        location.pathname === link.path ? "bg-blue-50 text-blue-600" : "hover:bg-gray-100"
-                      }`}
-                    >
-                      {link.name}
-                    </Link>
-                  </motion.div>
-                ))}
-
-                {/* Mobile Services Dropdown */}
-                <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: navLinks.length * 0.1 }}>
-                  <button
-                    onClick={() => setMobileServicesOpen(!mobileServicesOpen)}
-                    className="w-full text-left px-4 py-2 rounded hover:bg-gray-100 transition flex items-center justify-between"
-                  >
-                    <span>Services</span>
-                    <motion.span animate={{ rotate: mobileServicesOpen ? 180 : 0 }} transition={{ duration: 0.3 }}>
-                      ➜
-                    </motion.span>
-                  </button>
-
-                  <AnimatePresence>
-                    {mobileServicesOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="overflow-hidden"
-                      >
-                        {serviceLinks.map((service, idx) => (
-                          <motion.div
-                            key={service.path}
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: idx * 0.05 }}
-                          >
-                            <Link
-                              to={service.path}
-                              className="block pl-8 pr-4 py-2 text-sm rounded transition hover:bg-gray-100"
-                            >
-                              {service.name}
-                            </Link>
-                          </motion.div>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-
-                <div className="px-4 pt-2">
-                  <Link to="/contact">
-                    <Button className="w-full">Get Started</Button>
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <button
+          type="button"
+          className="pb-nav-toggle"
+          aria-label={open ? "Close navigation" : "Open navigation"}
+          onClick={() => setOpen((value) => !value)}
+        >
+          {open ? <X size={25} /> : <Menu size={25} />}
+        </button>
       </div>
-    </motion.nav>
+
+      {open && (
+        <div className="pb-mobile-nav">
+          {links.map((link) => (
+            <Link key={link.label} to={link.to}>{link.label}</Link>
+          ))}
+          <Link to="/contact" className="pb-button pb-button-aqua pb-button-full">
+            Request a quote
+          </Link>
+        </div>
+      )}
+    </nav>
   );
 }
