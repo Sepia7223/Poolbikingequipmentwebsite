@@ -1,321 +1,193 @@
 import { Link } from "react-router-dom";
-import { Button } from "../components/ui/button";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { motion } from "motion/react";
-import { useInView } from "react-intersection-observer";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Check, ShieldCheck, Waves, Wrench } from "lucide-react";
+import { equipmentData } from "../data/equipment";
 import heroImage from "../content/Marketing/IMG_3066retocado.jpg";
 import fitnessImage from "../content/Marketing/IMG_3053.JPG";
 import hotelsImage from "../content/Marketing/IMG_3055.JPG";
 import rehabImage from "../content/Marketing/IMG_3056retocado.jpg";
-import ceLogo from "../content/Logo's/sello_fabricacion_eng.tif";
-import pedalLogo from "../content/Logo's/segell_pedal_230_en.png";
-import proEquipLogo from "../content/Logo's/poolbiking_professional_equipment.svg";
-import warrantyGroupLogo from "../content/Logo's/garantia_en_grup.svg";
-import geometryLogo from "../content/Logo's/poolbiking_perfect_geometry.png";
-import ultraStrongLogo from "../content/Logo's/ultra_strong.svg";
+import trainingImage from "../content/Marketing/formacio-melia-076-poolbiking.jpg";
+
+const solutions = [
+  {
+    title: "Hotels & Resorts",
+    text: "Turn the pool and spa into an experience guests remember, with professional equipment built for demanding hospitality environments.",
+    image: hotelsImage,
+  },
+  {
+    title: "Fitness",
+    text: "Add low-impact, high-resistance training to aquatic programs with equipment engineered for recurring professional use.",
+    image: fitnessImage,
+  },
+  {
+    title: "Rehabilitation",
+    text: "Use the support and resistance of water for controlled movement, conditioning and low-impact rehabilitation programs.",
+    image: rehabImage,
+  },
+];
 
 export function HomePage() {
-  const [heroRef, heroInView] = useInView({ triggerOnce: true, threshold: 0.1 });
-
-  const pillars = [
-    {
-      title: "Fitness",
-      body: "Poolbiking is shaking up aquabike with innovative, high-quality equipment engineered for results.",
-      image: fitnessImage
-    },
-    {
-      title: "Hotels",
-      body: "Resorts worldwide choose Poolbiking to deliver unforgettable fitness, sport, fun and health experiences.",
-      image: hotelsImage
-    },
-    {
-      title: "Rehabilitation",
-      body: "Weightless resistance makes aquatic rehab gentle and effective—developed with clinicians and technicians.",
-      image: rehabImage
-    }
-  ];
-
-  const videos = [
-    { title: "Poolmat Activity", embed: "https://www.youtube.com/embed/UF8uR6Z6KLc" },
-    { title: "MasterClass", embed: "https://www.youtube.com/embed/J---aiyznGQ" },
-    { title: "Spa Gym Corner", embed: "https://www.youtube.com/embed/tAGnKpE4NCI" }
-  ];
-
-  const logoStrip = [ceLogo, pedalLogo, proEquipLogo, warrantyGroupLogo, geometryLogo, ultraStrongLogo];
-
-  // Water bubble component
-  const WaterBubble = ({ delay = 0, duration = 4, x = 0 }: { delay?: number; duration?: number; x?: number }) => (
-    <motion.div
-      initial={{ y: 0, opacity: 0, scale: 0 }}
-      animate={{
-        y: -1000,
-        opacity: [0, 0.6, 0.8, 0.6, 0],
-        scale: [0, 1, 1.2, 1, 0.8],
-      }}
-      transition={{
-        duration,
-        delay,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      className="absolute bottom-0 w-3 h-3 bg-white/30 rounded-full blur-sm"
-      style={{ left: `${x}%` }}
-    />
-  );
+  const featured = equipmentData.filter((item) => item.category === "Bikes").slice(0, 4);
 
   return (
-    <div className="pt-16">
-      {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden">
-        <motion.div
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.5 }}
-          className="absolute inset-0 z-0"
-        >
-          <ImageWithFallback src={heroImage} alt="Pool biking" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/5 to-cyan-900/5" />
-        </motion.div>
-
-        {/* Animated water bubbles */}
-        {[...Array(20)].map((_, i) => (
-          <WaterBubble
-            key={i}
-            delay={i * 0.5}
-            duration={3 + Math.random() * 3}
-            x={Math.random() * 100}
-          />
-        ))}
-
-        {/* Water ripple effects */}
-        <motion.div
-          className="absolute inset-0 z-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.3 }}
-        >
-          {[1, 2, 3].map((i) => (
-            <motion.div
-              key={i}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-2 border-white/20 rounded-full"
-              initial={{ width: 0, height: 0, opacity: 0 }}
-              animate={{
-                width: [0, 800, 1200],
-                height: [0, 800, 1200],
-                opacity: [0, 0.5, 0],
-              }}
-              transition={{
-                duration: 6,
-                delay: i * 2,
-                repeat: Infinity,
-                ease: "easeOut",
-              }}
-            />
-          ))}
-        </motion.div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={heroInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6"
-            >
-              <Sparkles className="h-4 w-4" />
-              <span>Transform Your Fitness Journey</span>
-            </motion.div>
-          </motion.div>
-
-          {/* Animated title with water wave effect */}
-          <div className="mb-6 overflow-hidden">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl">
-              {["Premium", "Poolbiking", "Equipment"].map((word, wordIndex) => (
-                <motion.span
-                  key={wordIndex}
-                  className="inline-block mr-4"
-                  initial={{ opacity: 0, y: 100 }}
-                  animate={heroInView ? { 
-                    opacity: 1, 
-                    y: 0,
-                  } : {}}
-                  transition={{ 
-                    duration: 0.8, 
-                    delay: 0.6 + wordIndex * 0.2,
-                    type: "spring",
-                    stiffness: 100
-                  }}
-                >
-                  {word.split("").map((char, charIndex) => (
-                    <motion.span
-                      key={charIndex}
-                      className="inline-block"
-                      animate={{
-                        y: [0, -10, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        delay: wordIndex * 0.3 + charIndex * 0.1,
-                        repeat: Infinity,
-                        repeatDelay: 1,
-                        ease: "easeInOut",
-                      }}
-                      style={{
-                        textShadow: "0 0 20px rgba(96, 165, 250, 0.8), 0 0 40px rgba(34, 211, 238, 0.6)",
-                      }}
-                    >
-                      {char}
-                    </motion.span>
-                  ))}
-                </motion.span>
-              ))}
-            </h1>
-          </div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 1.4 }}
-            className="text-xl md:text-2xl mb-8 text-gray-100"
-          >
-            Low-impact, high-intensity aquatic cycling for pools and aquatic centers
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={heroInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 1.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-          >
-            <Link to="/equipment">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" className="bg-white text-blue-900 hover:bg-gray-100 group">
-                  View Equipment
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition" />
-                </Button>
-              </motion.div>
-            </Link>
-            <Link to="/rental">
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700">
-                  Rental Options
-                </Button>
-              </motion.div>
-            </Link>
-          </motion.div>
+    <>
+      <section className="pb-hero">
+        <div className="pb-hero-media">
+          <img src={heroImage} alt="Aquatic cycling session with Poolbiking equipment" />
         </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="text-white"
-          >
-            <div className="w-6 h-10 border-2 border-white rounded-full flex items-start justify-center p-2">
-              <motion.div
-                animate={{ y: [0, 12, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }}
-                className="w-1.5 h-1.5 bg-white rounded-full"
-              />
-            </div>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Pillars Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl mb-4">Poolbiking for Every Need</h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Fitness, hotels, and rehabilitation—tailored aquatic solutions for every environment.
+        <div className="pb-container">
+          <div className="pb-hero-content">
+            <div className="pb-eyebrow pb-eyebrow-light">Poolbiking Caribbean</div>
+            <h1 className="pb-title">Professional aquatic fitness, made for serious pools.</h1>
+            <p className="pb-hero-lede">
+              Premium POOLBIKING bikes and aquatic training equipment for hotels,
+              resorts, fitness facilities and rehabilitation environments throughout the Caribbean.
             </p>
+            <div className="pb-hero-actions">
+              <Link to="/equipment" className="pb-button pb-button-aqua pb-button-lg">
+                Explore products <ArrowRight size={18} />
+              </Link>
+              <Link to="/contact" className="pb-button pb-button-outline-light pb-button-lg">
+                Request a quote
+              </Link>
+            </div>
+            <div className="pb-hero-note"><span /> Designed and manufactured in Barcelona. Regional sales and project support in the Caribbean.</div>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {pillars.map((pillar, index) => (
-              <motion.div
-                key={pillar.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="relative overflow-hidden rounded-xl shadow-2xl"
-              >
-                <ImageWithFallback src={pillar.image} alt={pillar.title} className="w-full h-96 object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-6 bg-white/80 backdrop-blur">
-                  <h3 className="text-2xl font-semibold mb-2 text-gray-900 uppercase tracking-wide">{pillar.title}</h3>
-                  <p className="text-gray-800 text-sm leading-relaxed">{pillar.body}</p>
+        </div>
+      </section>
+
+      <div className="pb-statbar">
+        <div className="pb-container pb-stats">
+          <div className="pb-stat"><strong>AISI 316L</strong><span>Professional stainless-steel construction</span></div>
+          <div className="pb-stat"><strong>2–7 years</strong><span>Warranty coverage depending on model</span></div>
+          <div className="pb-stat"><strong>60+ countries</strong><span>POOLBIKING equipment used worldwide</span></div>
+          <div className="pb-stat"><strong>3 core uses</strong><span>Fitness · Hotels · Rehabilitation</span></div>
+        </div>
+      </div>
+
+      <section className="pb-section" id="solutions">
+        <div className="pb-container">
+          <div className="pb-eyebrow">Built around your facility</div>
+          <h2 className="pb-title pb-title-md">One aquatic platform. Three high-value applications.</h2>
+          <p className="pb-copy">
+            The right equipment is only part of the project. We help match the product to the pool,
+            the users and the experience you want to create.
+          </p>
+
+          <div className="pb-grid-3" style={{ marginTop: 46 }}>
+            {solutions.map((solution) => (
+              <article key={solution.title} className="pb-solution-card">
+                <img src={solution.image} alt={solution.title} />
+                <div className="pb-solution-content">
+                  <h3>{solution.title}</h3>
+                  <p>{solution.text}</p>
+                  <Link className="pb-solution-link" to="/contact">Plan a project →</Link>
                 </div>
-              </motion.div>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Videos Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10">
-            <h2 className="text-4xl md:text-5xl mb-3">See Poolbiking in Action</h2>
-            <p className="text-lg text-gray-600">Real sessions across fitness, hotels, and rehabilitation settings.</p>
+      <section className="pb-section pb-section-soft">
+        <div className="pb-container">
+          <div style={{ display: "flex", justifyContent: "space-between", gap: 30, alignItems: "end", flexWrap: "wrap", marginBottom: 40 }}>
+            <div>
+              <div className="pb-eyebrow">Selected equipment</div>
+              <h2 className="pb-title pb-title-md">Professional bikes for different training goals.</h2>
+            </div>
+            <Link to="/equipment" className="pb-button pb-button-outline">View all equipment <ArrowRight size={17} /></Link>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {videos.map((video, index) => (
-              <motion.div
-                key={video.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="overflow-hidden rounded-xl shadow-xl bg-black border border-gray-200"
-              >
-                <iframe
-                  title={video.title}
-                  src={video.embed}
-                  className="w-full aspect-video"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </motion.div>
+
+          <div className="pb-grid-4">
+            {featured.map((item) => (
+              <Link key={item.id} to={`/equipment/${item.id}`} className="pb-product-card">
+                <div className="pb-product-media">
+                  <span className="pb-product-pill">{item.category}</span>
+                  <img src={item.image} alt={item.name} />
+                </div>
+                <div className="pb-product-body">
+                  <h3>{item.name}</h3>
+                  <p>{item.shortDescription}</p>
+                  <div className="pb-product-meta">
+                    <span>{item.warrantyYears ? `${item.warrantyYears}-year warranty` : "Professional equipment"}</span>
+                    <span className="pb-product-arrow">Details →</span>
+                  </div>
+                </div>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Logos Strip */}
-      <section className="py-12 bg-gray-50">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            {logoStrip.map((logoSrc, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="p-3 bg-white rounded-lg shadow-sm border border-gray-200"
-              >
-                <img
-                  src={logoSrc}
-                  alt="Poolbiking credential"
-                  className="object-contain"
-                  style={{ width: "18rem", height: "9.5rem" }}
-                />
-              </motion.div>
-            ))}
+      <section className="pb-section">
+        <div className="pb-container pb-feature-split">
+          <div className="pb-feature-photo">
+            <img src={trainingImage} alt="POOLBIKING professional training session" />
+          </div>
+          <div>
+            <div className="pb-eyebrow">Professional by design</div>
+            <h2 className="pb-title pb-title-md">Equipment that belongs in a premium facility.</h2>
+            <p className="pb-copy">
+              POOLBIKING develops its equipment for professional, repeated use. The result is a range focused on biomechanics,
+              durability, corrosion resistance and straightforward operation in real aquatic environments.
+            </p>
+
+            <div className="pb-feature-points">
+              <div className="pb-feature-point">
+                <div className="pb-feature-icon"><ShieldCheck size={19} /></div>
+                <div><strong>Built for aquatic environments</strong><span>Selected stainless-steel construction and corrosion-conscious engineering for pools and professional facilities.</span></div>
+              </div>
+              <div className="pb-feature-point">
+                <div className="pb-feature-icon"><Waves size={19} /></div>
+                <div><strong>Water-powered resistance</strong><span>Progressive resistance supports a broad range of fitness levels without turning the pool into a complicated gym floor.</span></div>
+              </div>
+              <div className="pb-feature-point">
+                <div className="pb-feature-icon"><Check size={19} /></div>
+                <div><strong>Purpose-built product range</strong><span>Models are tailored for general fitness, heavy-duty training, hotels, beaches, public pools and rehabilitation applications.</span></div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
-    </div>
+
+      <section className="pb-section pb-section-sand">
+        <div className="pb-container">
+          <div className="pb-eyebrow">From first question to poolside</div>
+          <h2 className="pb-title pb-title-md">A simpler way to specify aquatic equipment.</h2>
+          <div className="pb-process">
+            <div>
+              <span className="pb-step-number">01 — DISCOVER</span>
+              <h3>Tell us about your pool.</h3>
+              <p>Share the facility type, water environment, intended users and the experience you want to offer.</p>
+            </div>
+            <div>
+              <span className="pb-step-number">02 — SPECIFY</span>
+              <h3>Choose the right equipment.</h3>
+              <p>We help narrow the range by use case, rider fit, resistance, durability and operational requirements.</p>
+            </div>
+            <div>
+              <span className="pb-step-number">03 — DELIVER</span>
+              <h3>Move from quote to installation.</h3>
+              <p>Once the specification is confirmed, the project can move into pricing, delivery planning and ongoing product support.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="pb-section">
+        <div className="pb-container">
+          <div className="pb-cta">
+            <div className="pb-cta-inner">
+              <div>
+                <div className="pb-eyebrow pb-eyebrow-light">Start your project</div>
+                <h2>Bring professional aquatic fitness to your facility.</h2>
+                <p>Tell us whether you are planning for a hotel, resort, gym, rehabilitation facility or private project and we will help you identify the right POOLBIKING equipment.</p>
+              </div>
+              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Request a quote <ArrowRight size={18} /></Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
