@@ -23,6 +23,22 @@ figure.pb-gallery-item { margin: 0; }
   color: #fff !important;
 }
 
+.pb-product-media img {
+  max-width: 88%;
+  max-height: 88%;
+}
+
+.pb-detail-media img {
+  width: auto;
+  height: auto;
+  max-width: min(100%, 440px);
+  max-height: 440px;
+}
+
+.pb-form-note {
+  display: none;
+}
+
 @media (max-width: 1000px) {
   .pb-nav:not(.is-solid):not(.is-scrolled) .pb-mobile-nav a,
   .pb-nav:not(.is-solid):not(.is-scrolled) .pb-mobile-nav button {
