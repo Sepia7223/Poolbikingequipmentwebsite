@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight, PlayCircle, Search } from "lucide-react";
 import { categories, equipmentData } from "../data/equipment";
+import { productVideos } from "../data/productVideos";
 
 export function EquipmentPage() {
   const [category, setCategory] = useState("All");
@@ -63,6 +64,7 @@ export function EquipmentPage() {
                 <Link key={item.id} to={`/equipment/${item.id}`} className="pb-product-card">
                   <div className="pb-product-media">
                     <span className="pb-product-pill">{item.category}</span>
+                    {productVideos[item.id] && <span className="pb-video-pill"><PlayCircle size={13} /> Video</span>}
                     <img src={item.image} alt={item.name} loading="lazy" />
                   </div>
                   <div className="pb-product-body">
