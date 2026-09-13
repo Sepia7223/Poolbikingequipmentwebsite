@@ -19,10 +19,10 @@ export function GalleryPage() {
     <>
       <section className="pb-page-hero">
         <div className="pb-container">
-          <div className="pb-eyebrow pb-eyebrow-light">Real environments</div>
-          <h1 className="pb-title">See the equipment where it belongs: in the water.</h1>
+          <div className="pb-eyebrow pb-eyebrow-light">Gallery</div>
+          <h1 className="pb-title">POOLBIKING in use.</h1>
           <p className="pb-copy">
-            A visual look at POOLBIKING across fitness, hospitality and rehabilitation settings using the real photography already available for the brand.
+            Photos of POOLBIKING equipment in fitness, hospitality, training and rehabilitation settings.
           </p>
         </div>
       </section>
@@ -44,9 +44,9 @@ export function GalleryPage() {
           <div className="pb-cta">
             <div className="pb-cta-inner">
               <div>
-                <div className="pb-eyebrow pb-eyebrow-light">See the range</div>
-                <h2>Match the experience to the right equipment.</h2>
-                <p>Browse the catalogue or tell us the type of facility you are planning and we can help narrow your options.</p>
+                <div className="pb-eyebrow pb-eyebrow-light">Browse the catalogue</div>
+                <h2>Compare the equipment shown here.</h2>
+                <p>Browse the bikes, platforms and accessories, or contact us if you need help choosing a model for your facility.</p>
               </div>
               <Link to="/equipment" className="pb-button pb-button-white pb-button-lg">Browse products <ArrowRight size={18} /></Link>
             </div>
