@@ -1,225 +1,102 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "motion/react";
-import { useInView } from "react-intersection-observer";
-import { equipmentData, categories } from "../data/equipment";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { Button } from "../components/ui/button";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Badge } from "../components/ui/badge";
-import { Search, SlidersHorizontal } from "lucide-react";
-import { Input } from "../components/ui/input";
-import heroBg from "../content/Marketing/formacio-melia-076-poolbiking.jpg";
-import warranty2Logo from "../content/Waranty Logo/garantia-2_en.svg";
-import warranty3Logo from "../content/Waranty Logo/garantia-3_en.svg";
-import warranty4Logo from "../content/Waranty Logo/garantia-4_en.svg";
-import warranty5Logo from "../content/Waranty Logo/garantia-5_en.svg";
-import warranty7Logo from "../content/Waranty Logo/garantia-7_en.svg";
+import { ArrowRight, Search } from "lucide-react";
+import { categories, equipmentData } from "../data/equipment";
 
 export function EquipmentPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+  const [category, setCategory] = useState("All");
+  const [query, setQuery] = useState("");
 
-  const categoryOrder: Record<string, number> = { Bikes: 0, Platforms: 1, Accessories: 2, All: 3 };
-
-  const filteredEquipment = equipmentData
-    .filter(item => {
-      const matchesCategory = selectedCategory === "All" || item.category === selectedCategory;
-      const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                           item.description.toLowerCase().includes(searchTerm.toLowerCase());
-      return matchesCategory && matchesSearch;
-    })
-    .sort((a, b) => {
-      const orderA = categoryOrder[a.category] ?? 99;
-      const orderB = categoryOrder[b.category] ?? 99;
-      if (orderA !== orderB) return orderA - orderB;
-      return a.name.localeCompare(b.name);
+  const products = useMemo(() => {
+    const normalized = query.trim().toLowerCase();
+    return equipmentData.filter((item) => {
+      const categoryMatch = category === "All" || item.category === category;
+      const searchMatch = !normalized || [item.name, item.shortDescription, item.description]
+        .some((value) => value.toLowerCase().includes(normalized));
+      return categoryMatch && searchMatch;
     });
-
-  const getBoxHeight = () => {
-    const baseHeightRem = 16; // matches h-64
-    return `${baseHeightRem * 1.35}rem`; // +35%
-  };
-
-  const getWarrantyLogo = (years?: number) => {
-    switch (years) {
-      case 2:
-        return warranty2Logo;
-      case 3:
-        return warranty3Logo;
-      case 4:
-        return warranty4Logo;
-      case 5:
-        return warranty5Logo;
-      case 7:
-        return warranty7Logo;
-      default:
-        return undefined;
-    }
-  };
+  }, [category, query]);
 
   return (
-    <div className="pt-16 min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative text-white py-20 overflow-hidden"
-      >
-        <div className="absolute inset-0">
-          <ImageWithFallback src={heroBg} alt="Poolbiking equipment" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/65 to-cyan-900/45" />
+    <>
+      <section className="pb-page-hero">
+        <div className="pb-container">
+          <div className="pb-eyebrow pb-eyebrow-light">Product catalogue</div>
+          <h1 className="pb-title">Aquatic equipment for professional environments.</h1>
+          <p className="pb-copy">
+            Explore POOLBIKING bikes, training platforms and aquatic accessories. Each product is designed for a specific use case,
+            from hotel programs and commercial fitness to rehabilitation and intensive aquatic training.
+          </p>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-6xl mb-6">Our Equipment</h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Browse 10 Poolbiking bikes, platforms, and accessories built for aquatic fitness and rehab
-            </p>
-          </motion.div>
-        </div>
-      </motion.section>
+      </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-12"
-        >
-          {/* Search Bar */}
-          <div className="mb-6">
-            <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Search equipment..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </div>
-
-          {/* Category Filters */}
-          <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex items-center gap-2">
-              <SlidersHorizontal className="h-5 w-5 text-gray-600" />
-              <span className="text-gray-600">Filter:</span>
-            </div>
-            {categories.map((category, index) => (
-              <motion.button
-                key={category}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full transition ${
-                  selectedCategory === category
-                    ? "bg-blue-600 text-white shadow-lg"
-                    : "bg-white text-gray-700 hover:bg-gray-100"
-                }`}
-              >
-                {category}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Equipment Grid */}
-        <div ref={ref}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedCategory + searchTerm}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {filteredEquipment.map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={inView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  whileHover={{ y: -10 }}
-                  layout
+      <section className="pb-section">
+        <div className="pb-container">
+          <div className="pb-filterbar">
+            <div className="pb-filters" aria-label="Product categories">
+              {categories.map((item) => (
+                <button
+                  key={item}
+                  type="button"
+                  className={`pb-chip ${category === item ? "is-active" : ""}`}
+                  onClick={() => setCategory(item)}
                 >
-                  <Link to={`/equipment/${item.id}`}>
-                    <Card className="h-full overflow-hidden hover:shadow-2xl transition-shadow group flex flex-col">
-                      <div
-                        className="relative h-64 overflow-hidden bg-white flex items-center justify-center"
-                        style={{ height: getBoxHeight() }}
-                      >
-                        <ImageWithFallback
-                          src={item.image}
-                          alt={item.name}
-                          className="max-h-full max-w-full object-contain p-4"
-                        />
-                        {item.warrantyYears && getWarrantyLogo(item.warrantyYears) && (
-                          <img
-                            src={getWarrantyLogo(item.warrantyYears)}
-                            alt={`${item.warrantyYears}-year warranty`}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 object-contain select-none pointer-events-none"
-                            style={{ height: "4.5rem", width: "4.5rem" }}
-                          />
-                        )}
-                        <div className="absolute top-4 right-4">
-                          <Badge className="bg-blue-600">{item.category}</Badge>
-                        </div>
-                        {item.inStock && (
-                          <div className="absolute top-4 left-4 opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0">
-                            <Badge className="bg-green-600">In Stock</Badge>
-                          </div>
-                        )}
-                      </div>
-                      <CardHeader className="flex-1 pb-2">
-                        <CardTitle className="group-hover:text-blue-600 transition">
-                          {item.name}
-                        </CardTitle>
-                        <CardDescription>{item.shortDescription}</CardDescription>
-                      </CardHeader>
-                      <CardContent className="pt-0">
-                        <div className="text-sm text-gray-600 mb-4">
-                          Pricing available on request for purchase or rental.
-                        </div>
-                        <motion.div
-                          whileHover={{ x: 5 }}
-                          className="text-blue-600 flex items-center gap-2"
-                        >
-                          View Details
-                          <span>&rarr;</span>
-                        </motion.div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </motion.div>
+                  {item}
+                </button>
               ))}
-            </motion.div>
-          </AnimatePresence>
+            </div>
+            <label style={{ position: "relative" }}>
+              <Search size={17} style={{ position: "absolute", left: 15, top: 14, color: "#7b8e96" }} />
+              <input
+                className="pb-search"
+                style={{ paddingLeft: 42 }}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search equipment"
+                aria-label="Search equipment"
+              />
+            </label>
+          </div>
 
-          {filteredEquipment.length === 0 && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center py-20"
-            >
-              <p className="text-2xl text-gray-600">No equipment found matching your criteria</p>
-            </motion.div>
+          {products.length > 0 ? (
+            <div className="pb-grid-3">
+              {products.map((item) => (
+                <Link key={item.id} to={`/equipment/${item.id}`} className="pb-product-card">
+                  <div className="pb-product-media">
+                    <span className="pb-product-pill">{item.category}</span>
+                    <img src={item.image} alt={item.name} loading="lazy" />
+                  </div>
+                  <div className="pb-product-body">
+                    <h3>{item.name}</h3>
+                    <p>{item.shortDescription}</p>
+                    <div className="pb-product-meta">
+                      <span>{item.warrantyYears ? `${item.warrantyYears}-year warranty` : "Professional range"}</span>
+                      <span className="pb-product-arrow">View details <ArrowRight size={13} style={{ display: "inline", verticalAlign: "middle" }} /></span>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="pb-empty">No equipment matches that search yet.</div>
           )}
         </div>
-      </div>
-    </div>
+      </section>
+
+      <section className="pb-section-compact pb-section-soft">
+        <div className="pb-container">
+          <div className="pb-cta">
+            <div className="pb-cta-inner">
+              <div>
+                <div className="pb-eyebrow pb-eyebrow-light">Not sure which model fits?</div>
+                <h2>Tell us how the equipment will be used.</h2>
+                <p>We can narrow the range by facility type, pool environment, rider profile and training objective.</p>
+              </div>
+              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Talk to us <ArrowRight size={18} /></Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
