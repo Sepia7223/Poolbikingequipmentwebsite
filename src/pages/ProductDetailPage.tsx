@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, ExternalLink, PlayCircle } from "lucide-react";
 import { equipmentData } from "../data/equipment";
+import { productVideos } from "../data/productVideos";
 
 export function ProductDetailPage() {
   const { id } = useParams();
@@ -21,6 +22,7 @@ export function ProductDetailPage() {
   const related = equipmentData
     .filter((item) => item.category === product.category && item.id !== product.id)
     .slice(0, 3);
+  const video = productVideos[product.id];
 
   const specificationLabels: Record<string, string> = {
     weight: "Weight",
@@ -48,7 +50,24 @@ export function ProductDetailPage() {
             <div className="pb-detail-actions">
               <Link to="/contact" className="pb-button pb-button-aqua pb-button-lg">Request pricing <ArrowRight size={18} /></Link>
               <Link to="/contact" className="pb-button pb-button-outline pb-button-lg">Ask about this model</Link>
+              {video && (
+                <a
+                  href={video.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="pb-button pb-button-video pb-button-lg"
+                >
+                  <PlayCircle size={19} /> {video.label} <ExternalLink size={15} />
+                </a>
+              )}
             </div>
+
+            {video && (
+              <div className="pb-video-source">
+                <PlayCircle size={17} />
+                <span>{video.source}{video.direct ? "" : ". Opens the official channel search for this model."}</span>
+              </div>
+            )}
 
             {product.warrantyYears && (
               <div className="pb-status">International warranty: {product.warrantyYears} years for this model.</div>
@@ -88,6 +107,7 @@ export function ProductDetailPage() {
                 <Link key={item.id} to={`/equipment/${item.id}`} className="pb-product-card">
                   <div className="pb-product-media">
                     <span className="pb-product-pill">{item.category}</span>
+                    {productVideos[item.id] && <span className="pb-video-pill"><PlayCircle size={13} /> Video</span>}
                     <img src={item.image} alt={item.name} loading="lazy" />
                   </div>
                   <div className="pb-product-body">
