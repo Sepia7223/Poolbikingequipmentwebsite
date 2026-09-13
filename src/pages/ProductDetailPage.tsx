@@ -1,250 +1,107 @@
-import { useParams, Link } from "react-router-dom";
-import { motion } from "motion/react";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import { equipmentData } from "../data/equipment";
-import { Button } from "../components/ui/button";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import { Card, CardContent } from "../components/ui/card";
-import { Badge } from "../components/ui/badge";
-import { Check, ArrowLeft } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
-import warranty2Logo from "../content/Waranty Logo/garantia-2_en.svg";
-import warranty3Logo from "../content/Waranty Logo/garantia-3_en.svg";
-import warranty4Logo from "../content/Waranty Logo/garantia-4_en.svg";
-import warranty5Logo from "../content/Waranty Logo/garantia-5_en.svg";
-import warranty7Logo from "../content/Waranty Logo/garantia-7_en.svg";
 
 export function ProductDetailPage() {
   const { id } = useParams();
-  const product = equipmentData.find(item => item.id === id);
-
-  const getWarrantyLogo = (years?: number) => {
-    switch (years) {
-      case 2:
-        return warranty2Logo;
-      case 3:
-        return warranty3Logo;
-      case 4:
-        return warranty4Logo;
-      case 5:
-        return warranty5Logo;
-      case 7:
-        return warranty7Logo;
-      default:
-        return undefined;
-    }
-  };
+  const product = equipmentData.find((item) => item.id === id);
 
   if (!product) {
     return (
-      <div className="pt-16 min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl mb-4">Product Not Found</h1>
-          <Link to="/equipment">
-            <Button>Back to Equipment</Button>
-          </Link>
+      <section className="pb-detail">
+        <div className="pb-container">
+          <h1 className="pb-title pb-title-md">Product not found.</h1>
+          <p className="pb-copy">The requested product is not in the current catalogue.</p>
+          <Link to="/equipment" className="pb-button" style={{ marginTop: 28 }}>Back to products</Link>
         </div>
-      </div>
+      </section>
     );
   }
 
+  const related = equipmentData
+    .filter((item) => item.category === product.category && item.id !== product.id)
+    .slice(0, 3);
+
+  const specificationLabels: Record<string, string> = {
+    weight: "Weight",
+    dimensions: "Dimensions",
+    material: "Material",
+    maxUserWeight: "User / application",
+    resistanceLevels: "Resistance",
+  };
+
   return (
-    <div className="pt-16 min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Back Button */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <Link to="/equipment">
-            <Button variant="ghost" className="group">
-              <ArrowLeft className="mr-2 h-4 w-4 group-hover:-translate-x-1 transition" />
-              Back to Equipment
-            </Button>
-          </Link>
-        </motion.div>
+    <section className="pb-detail">
+      <div className="pb-container">
+        <Link to="/equipment" className="pb-back"><ArrowLeft size={17} /> Back to products</Link>
 
-        <div className="grid lg:grid-cols-2 gap-12 mb-12">
-          {/* Product Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-2xl bg-white flex items-center justify-center">
-              <ImageWithFallback
-                src={product.image}
-                alt={product.name}
-                className="max-h-full max-w-full object-contain p-6"
-              />
-              {product.warrantyYears && getWarrantyLogo(product.warrantyYears) && (
-                <div className="absolute inset-y-0 left-4 md:left-6 flex items-center">
-                  <img
-                    src={getWarrantyLogo(product.warrantyYears)}
-                    alt={`${product.warrantyYears}-year warranty`}
-                    className="object-contain select-none pointer-events-none"
-                    style={{ height: "6.5rem", width: "6.5rem" }}
-                  />
-                </div>
-              )}
-              <div className="absolute top-4 right-4 flex gap-2">
-                <Badge className="bg-blue-600">{product.category}</Badge>
-                {product.inStock && (
-                  <Badge className="bg-green-600">In Stock</Badge>
-                )}
+        <div className="pb-detail-grid">
+          <div className="pb-detail-media">
+            <img src={product.image} alt={product.name} />
+          </div>
+
+          <div className="pb-detail-info">
+            <div className="pb-eyebrow">{product.category}</div>
+            <h1>{product.name}</h1>
+            <p className="pb-detail-summary">{product.description}</p>
+
+            <div className="pb-detail-actions">
+              <Link to="/contact" className="pb-button pb-button-aqua pb-button-lg">Request pricing <ArrowRight size={18} /></Link>
+              <Link to="/contact" className="pb-button pb-button-outline pb-button-lg">Discuss your facility</Link>
+            </div>
+
+            {product.warrantyYears && (
+              <div className="pb-status">International warranty: {product.warrantyYears} years for this model.</div>
+            )}
+
+            <div className="pb-detail-block">
+              <h2>Key features</h2>
+              <div className="pb-feature-list">
+                {product.features.map((feature) => (
+                  <div key={feature} className="pb-feature-row">
+                    <CheckCircle2 size={18} />
+                    <span>{feature}</span>
+                  </div>
+                ))}
               </div>
             </div>
-          </motion.div>
 
-          {/* Product Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h1 className="text-4xl md:text-5xl mb-4">{product.name}</h1>
-            <p className="text-xl text-gray-600 mb-8">{product.description}</p>
-
-            {/* Pricing */}
-            <div className="mb-8">
-              <div className="p-6 bg-blue-50 rounded-lg">
-                <h3 className="text-2xl mb-2">Pricing available on request</h3>
-                <p className="text-gray-700 mb-4">
-                  Contact our team to buy or rent this equipment. We’ll tailor a quote to your project.
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  <Link to="/sales">
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button className="w-full group">Contact Sales</Button>
-                    </motion.div>
-                  </Link>
-                  <Link to="/rental">
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button variant="outline" className="w-full group">Rental Inquiry</Button>
-                    </motion.div>
-                  </Link>
-                </div>
+            <div className="pb-detail-block">
+              <h2>Technical overview</h2>
+              <div className="pb-spec-list">
+                {Object.entries(product.specifications).map(([key, value]) => (
+                  <div className="pb-spec-row" key={key}>
+                    <span>{specificationLabels[key] ?? key}</span>
+                    <strong>{value}</strong>
+                  </div>
+                ))}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Tabs Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <Tabs defaultValue="features" className="w-full">
-            <TabsList className="grid w-full max-w-md grid-cols-2">
-              <TabsTrigger value="features">Features</TabsTrigger>
-              <TabsTrigger value="specs">Specifications</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="features" className="mt-6">
-              <Card>
-                <CardContent className="pt-6">
-                  <h3 className="text-2xl mb-6">Key Features</h3>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    {product.features.map((feature, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="flex items-start gap-3"
-                      >
-                        <div className="flex-shrink-0 mt-1">
-                          <div className="h-6 w-6 bg-green-100 rounded-full flex items-center justify-center">
-                            <Check className="h-4 w-4 text-green-600" />
-                          </div>
-                        </div>
-                        <span className="text-lg">{feature}</span>
-                      </motion.div>
-                    ))}
+        {related.length > 0 && (
+          <div className="pb-related">
+            <div className="pb-eyebrow">Continue exploring</div>
+            <h2 className="pb-title pb-title-sm">Related equipment.</h2>
+            <div className="pb-grid-3" style={{ marginTop: 34 }}>
+              {related.map((item) => (
+                <Link key={item.id} to={`/equipment/${item.id}`} className="pb-product-card">
+                  <div className="pb-product-media">
+                    <span className="pb-product-pill">{item.category}</span>
+                    <img src={item.image} alt={item.name} loading="lazy" />
                   </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            <TabsContent value="specs" className="mt-6">
-              <Card>
-                <CardContent className="pt-6">
-                  <h3 className="text-2xl mb-6">Technical Specifications</h3>
-                  <div className="space-y-4">
-                    {Object.entries(product.specifications).map(([key, value], index) => (
-                      <motion.div
-                        key={key}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: index * 0.1 }}
-                        className="flex justify-between py-3 border-b last:border-0"
-                      >
-                        <span className="text-gray-600 capitalize">
-                          {key.replace(/([A-Z])/g, ' $1').trim()}
-                        </span>
-                        <span>{value}</span>
-                      </motion.div>
-                    ))}
+                  <div className="pb-product-body">
+                    <h3>{item.name}</h3>
+                    <p>{item.shortDescription}</p>
+                    <div className="pb-product-meta"><span>Professional range</span><span className="pb-product-arrow">Details →</span></div>
                   </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </motion.div>
-
-        {/* Related Products */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-16"
-        >
-          <h3 className="text-3xl mb-8">Similar Equipment</h3>
-          <div className="grid md:grid-cols-3 gap-8">
-            {equipmentData
-              .filter(item => item.category === product.category && item.id !== product.id)
-              .slice(0, 3)
-              .map((item, index) => (
-                <motion.div
-                  key={item.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ y: -10 }}
-                >
-                  <Link to={`/equipment/${item.id}`}>
-                    <Card className="overflow-hidden hover:shadow-xl transition">
-                      <div className="relative h-48 overflow-hidden bg-white flex items-center justify-center">
-                        <ImageWithFallback
-                          src={item.image}
-                          alt={item.name}
-                          className="max-h-full max-w-full object-contain p-3"
-                        />
-                        {item.warrantyYears && getWarrantyLogo(item.warrantyYears) && (
-                          <div className="absolute inset-y-0 left-3 md:left-4 flex items-center">
-                            <img
-                              src={getWarrantyLogo(item.warrantyYears)}
-                              alt={`${item.warrantyYears}-year warranty`}
-                              className="object-contain select-none pointer-events-none"
-                              style={{ height: "4.5rem", width: "4.5rem" }}
-                            />
-                          </div>
-                        )}
-                      </div>
-                      <CardContent className="pt-4">
-                        <h4 className="text-xl mb-2">{item.name}</h4>
-                        <p className="text-gray-600 mb-2">{item.shortDescription}</p>
-                        <div className="text-sm text-blue-600">View details →</div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                </motion.div>
+                </Link>
               ))}
+            </div>
           </div>
-        </motion.div>
+        )}
       </div>
-    </div>
+    </section>
   );
 }
