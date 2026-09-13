@@ -22,10 +22,9 @@ export function EquipmentPage() {
       <section className="pb-page-hero">
         <div className="pb-container">
           <div className="pb-eyebrow pb-eyebrow-light">Product catalogue</div>
-          <h1 className="pb-title">Aquatic equipment for professional environments.</h1>
+          <h1 className="pb-title">POOLBIKING bikes, platforms and aquatic accessories.</h1>
           <p className="pb-copy">
-            Explore POOLBIKING bikes, training platforms and aquatic accessories. Each product is designed for a specific use case,
-            from hotel programs and commercial fitness to rehabilitation and intensive aquatic training.
+            Browse equipment for hotel programs, commercial fitness, rehabilitation and other pool-based training.
           </p>
         </div>
       </section>
@@ -70,7 +69,7 @@ export function EquipmentPage() {
                     <h3>{item.name}</h3>
                     <p>{item.shortDescription}</p>
                     <div className="pb-product-meta">
-                      <span>{item.warrantyYears ? `${item.warrantyYears}-year warranty` : "Professional range"}</span>
+                      <span>{item.warrantyYears ? `${item.warrantyYears}-year warranty` : item.category}</span>
                       <span className="pb-product-arrow">View details <ArrowRight size={13} style={{ display: "inline", verticalAlign: "middle" }} /></span>
                     </div>
                   </div>
@@ -78,7 +77,7 @@ export function EquipmentPage() {
               ))}
             </div>
           ) : (
-            <div className="pb-empty">No equipment matches that search yet.</div>
+            <div className="pb-empty">No equipment matches that search.</div>
           )}
         </div>
       </section>
@@ -88,11 +87,11 @@ export function EquipmentPage() {
           <div className="pb-cta">
             <div className="pb-cta-inner">
               <div>
-                <div className="pb-eyebrow pb-eyebrow-light">Not sure which model fits?</div>
-                <h2>Tell us how the equipment will be used.</h2>
-                <p>We can narrow the range by facility type, pool environment, rider profile and training objective.</p>
+                <div className="pb-eyebrow pb-eyebrow-light">Need help choosing a model?</div>
+                <h2>Tell us how and where the equipment will be used.</h2>
+                <p>Facility type, pool environment, rider profile and training goal help narrow the options.</p>
               </div>
-              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Talk to us <ArrowRight size={18} /></Link>
+              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Contact us <ArrowRight size={18} /></Link>
             </div>
           </div>
         </div>
