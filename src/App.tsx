@@ -1,43 +1,33 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
 import { Footer } from "./components/Footer";
 import { HomePage } from "./pages/HomePage";
 import { EquipmentPage } from "./pages/EquipmentPage";
 import { ProductDetailPage } from "./pages/ProductDetailPage";
-import { RentalPage } from "./pages/RentalPage";
-import { SalesPage } from "./pages/SalesPage";
 import { AboutPage } from "./pages/AboutPage";
-import { ContactPage } from "./pages/ContactPage";
 import { GalleryPage } from "./pages/GalleryPage";
-import { MaintenancePage } from "./pages/MaintenancePage";
-import { TrainingPage } from "./pages/TrainingPage";
-import { CustomSolutionsPage } from "./pages/CustomSolutionsPage";
-import { SupportPage } from "./pages/SupportPage";
-import { Toaster } from "./components/ui/sonner";
+import { ContactPage } from "./pages/ContactPage";
 
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="pb-shell">
         <Navigation />
-        <main className="flex-1">
+        <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/equipment" element={<EquipmentPage />} />
             <Route path="/equipment/:id" element={<ProductDetailPage />} />
-            <Route path="/rental" element={<RentalPage />} />
-            <Route path="/sales" element={<SalesPage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/services/maintenance" element={<MaintenancePage />} />
-            <Route path="/services/training" element={<TrainingPage />} />
-            <Route path="/services/custom-solutions" element={<CustomSolutionsPage />} />
-            <Route path="/services/support" element={<SupportPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/sales" element={<Navigate to="/contact" replace />} />
+            <Route path="/rental" element={<Navigate to="/contact" replace />} />
+            <Route path="/services/*" element={<Navigate to="/contact" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </main>
         <Footer />
-        <Toaster />
       </div>
     </Router>
   );
