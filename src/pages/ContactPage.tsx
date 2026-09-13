@@ -32,10 +32,10 @@ export function ContactPage() {
     <>
       <section className="pb-page-hero">
         <div className="pb-container">
-          <div className="pb-eyebrow pb-eyebrow-light">Start a project</div>
-          <h1 className="pb-title">Tell us what you want to build around the pool.</h1>
+          <div className="pb-eyebrow pb-eyebrow-light">Contact</div>
+          <h1 className="pb-title">Tell us about your pool and the equipment you need.</h1>
           <p className="pb-copy">
-            Share the facility type, location and intended use. That gives us enough context to point you toward the right POOLBIKING models and prepare the next steps for a quote.
+            Send the facility type, location, intended use and approximate number of units. We can use that information to recommend suitable POOLBIKING models and prepare a quote.
           </p>
         </div>
       </section>
@@ -44,9 +44,9 @@ export function ContactPage() {
         <div className="pb-container pb-contact-grid">
           <aside className="pb-contact-card">
             <div className="pb-eyebrow pb-eyebrow-light">Poolbiking Caribbean</div>
-            <h2>Commercial inquiries, without the guesswork.</h2>
+            <h2>Sales and product questions.</h2>
             <p>
-              We can help with product selection for hotels and resorts, fitness facilities, rehabilitation environments and specialist aquatic projects across the Caribbean.
+              Contact us about equipment for hotels, fitness facilities, rehabilitation programs and other aquatic projects in the Caribbean.
             </p>
 
             <div className="pb-contact-list">
@@ -66,16 +66,16 @@ export function ContactPage() {
               </div>
               <div className="pb-contact-line">
                 <CheckCircle2 size={20} />
-                <div><strong>Helpful information</strong><span>Facility type, pool environment, number of units and intended users</span></div>
+                <div><strong>Useful details</strong><span>Facility type, pool environment, number of units and intended users</span></div>
               </div>
             </div>
           </aside>
 
           <div>
             <div className="pb-eyebrow">Request a quote</div>
-            <h2 className="pb-title pb-title-sm">Give us the project basics.</h2>
+            <h2 className="pb-title pb-title-sm">Tell us about the project.</h2>
             <p className="pb-copy" style={{ marginBottom: 34 }}>
-              You do not need to know the exact model yet. Describe the project and the use case; the equipment can be narrowed from there.
+              You do not need to choose a model before contacting us. Describe the pool and intended use, and we can help narrow the options.
             </p>
 
             <form className="pb-form" onSubmit={handleSubmit}>
@@ -130,7 +130,7 @@ export function ContactPage() {
                 Prepare inquiry <Send size={17} />
               </button>
               <div className="pb-form-note">
-                Submitting the form prepares an email to {CONTACT_EMAIL}. You can also contact us directly by phone or email using the details shown here.
+                This form prepares an email to {CONTACT_EMAIL}. You can also use the phone number or email address shown on this page.
               </div>
             </form>
           </div>
