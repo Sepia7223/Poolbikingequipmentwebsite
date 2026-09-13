@@ -19,8 +19,8 @@ export function Footer() {
               </span>
             </Link>
             <p>
-              Premium POOLBIKING aquatic fitness equipment for hotels, resorts,
-              fitness facilities, rehabilitation environments and professional pools
+              POOLBIKING aquatic fitness equipment for hotels, resorts,
+              fitness facilities, rehabilitation programs and other pool-based projects
               across the Caribbean.
             </p>
             <div className="pb-footer-links" style={{ marginTop: 18 }}>
@@ -40,7 +40,7 @@ export function Footer() {
           </div>
 
           <div>
-            <div className="pb-footer-heading">Solutions</div>
+            <div className="pb-footer-heading">Applications</div>
             <div className="pb-footer-links">
               <Link to="/contact">Hotels & resorts</Link>
               <Link to="/contact">Fitness facilities</Link>
