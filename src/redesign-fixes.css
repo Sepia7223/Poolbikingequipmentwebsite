@@ -1,5 +1,14 @@
 figure.pb-gallery-item { margin: 0; }
 
+/* Remove the decorative dash before section labels. */
+.pb-eyebrow::before {
+  display: none !important;
+}
+
+.pb-eyebrow {
+  gap: 0;
+}
+
 .pb-nav:not(.is-solid):not(.is-scrolled) .pb-brand-copy strong {
   color: #fff;
 }
@@ -37,6 +46,61 @@ figure.pb-gallery-item { margin: 0; }
 
 .pb-form-note {
   display: none;
+}
+
+/* Keep the Why POOLBIKING photo focused on the riders instead of cropping
+   the POOLBIKING word down to a partial logo at the right edge. */
+.pb-feature-photo img {
+  object-position: 12% center;
+}
+
+/* Product video affordances */
+.pb-video-pill {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.94);
+  color: var(--pb-navy);
+  border: 1px solid rgba(11,31,42,.10);
+  box-shadow: 0 6px 20px rgba(11,31,42,.08);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.pb-button-video {
+  background: #fff;
+  color: var(--pb-navy);
+  border: 1px solid var(--pb-line);
+}
+
+.pb-button-video:hover {
+  background: var(--pb-ice);
+  border-color: #bcd3d6;
+}
+
+.pb-video-source {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 14px;
+  color: var(--pb-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.pb-video-source svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--pb-aqua-deep);
 }
 
 /* Editorial hierarchy refinements */
@@ -230,5 +294,10 @@ figure.pb-gallery-item { margin: 0; }
 
   .pb-cta-clean {
     padding: 38px 28px;
+  }
+
+  .pb-video-pill {
+    top: 12px;
+    right: 12px;
   }
 }
