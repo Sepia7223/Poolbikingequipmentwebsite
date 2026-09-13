@@ -47,7 +47,7 @@ export function ProductDetailPage() {
 
             <div className="pb-detail-actions">
               <Link to="/contact" className="pb-button pb-button-aqua pb-button-lg">Request pricing <ArrowRight size={18} /></Link>
-              <Link to="/contact" className="pb-button pb-button-outline pb-button-lg">Discuss your facility</Link>
+              <Link to="/contact" className="pb-button pb-button-outline pb-button-lg">Ask about this model</Link>
             </div>
 
             {product.warrantyYears && (
@@ -67,7 +67,7 @@ export function ProductDetailPage() {
             </div>
 
             <div className="pb-detail-block">
-              <h2>Technical overview</h2>
+              <h2>Specifications</h2>
               <div className="pb-spec-list">
                 {Object.entries(product.specifications).map(([key, value]) => (
                   <div className="pb-spec-row" key={key}>
@@ -82,7 +82,6 @@ export function ProductDetailPage() {
 
         {related.length > 0 && (
           <div className="pb-related">
-            <div className="pb-eyebrow">Continue exploring</div>
             <h2 className="pb-title pb-title-sm">Related equipment.</h2>
             <div className="pb-grid-3" style={{ marginTop: 34 }}>
               {related.map((item) => (
@@ -94,7 +93,7 @@ export function ProductDetailPage() {
                   <div className="pb-product-body">
                     <h3>{item.name}</h3>
                     <p>{item.shortDescription}</p>
-                    <div className="pb-product-meta"><span>Professional range</span><span className="pb-product-arrow">Details →</span></div>
+                    <div className="pb-product-meta"><span>{item.category}</span><span className="pb-product-arrow">Details →</span></div>
                   </div>
                 </Link>
               ))}
