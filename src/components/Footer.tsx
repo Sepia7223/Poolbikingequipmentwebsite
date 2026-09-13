@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import logo from "../content/Logo's/Poolbiking CW.png";
 
+const CONTACT_EMAIL = "info@seraphic.me";
+const CONTACT_PHONE_DISPLAY = "+5999 5142050";
+const CONTACT_PHONE_HREF = "tel:+59995142050";
+
 export function Footer() {
   return (
     <footer className="pb-footer">
@@ -19,6 +23,10 @@ export function Footer() {
               fitness facilities, rehabilitation environments and professional pools
               across the Caribbean.
             </p>
+            <div className="pb-footer-links" style={{ marginTop: 18 }}>
+              <a href={CONTACT_PHONE_HREF}>{CONTACT_PHONE_DISPLAY}</a>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+            </div>
           </div>
 
           <div>
