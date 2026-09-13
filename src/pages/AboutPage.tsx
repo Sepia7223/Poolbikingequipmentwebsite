@@ -8,10 +8,10 @@ export function AboutPage() {
       <section className="pb-page-hero">
         <div className="pb-container">
           <div className="pb-eyebrow pb-eyebrow-light">About Poolbiking Caribbean</div>
-          <h1 className="pb-title">A regional partner for professional aquatic fitness.</h1>
+          <h1 className="pb-title">POOLBIKING equipment for Caribbean facilities.</h1>
           <p className="pb-copy">
-            Poolbiking Caribbean is focused on bringing POOLBIKING aquatic equipment to facilities across the Caribbean,
-            with a clearer regional path from product selection and quotation to delivery planning and support.
+            Poolbiking Caribbean supplies POOLBIKING aquatic equipment for hotels, fitness facilities,
+            rehabilitation programs and other pool-based projects across the region.
           </p>
         </div>
       </section>
@@ -19,15 +19,14 @@ export function AboutPage() {
       <section className="pb-section">
         <div className="pb-container pb-about-grid">
           <div>
-            <div className="pb-eyebrow">The equipment behind the brand</div>
-            <h2 className="pb-title pb-title-md">Barcelona engineering, adapted to Caribbean projects.</h2>
+            <div className="pb-eyebrow">About the equipment</div>
+            <h2 className="pb-title pb-title-md">Designed and manufactured in Barcelona.</h2>
             <p className="pb-copy">
               POOLBIKING designs and manufactures professional aquatic bikes and fitness equipment in Barcelona.
               Its range is used in hotels, fitness facilities and rehabilitation environments around the world.
             </p>
             <p className="pb-copy" style={{ marginTop: 16 }}>
-              Our role is to make that range easier to understand and specify for Caribbean facilities—whether the priority is
-              a resort guest experience, a commercial group class, a rehabilitation program or a specialist pool project.
+              We help Caribbean customers compare models, choose equipment for their pool and plan quotations and delivery.
             </p>
             <Link to="/equipment" className="pb-button" style={{ marginTop: 30 }}>Explore equipment <ArrowRight size={17} /></Link>
           </div>
@@ -39,23 +38,23 @@ export function AboutPage() {
 
       <section className="pb-section pb-section-soft">
         <div className="pb-container">
-          <div className="pb-eyebrow">Where it fits</div>
-          <h2 className="pb-title pb-title-md">Designed around real aquatic facilities.</h2>
+          <div className="pb-eyebrow">Typical applications</div>
+          <h2 className="pb-title pb-title-md">Equipment for different types of pool programs.</h2>
           <div className="pb-values">
             <article className="pb-value">
               <Building2 size={26} />
               <h3>Hotels & Resorts</h3>
-              <p>Premium aquatic experiences, spa-gym concepts and structured guest activities with professional-grade equipment.</p>
+              <p>Aquatic fitness sessions, spa-gym concepts and guest activities using equipment made for regular professional use.</p>
             </article>
             <article className="pb-value">
               <Dumbbell size={26} />
               <h3>Fitness</h3>
-              <p>Low-impact group and individual training that uses water resistance to create a distinctive fitness offering.</p>
+              <p>Group and individual training that uses water resistance for low-impact conditioning and cardio work.</p>
             </article>
             <article className="pb-value">
               <HeartPulse size={26} />
               <h3>Rehabilitation</h3>
-              <p>Controlled aquatic movement and conditioning supported by the buoyancy and resistance characteristics of water.</p>
+              <p>Controlled aquatic movement and conditioning that uses the buoyancy and resistance of water.</p>
             </article>
           </div>
         </div>
@@ -66,11 +65,11 @@ export function AboutPage() {
           <div className="pb-cta">
             <div className="pb-cta-inner">
               <div>
-                <div className="pb-eyebrow pb-eyebrow-light">Planning a facility?</div>
-                <h2>We can help narrow the range before you request pricing.</h2>
-                <p>Tell us about the pool, the users and the business goal. We will help identify which product families deserve a closer look.</p>
+                <div className="pb-eyebrow pb-eyebrow-light">Choosing equipment</div>
+                <h2>Tell us about the pool before you request pricing.</h2>
+                <p>Facility type, pool conditions, intended users and expected use are enough to start narrowing the range.</p>
               </div>
-              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Start a conversation <ArrowRight size={18} /></Link>
+              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Contact us <ArrowRight size={18} /></Link>
             </div>
           </div>
         </div>
