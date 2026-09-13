@@ -1,7 +1,9 @@
 import { FormEvent, useState } from "react";
-import { CheckCircle2, Mail, MapPin, Send } from "lucide-react";
+import { CheckCircle2, Mail, Phone, Send } from "lucide-react";
 
-const CONTACT_EMAIL = (import.meta as any).env?.VITE_CONTACT_EMAIL as string | undefined;
+const CONTACT_EMAIL = ((import.meta as any).env?.VITE_CONTACT_EMAIL as string | undefined) || "info@seraphic.me";
+const CONTACT_PHONE_DISPLAY = "+5999 5142050";
+const CONTACT_PHONE_HREF = "tel:+59995142050";
 
 export function ContactPage() {
   const [status, setStatus] = useState("");
@@ -9,11 +11,6 @@ export function ContactPage() {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = new FormData(event.currentTarget);
-
-    if (!CONTACT_EMAIL) {
-      setStatus("The inquiry form is ready for preview. Add VITE_CONTACT_EMAIL to the deployment environment before launch to enable submissions.");
-      return;
-    }
 
     const subject = `Poolbiking Caribbean inquiry — ${form.get("interest")}`;
     const body = [
@@ -54,12 +51,18 @@ export function ContactPage() {
 
             <div className="pb-contact-list">
               <div className="pb-contact-line">
-                <MapPin size={20} />
-                <div><strong>Region</strong><span>Caribbean project inquiries and regional equipment planning</span></div>
+                <Phone size={20} />
+                <div>
+                  <strong>Phone</strong>
+                  <a href={CONTACT_PHONE_HREF}><span>{CONTACT_PHONE_DISPLAY}</span></a>
+                </div>
               </div>
               <div className="pb-contact-line">
                 <Mail size={20} />
-                <div><strong>Inquiry type</strong><span>Sales, product specification, delivery planning and equipment questions</span></div>
+                <div>
+                  <strong>Email</strong>
+                  <a href={`mailto:${CONTACT_EMAIL}`}><span>{CONTACT_EMAIL}</span></a>
+                </div>
               </div>
               <div className="pb-contact-line">
                 <CheckCircle2 size={20} />
@@ -127,7 +130,7 @@ export function ContactPage() {
                 Prepare inquiry <Send size={17} />
               </button>
               <div className="pb-form-note">
-                On the redesign preview branch, the recipient email is configured through the VITE_CONTACT_EMAIL deployment variable. No placeholder phone number, address or fake email is shown on the public page.
+                Submitting the form prepares an email to {CONTACT_EMAIL}. You can also contact us directly by phone or email using the details shown here.
               </div>
             </form>
           </div>
