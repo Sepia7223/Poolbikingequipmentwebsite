@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, ShieldCheck, Waves, Wrench } from "lucide-react";
+import { ArrowRight, Check, ShieldCheck, Waves } from "lucide-react";
 import { equipmentData } from "../data/equipment";
 import heroImage from "../content/Marketing/IMG_3066retocado.jpg";
 import fitnessImage from "../content/Marketing/IMG_3053.JPG";
@@ -12,21 +12,25 @@ const solutions = [
     title: "Hotels & Resorts",
     text: "Add structured aquatic fitness to hotel and resort programs with equipment designed for regular professional use.",
     image: hotelsImage,
+    interest: "Hotel / resort",
   },
   {
     title: "Fitness",
     text: "Add low-impact, high-resistance training to aquatic programs with equipment engineered for recurring professional use.",
     image: fitnessImage,
+    interest: "Fitness facility",
   },
   {
     title: "Rehabilitation",
     text: "Use the support and resistance of water for controlled movement, conditioning and low-impact rehabilitation programs.",
     image: rehabImage,
+    interest: "Rehabilitation",
   },
 ];
 
 export function HomePage() {
-  const featured = equipmentData.filter((item) => item.category === "Bikes").slice(0, 4);
+  const featured = equipmentData
+    .filter((item) => ["poolbiking-one-2-0", "poolbiking-one-plus", "poolbiking-evolution"].includes(item.id));
 
   return (
     <>
@@ -56,31 +60,40 @@ export function HomePage() {
 
       <div className="pb-statbar">
         <div className="pb-container pb-stats">
-          <div className="pb-stat"><strong>AISI 316L</strong><span>Professional stainless-steel construction</span></div>
+          <div className="pb-stat"><strong>AISI 316L</strong><span>Stainless-steel construction on core bike models</span></div>
           <div className="pb-stat"><strong>2–7 years</strong><span>Warranty coverage depending on model</span></div>
           <div className="pb-stat"><strong>60+ countries</strong><span>POOLBIKING equipment used worldwide</span></div>
-          <div className="pb-stat"><strong>3 core uses</strong><span>Fitness · Hotels · Rehabilitation</span></div>
+          <div className="pb-stat"><strong>Since 2005</strong><span>Designed and manufactured in Barcelona</span></div>
         </div>
       </div>
 
-      <section className="pb-section" id="solutions">
+      <section className="pb-section pb-solutions-section" id="solutions">
         <div className="pb-container">
-          <div className="pb-eyebrow">Choose by use</div>
-          <h2 className="pb-title pb-title-md">Match the equipment to the pool and the program.</h2>
-          <p className="pb-copy">
-            We help compare models based on the facility, the users and how the equipment will be used.
-          </p>
+          <div className="pb-section-head">
+            <div>
+              <div className="pb-eyebrow">Choose by use</div>
+              <h2 className="pb-title pb-title-md">Match the equipment to the pool and the program.</h2>
+            </div>
+            <p className="pb-copy">
+              Start with the facility type. We can then compare models by fit, resistance, durability and intended use.
+            </p>
+          </div>
 
-          <div className="pb-grid-3" style={{ marginTop: 46 }}>
+          <div className="pb-grid-3 pb-solution-grid">
             {solutions.map((solution) => (
-              <article key={solution.title} className="pb-solution-card">
+              <Link
+                key={solution.title}
+                className="pb-solution-card"
+                to={`/contact?interest=${encodeURIComponent(solution.interest)}`}
+              >
                 <img src={solution.image} alt={solution.title} />
                 <div className="pb-solution-content">
+                  <div className="pb-solution-kicker">Facility type</div>
                   <h3>{solution.title}</h3>
                   <p>{solution.text}</p>
-                  <Link className="pb-solution-link" to="/contact">Discuss your facility →</Link>
+                  <span className="pb-solution-link">Discuss this project <ArrowRight size={15} /></span>
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         </div>
@@ -88,15 +101,15 @@ export function HomePage() {
 
       <section className="pb-section pb-section-soft">
         <div className="pb-container">
-          <div style={{ display: "flex", justifyContent: "space-between", gap: 30, alignItems: "end", flexWrap: "wrap", marginBottom: 40 }}>
+          <div className="pb-section-head pb-section-head-tight">
             <div>
-              <div className="pb-eyebrow">Selected equipment</div>
-              <h2 className="pb-title pb-title-md">Aquabikes for different training needs.</h2>
+              <div className="pb-eyebrow">Aquatic bikes</div>
+              <h2 className="pb-title pb-title-md">Three models to start the comparison.</h2>
             </div>
-            <Link to="/equipment" className="pb-button pb-button-outline">View all equipment <ArrowRight size={17} /></Link>
+            <Link to="/equipment" className="pb-text-link">View the full range <ArrowRight size={16} /></Link>
           </div>
 
-          <div className="pb-grid-4">
+          <div className="pb-grid-3 pb-featured-products">
             {featured.map((item) => (
               <Link key={item.id} to={`/equipment/${item.id}`} className="pb-product-card">
                 <div className="pb-product-media">
@@ -108,7 +121,7 @@ export function HomePage() {
                   <p>{item.shortDescription}</p>
                   <div className="pb-product-meta">
                     <span>{item.warrantyYears ? `${item.warrantyYears}-year warranty` : "Professional equipment"}</span>
-                    <span className="pb-product-arrow">Details →</span>
+                    <span className="pb-product-arrow">View model <ArrowRight size={13} /></span>
                   </div>
                 </div>
               </Link>
@@ -123,24 +136,24 @@ export function HomePage() {
             <img src={trainingImage} alt="POOLBIKING professional training session" />
           </div>
           <div>
-            <div className="pb-eyebrow">For regular pool use</div>
-            <h2 className="pb-title pb-title-md">Designed for repeated professional use.</h2>
+            <div className="pb-eyebrow">Why POOLBIKING</div>
+            <h2 className="pb-title pb-title-md">Built for repeated use in aquatic facilities.</h2>
             <p className="pb-copy">
-              POOLBIKING focuses on biomechanics, corrosion resistance, durability and straightforward day-to-day operation in aquatic facilities.
+              POOLBIKING designs its equipment for professional pool environments, with an emphasis on rider fit, corrosion resistance and straightforward daily operation.
             </p>
 
             <div className="pb-feature-points">
               <div className="pb-feature-point">
                 <div className="pb-feature-icon"><ShieldCheck size={19} /></div>
-                <div><strong>Built for aquatic environments</strong><span>Selected stainless-steel construction and corrosion-conscious engineering for pools and professional facilities.</span></div>
+                <div><strong>Pool-ready materials</strong><span>Selected bike models use AISI 316L stainless steel and components intended for aquatic environments.</span></div>
               </div>
               <div className="pb-feature-point">
                 <div className="pb-feature-icon"><Waves size={19} /></div>
-                <div><strong>Progressive water resistance</strong><span>Water resistance changes with effort, so the same equipment can support different fitness levels and session intensities.</span></div>
+                <div><strong>Resistance from the water</strong><span>Pedalling in water creates progressive resistance for low-impact cardio and conditioning work.</span></div>
               </div>
               <div className="pb-feature-point">
                 <div className="pb-feature-icon"><Check size={19} /></div>
-                <div><strong>Models for different pool settings</strong><span>The range includes options for general fitness, heavy-duty training, hotels, beaches, public pools and rehabilitation.</span></div>
+                <div><strong>Models for different settings</strong><span>The range includes options for general fitness, intensive training, hotels, public pools, beaches and rehabilitation.</span></div>
               </div>
             </div>
           </div>
@@ -149,23 +162,29 @@ export function HomePage() {
 
       <section className="pb-section pb-section-sand">
         <div className="pb-container">
-          <div className="pb-eyebrow">How we help</div>
-          <h2 className="pb-title pb-title-md">From pool details to a quote.</h2>
-          <div className="pb-process">
+          <div className="pb-section-head pb-section-head-tight">
             <div>
-              <span className="pb-step-number">01 / POOL</span>
+              <div className="pb-eyebrow">Project support</div>
+              <h2 className="pb-title pb-title-md">From product selection to delivery planning.</h2>
+            </div>
+            <p className="pb-copy">You can contact us before choosing a model. We will narrow the range around the pool, users and intended program.</p>
+          </div>
+
+          <div className="pb-process pb-process-cards">
+            <div>
+              <span className="pb-step-number">01</span>
               <h3>Tell us about the facility.</h3>
-              <p>Share the pool environment, intended users and the type of program you plan to run.</p>
+              <p>Share the pool environment, intended users, program and approximate number of units.</p>
             </div>
             <div>
-              <span className="pb-step-number">02 / EQUIPMENT</span>
+              <span className="pb-step-number">02</span>
               <h3>Compare suitable models.</h3>
-              <p>We narrow the range using rider fit, resistance, durability and the practical requirements of the facility.</p>
+              <p>We narrow the range by fit, resistance, construction and operational requirements.</p>
             </div>
             <div>
-              <span className="pb-step-number">03 / QUOTE</span>
-              <h3>Plan pricing and delivery.</h3>
-              <p>Once the equipment is selected, we can move into pricing, delivery planning and product support.</p>
+              <span className="pb-step-number">03</span>
+              <h3>Plan the order.</h3>
+              <p>Once the model and quantity are confirmed, we can move into quotation and delivery planning.</p>
             </div>
           </div>
         </div>
@@ -173,14 +192,14 @@ export function HomePage() {
 
       <section className="pb-section">
         <div className="pb-container">
-          <div className="pb-cta">
+          <div className="pb-cta pb-cta-clean">
             <div className="pb-cta-inner">
               <div>
-                <div className="pb-eyebrow pb-eyebrow-light">Need help choosing?</div>
-                <h2>Tell us about your pool and the program you want to run.</h2>
-                <p>We can help identify suitable POOLBIKING models for a hotel, resort, gym, rehabilitation facility or private project.</p>
+                <div className="pb-eyebrow pb-eyebrow-light">Request a quote</div>
+                <h2>Tell us what kind of pool project you are planning.</h2>
+                <p>We can recommend a starting point for hotels, fitness facilities, rehabilitation programs and other professional aquatic settings.</p>
               </div>
-              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Request a quote <ArrowRight size={18} /></Link>
+              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Contact Poolbiking Caribbean <ArrowRight size={18} /></Link>
             </div>
           </div>
         </div>
