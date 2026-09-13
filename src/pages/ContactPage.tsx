@@ -1,12 +1,25 @@
 import { FormEvent, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { CheckCircle2, Mail, Phone, Send } from "lucide-react";
 
 const CONTACT_EMAIL = ((import.meta as any).env?.VITE_CONTACT_EMAIL as string | undefined) || "info@seraphic.me";
 const CONTACT_PHONE_DISPLAY = "+5999 5142050";
 const CONTACT_PHONE_HREF = "tel:+59995142050";
 
+const interests = [
+  "Hotel / resort",
+  "Fitness facility",
+  "Rehabilitation",
+  "Private facility",
+  "Product purchase",
+  "Other aquatic project",
+];
+
 export function ContactPage() {
   const [status, setStatus] = useState("");
+  const [searchParams] = useSearchParams();
+  const requestedInterest = searchParams.get("interest") ?? "";
+  const defaultInterest = interests.includes(requestedInterest) ? requestedInterest : "Hotel / resort";
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -108,13 +121,8 @@ export function ContactPage() {
                 </div>
                 <div className="pb-field">
                   <label htmlFor="interest">Primary interest *</label>
-                  <select id="interest" name="interest" required defaultValue="Hotel / resort">
-                    <option>Hotel / resort</option>
-                    <option>Fitness facility</option>
-                    <option>Rehabilitation</option>
-                    <option>Private facility</option>
-                    <option>Product purchase</option>
-                    <option>Other aquatic project</option>
+                  <select id="interest" name="interest" required defaultValue={defaultInterest}>
+                    {interests.map((interest) => <option key={interest}>{interest}</option>)}
                   </select>
                 </div>
               </div>
@@ -130,7 +138,7 @@ export function ContactPage() {
                 Prepare inquiry <Send size={17} />
               </button>
               <div className="pb-form-note">
-                This form prepares an email to {CONTACT_EMAIL}. You can also use the phone number or email address shown on this page.
+                Submitting the form prepares an email to {CONTACT_EMAIL}. You can also contact us directly by phone or email using the details shown here.
               </div>
             </form>
           </div>
