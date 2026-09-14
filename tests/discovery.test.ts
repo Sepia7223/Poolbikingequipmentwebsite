@@ -23,6 +23,27 @@ describe("equipment discovery and quote context", () => {
       "poolbiking-ibiza",
     ]);
   });
+  it("offers real equipment in each requested family and avoids pool-only sea recommendations", () => {
+    for (const use of useCases) {
+      for (const family of ["Bikes", "Platforms", "Accessories"]) {
+        const result = getStartingPoints(use.id, "pool", family);
+        expect(result.products.length).toBeGreaterThan(0);
+        for (const id of result.products)
+          expect(equipmentData.find((item) => item.id === id)?.category).toBe(
+            family,
+          );
+      }
+    }
+    expect(getStartingPoints("senior", "pool", "Accessories").interest).toBe(
+      "Senior living / care residence",
+    );
+    expect(getStartingPoints("resort", "sea", "Platforms").products).toEqual(
+      [],
+    );
+    expect(getStartingPoints("resort", "sea", "Accessories").products).toEqual(
+      [],
+    );
+  });
   it("falls back gracefully for an unknown facility", () => {
     expect(getStartingPoints("unknown", "pool")).toEqual(useCases[0]);
   });

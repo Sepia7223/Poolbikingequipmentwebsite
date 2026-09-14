@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../content/Logo's/Poolbiking CW.png";
+import logo from "../content/brand/poolbiking-fitness.svg";
 import {
   CONTACT_EMAIL,
   CONTACT_PHONE_DISPLAY,
@@ -13,16 +13,20 @@ export function Footer() {
         <div className="pb-footer-grid">
           <div className="pb-footer-brand">
             <Link to="/" className="pb-brand">
-              <img src={logo} alt="Poolbiking Caribbean" />
+              <img
+                src={logo}
+                alt="POOLBIKING aquatic fitness"
+                width="184"
+                height="48"
+              />
               <span className="pb-brand-copy">
-                <strong>Poolbiking Caribbean</strong>
-                <span>Professional aquatic fitness</span>
+                <strong>Caribbean</strong>
               </span>
             </Link>
             <p>
               POOLBIKING aquatic fitness equipment for hotels, resorts, fitness
-              facilities, rehabilitation programs and other pool-based projects
-              across the Caribbean.
+              facilities, senior living and other pool-based projects across the
+              Caribbean.
             </p>
             <div className="pb-footer-links" style={{ marginTop: 18 }}>
               <a href={CONTACT_PHONE_HREF}>{CONTACT_PHONE_DISPLAY}</a>
@@ -34,7 +38,7 @@ export function Footer() {
             <div className="pb-footer-heading">Explore</div>
             <div className="pb-footer-links">
               <Link to="/equipment">Products</Link>
-              <Link to="/compare">Compare equipment</Link>
+              <Link to="/equipment#compare">Compare equipment</Link>
               <Link to="/gallery">Gallery</Link>
               <Link to="/about">About</Link>
               <Link to="/contact">Request a quote</Link>
@@ -50,7 +54,9 @@ export function Footer() {
               <Link to="/contact?interest=Fitness+facility">
                 Fitness facilities
               </Link>
-              <Link to="/contact?interest=Rehabilitation">Rehabilitation</Link>
+              <Link to="/contact?interest=Senior+living+%2F+care+residence">
+                Senior living
+              </Link>
               <Link to="/contact">Product support</Link>
             </div>
           </div>

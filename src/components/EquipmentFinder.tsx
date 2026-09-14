@@ -15,12 +15,13 @@ import {
 } from "../data/discovery";
 import { CompareButton } from "./Comparison";
 
-const icons = [Building2, Dumbbell, Accessibility, House];
+const icons = [Building2, Dumbbell, Accessibility, Accessibility, House];
 
 export function EquipmentFinder() {
   const [use, setUse] = useState("resort");
   const [environment, setEnvironment] = useState("pool");
-  const selection = getStartingPoints(use, environment);
+  const [family, setFamily] = useState("Recommended");
+  const selection = getStartingPoints(use, environment, family);
   const products = selection.products.map(
     (id) => equipmentData.find((item) => item.id === id)!,
   );
@@ -81,6 +82,21 @@ export function EquipmentFinder() {
               >
                 <option value="pool">In a swimming pool</option>
                 <option value="sea">At the beach / in the sea</option>
+              </select>
+            </div>
+            <div className="pb-finder-environment">
+              <label htmlFor="finder-family">
+                <span>03</span> What would you like to explore?
+              </label>
+              <select
+                id="finder-family"
+                value={family}
+                onChange={(event) => setFamily(event.target.value)}
+              >
+                <option>Recommended</option>
+                <option>Bikes</option>
+                <option>Platforms</option>
+                <option>Accessories</option>
               </select>
             </div>
             <p className="pb-small-copy">

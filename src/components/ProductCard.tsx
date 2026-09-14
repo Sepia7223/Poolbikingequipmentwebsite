@@ -4,6 +4,8 @@ import type { Equipment } from "../data/equipment";
 import { productVideos } from "../data/productVideos";
 import { CompareButton } from "./Comparison";
 
+import { WarrantyBadge } from "./WarrantyBadge";
+
 export interface CatalogueState {
   category: string;
   query: string;
@@ -52,11 +54,11 @@ export function ProductCard({ item, catalogueState }: ProductCardProps) {
         <h3>{item.name}</h3>
         <p>{item.shortDescription}</p>
         <div className="pb-product-meta">
-          <span>
-            {item.warrantyYears
-              ? `${item.warrantyYears}-year warranty`
-              : item.category}
-          </span>
+          {item.warrantyYears ? (
+            <WarrantyBadge years={item.warrantyYears} />
+          ) : (
+            <span>{item.category}</span>
+          )}
           <span className="pb-product-arrow">
             View details <ArrowRight size={13} />
           </span>

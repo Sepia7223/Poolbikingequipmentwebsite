@@ -12,7 +12,7 @@ import { ProductDetailPage } from "./pages/ProductDetailPage";
 import { AboutPage } from "./pages/AboutPage";
 import { GalleryPage } from "./pages/GalleryPage";
 import { ContactPage } from "./pages/ContactPage";
-import { ComparePage } from "./pages/ComparePage";
+import { PageMotion } from "./components/PageMotion";
 import { ComparisonProvider, ComparisonTray } from "./components/Comparison";
 
 export default function App() {
@@ -32,12 +32,16 @@ export default function App() {
             Skip to content
           </a>
           <Navigation />
+          <PageMotion />
           <main id="main-content" tabIndex={-1}>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/equipment" element={<EquipmentPage />} />
               <Route path="/equipment/:id" element={<ProductDetailPage />} />
-              <Route path="/compare" element={<ComparePage />} />
+              <Route
+                path="/compare"
+                element={<Navigate to="/equipment#compare" replace />}
+              />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/gallery" element={<GalleryPage />} />
               <Route path="/contact" element={<ContactPage />} />

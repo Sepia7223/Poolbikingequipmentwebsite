@@ -28,6 +28,15 @@ export const useCases = [
       "Compare aquatic treadmills with different support configurations. Your clinician should confirm suitability for the intended program.",
   },
   {
+    id: "senior",
+    label: "Senior living",
+    interest: "Senior living / care residence",
+    description: "Make space for supported movement in the water.",
+    products: ["pooltrekking-medical", "poolbiking-one-plus"],
+    reason:
+      "Explore support bars and adjustable seating with your care team. Suitability, access and supervision should be reviewed for each resident.",
+  },
+  {
     id: "private",
     label: "Private pools",
     interest: "Private facility",
@@ -54,8 +63,61 @@ export function sanitizeProductIds(
   ].slice(0, MAX_COMPARE);
 }
 
-export function getStartingPoints(use: string, environment: string) {
+const additionalEquipment: Record<string, Record<string, string[]>> = {
+  resort: {
+    Platforms: ["poolmat-set", "poolfit-basic"],
+    Accessories: ["pooljumping-trampoline", "pool-step"],
+  },
+  fitness: {
+    Platforms: ["poolfit-premium", "poolmat-set"],
+    Accessories: ["poolbag", "poolball"],
+  },
+  rehabilitation: {
+    Platforms: ["pooltrekking-medical", "pooltrekking-miami"],
+    Accessories: ["meta-400", "pool-step"],
+  },
+  senior: {
+    Platforms: ["pooltrekking-medical", "pooltrekking-miami"],
+    Accessories: ["meta-400", "meta-pk"],
+  },
+  private: {
+    Platforms: ["poolmat-set", "pooltrekking-miami"],
+    Accessories: ["pool-step", "poolbag"],
+  },
+};
+export function getStartingPoints(
+  use: string,
+  environment: string,
+  family = "Recommended",
+) {
   const selected = useCases.find((item) => item.id === use) ?? useCases[0];
+  if (environment === "sea" && family !== "Recommended" && family !== "Bikes") {
+    return {
+      ...selected,
+      products: [] as string[],
+      description: "Let’s check your waterfront setup.",
+      reason:
+        "These platforms and accessories are pool options. Contact us to check suitability for a beach or sea installation.",
+    };
+  }
+  if (environment === "pool" && family !== "Recommended") {
+    const products =
+      family === "Bikes"
+        ? selected.id === "rehabilitation" || selected.id === "senior"
+          ? ["poolbiking-one-plus", "poolbiking-one-2-0"]
+          : [...selected.products]
+        : (additionalEquipment[selected.id][family] ?? []);
+    return {
+      ...selected,
+      products,
+      reason:
+        family === "Accessories"
+          ? "Complete the setup with training or pool-access equipment. We’ll review compatibility, installation and user needs with you."
+          : family === "Platforms"
+            ? "Explore floating training platforms or aquatic walking equipment for your program. Confirm pool depth and supervision needs with your team."
+            : selected.reason,
+    };
+  }
   if (environment === "sea") {
     return {
       ...selected,

@@ -1,3 +1,4 @@
+import brandLogo from "../content/brand/poolbiking-barcelona.png";
 import { Link } from "react-router-dom";
 import { ArrowDown, ArrowRight, Check, ShieldCheck, Waves } from "lucide-react";
 import { equipmentData } from "../data/equipment";
@@ -17,13 +18,11 @@ export function HomePage() {
     "poolbiking-evolution",
   ].map((id) => equipmentData.find((item) => item.id === id)!);
   const exploreSolutions = () =>
-    document
-      .getElementById("solutions")
-      ?.scrollIntoView({
-        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth",
-      });
+    document.getElementById("solutions")?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
 
   return (
     <div className="pb-home">
@@ -42,17 +41,26 @@ export function HomePage() {
         </div>
         <div className="pb-container pb-hero-layout">
           <div className="pb-hero-content">
+            <img
+              className="pb-hero-logo"
+              src={brandLogo}
+              alt="POOLBIKING Barcelona"
+              width="880"
+              height="500"
+            />
             <div className="pb-eyebrow pb-eyebrow-light">
               Professional aquatic fitness · Caribbean
             </div>
             <h1 className="pb-title">
-              Make your pool
-              <br />a place to <em>move.</em>
+              Bring your pool
+              <br />
+              <em>to life.</em>
             </h1>
             <p className="pb-hero-lede">
               Turn time in the water into something people look forward to.
-              Explore POOLBIKING equipment for your hotel, fitness facility or
-              specialist pool.
+              Discover aquatic bikes, platforms and accessories for hotels,
+              senior living and fitness facilities. See the equipment in action
+              and explore a setup for your people.
             </p>
             <div className="pb-hero-actions">
               <Link
@@ -144,6 +152,38 @@ export function HomePage() {
         </div>
       </section>
 
+      <section className="pb-section pb-audiences">
+        <div className="pb-container pb-audience-grid">
+          <article>
+            <span className="pb-eyebrow">Hotels & resorts</span>
+            <h2>A pool experience worth exploring.</h2>
+            <p>
+              From a morning ride to a group session, show your team how aquatic
+              equipment could fit your guest activities.
+            </p>
+            <Link
+              className="pb-text-link"
+              to="/contact?interest=Hotel+%2F+resort"
+            >
+              Discuss a hotel demonstration <ArrowRight size={16} />
+            </Link>
+          </article>
+          <article>
+            <span className="pb-eyebrow">Senior living & care residences</span>
+            <h2>Movement, with people in mind.</h2>
+            <p>
+              Explore adjustable equipment, supported aquatic walking and
+              pool-access options with your staff and care team.
+            </p>
+            <Link
+              className="pb-text-link"
+              to="/contact?interest=Senior+living+%2F+care+residence"
+            >
+              Discuss your residence’s needs <ArrowRight size={16} />
+            </Link>
+          </article>
+        </div>
+      </section>
       <EquipmentFinder />
 
       <section className="pb-section pb-home-products">

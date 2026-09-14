@@ -52,6 +52,44 @@ describe("customer journeys", () => {
     expect(link.getAttribute("href")).toContain("interest=Fitness+facility");
   });
 
+  it("lets a residence explore access accessories and keeps that context in its inquiry", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(
+      screen.getByRole("button", { name: "Senior living", exact: true }),
+    );
+    await user.selectOptions(
+      screen.getByRole("combobox", { name: /What would you like to explore/ }),
+      "Accessories",
+    );
+    expect(
+      screen.getByRole("link", { name: "Explore Meta 400 Pool Lift" }),
+    ).toBeTruthy();
+    const link = screen.getByRole("link", { name: "Discuss these options" });
+    await user.click(link);
+    expect(
+      (screen.getByLabelText("Primary interest *") as HTMLSelectElement).value,
+    ).toBe("Senior living / care residence");
+  });
+
+  it("redirects saved comparison links into the equipment catalogue", async () => {
+    window.location.hash = "#/compare";
+    render(<App />);
+    await waitFor(() =>
+      expect(window.location.hash).toBe("#/equipment#compare"),
+    );
+    expect(
+      screen.getByRole("textbox", { name: "Search equipment" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("heading", { name: "The details, side by side." }),
+    ).toBeTruthy();
+    expect(
+      screen.getAllByRole("img", { name: /year international warranty/ })
+        .length,
+    ).toBeGreaterThan(0);
+  });
+
   it("caps comparisons at three, restores them after remount and supports removal", async () => {
     const user = userEvent.setup();
     const first = render(<App />);

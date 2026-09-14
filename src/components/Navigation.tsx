@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Columns3, Menu, X } from "lucide-react";
 import { useComparison } from "./Comparison";
-import logo from "../content/Logo's/Poolbiking CW.png";
+import logo from "../content/brand/poolbiking-fitness.svg";
 
 const links = [
   { label: "Equipment", to: "/equipment" },
@@ -29,9 +29,9 @@ export function Navigation() {
     setOpen(false);
     if (location.state?.restoreProductId) return;
     const frame = requestAnimationFrame(() => {
-      if (location.hash === "#solutions")
+      if (location.hash)
         document
-          .getElementById("solutions")
+          .getElementById(location.hash.slice(1))
           ?.scrollIntoView({ behavior: "instant" });
       else window.scrollTo({ top: 0, behavior: "instant" });
     });
@@ -61,10 +61,14 @@ export function Navigation() {
           className="pb-brand"
           aria-label="Poolbiking Caribbean home"
         >
-          <img src={logo} alt="" width="48" height="48" />
+          <img
+            src={logo}
+            alt="POOLBIKING aquatic fitness"
+            width="184"
+            height="48"
+          />
           <span className="pb-brand-copy">
-            <strong>Poolbiking Caribbean</strong>
-            <span>Professional aquatic fitness</span>
+            <strong>Caribbean</strong>
           </span>
         </Link>
         <div className="pb-nav-links">
@@ -84,7 +88,7 @@ export function Navigation() {
             </Link>
           ))}
           <Link
-            to="/compare"
+            to="/equipment#compare"
             className="pb-nav-compare"
             aria-label={`Compare equipment, ${ids.length} selected`}
           >
@@ -120,7 +124,7 @@ export function Navigation() {
               {link.label}
             </Link>
           ))}
-          <Link to="/compare">Compare equipment ({ids.length})</Link>
+          <Link to="/equipment#compare">Compare equipment ({ids.length})</Link>
           <Link
             to="/contact"
             className="pb-button pb-button-aqua pb-button-full"

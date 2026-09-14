@@ -1,3 +1,4 @@
+import { WarrantyBadge } from "../components/WarrantyBadge";
 import { useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import {
@@ -55,7 +56,9 @@ export function ProductDetailPage() {
     .slice(0, 3);
   const video = productVideos[product.id];
   const presentation = productPresentation[product.id];
-  const badges = getProductBadges(product);
+  const badges = getProductBadges(product).filter(
+    (badge) => !badge.title.includes("warranty"),
+  );
 
   const backState = {
     category: catalogueState?.category ?? "All",
@@ -117,9 +120,17 @@ export function ProductDetailPage() {
             )}
 
             {product.warrantyYears && (
-              <div className="pb-status">
-                International warranty: {product.warrantyYears} years for this
-                model.
+              <div className="pb-warranty-detail">
+                <WarrantyBadge years={product.warrantyYears} />
+                <div>
+                  <strong>
+                    {product.warrantyYears}-year international warranty
+                  </strong>
+                  <p>
+                    Manufacturer coverage listed for this model. Ask us about
+                    terms and support.
+                  </p>
+                </div>
               </div>
             )}
 
@@ -128,9 +139,8 @@ export function ProductDetailPage() {
                 <div className="pb-detail-kicker">Manufacturer information</div>
                 <h2>POOLBIKING systems used on this model</h2>
                 <p className="pb-detail-block-copy">
-                  Warranty marks and technology information are based on
-                  POOLBIKING manufacturer material for the current product
-                  range.
+                  Technology information is based on POOLBIKING manufacturer
+                  material for the current product range.
                 </p>
                 <div className="pb-manufacturer-badges">
                   {badges.map((badge) => (

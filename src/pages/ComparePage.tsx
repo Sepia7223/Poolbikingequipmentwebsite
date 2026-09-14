@@ -29,27 +29,27 @@ const rows: { label: string; value: (item: Equipment) => string }[] = [
   },
 ];
 
-export function ComparePage() {
+export function EquipmentComparison() {
   const { ids, toggle } = useComparison();
   const products = ids.map(
     (id) => equipmentData.find((item) => item.id === id)!,
   );
   return (
     <>
-      <section className="pb-page-hero">
+      <section
+        className="pb-section pb-inline-comparison"
+        id="compare"
+        aria-labelledby="comparison-title"
+      >
         <div className="pb-container">
-          <div className="pb-eyebrow pb-eyebrow-light">
-            Make a confident choice
-          </div>
-          <h1 className="pb-title">The details, side by side.</h1>
+          <div className="pb-eyebrow">Compare equipment</div>
+          <h2 className="pb-title pb-title-md" id="comparison-title">
+            The details, side by side.
+          </h2>
           <p className="pb-copy">
-            Compare up to three models, then ask us about the right setup for
-            your pool.
+            Choose up to three models from the catalogue above to build your
+            shortlist.
           </p>
-        </div>
-      </section>
-      <section className="pb-section">
-        <div className="pb-container">
           {!products.length ? (
             <div className="pb-compare-empty">
               <Columns3 size={42} />
@@ -58,7 +58,10 @@ export function ComparePage() {
                 Add equipment from the catalogue to see the differences in one
                 place.
               </p>
-              <Link to="/equipment" className="pb-button pb-button-aqua">
+              <Link
+                to="/equipment#product-catalogue"
+                className="pb-button pb-button-aqua"
+              >
                 Explore equipment <ArrowRight size={17} />
               </Link>
             </div>
@@ -71,7 +74,10 @@ export function ComparePage() {
                     ? " · Add another model to compare."
                     : ""}
                 </p>
-                <Link to="/equipment" className="pb-text-link">
+                <Link
+                  to="/equipment#product-catalogue"
+                  className="pb-text-link"
+                >
                   Add equipment <ArrowRight size={16} />
                 </Link>
               </div>

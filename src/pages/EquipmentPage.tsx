@@ -4,6 +4,8 @@ import { ArrowRight, Search } from "lucide-react";
 import { ProductCard, type CatalogueState } from "../components/ProductCard";
 import { categories, equipmentData } from "../data/equipment";
 
+import { EquipmentComparison } from "./ComparePage";
+
 interface CatalogueRestoreState extends CatalogueState {
   restoreProductId?: string;
 }
@@ -150,6 +152,8 @@ export function EquipmentPage() {
           )}
         </div>
       </section>
+
+      <EquipmentComparison />
 
       <section className="pb-section-compact pb-section-soft">
         <div className="pb-container">

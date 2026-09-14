@@ -11,6 +11,7 @@ import {
 
 const interests = [
   "Hotel / resort",
+  "Senior living / care residence",
   "Fitness facility",
   "Rehabilitation",
   "Private facility",

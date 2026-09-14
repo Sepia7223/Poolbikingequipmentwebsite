@@ -80,11 +80,16 @@ export function CompareButton({ id }: { id: string }) {
 
 export function ComparisonTray() {
   const { ids, toggle, clear } = useComparison();
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   const products = ids.map(
     (id) => equipmentData.find((item) => item.id === id)!,
   );
-  if (!ids.length || pathname === "/compare" || pathname === "/contact")
+  if (
+    !ids.length ||
+    pathname === "/compare" ||
+    pathname === "/contact" ||
+    hash === "#compare"
+  )
     return null;
   return (
     <aside className="pb-compare-tray" aria-label="Your equipment comparison">
@@ -115,7 +120,7 @@ export function ComparisonTray() {
         <button className="pb-text-button" type="button" onClick={clear}>
           Clear
         </button>
-        <Link to="/compare" className="pb-button pb-button-aqua">
+        <Link to="/equipment#compare" className="pb-button pb-button-aqua">
           Compare <ArrowRight size={16} />
         </Link>
       </div>

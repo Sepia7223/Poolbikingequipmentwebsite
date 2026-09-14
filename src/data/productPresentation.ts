@@ -27,7 +27,7 @@ export interface ProductPresentation {
   accessories?: ProductAccessory[];
 }
 
-const warrantyImages: Record<number, string> = {
+export const warrantyImages: Record<number, string> = {
   2: warranty2,
   3: warranty3,
   4: warranty4,
@@ -129,46 +129,75 @@ export function getProductBadges(product: Equipment): ProductBadge[] {
 
 export const productPresentation: Record<string, ProductPresentation> = {
   "poolbiking-one-2-0": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-one.html",
-    accessories: [accessories.doubleSaddle, accessories.bottleHolder, accessories.hitPedals, accessories.biggerWheels],
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-one.html",
+    accessories: [
+      accessories.doubleSaddle,
+      accessories.bottleHolder,
+      accessories.hitPedals,
+      accessories.biggerWheels,
+    ],
   },
   "poolbiking-one-plus": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-one-plus.html",
-    accessories: [accessories.multiExerciseBar, accessories.bottleHolder, accessories.hitPedals, accessories.biggerWheels],
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-one-plus.html",
+    accessories: [
+      accessories.multiExerciseBar,
+      accessories.bottleHolder,
+      accessories.hitPedals,
+      accessories.biggerWheels,
+    ],
   },
   "poolbiking-evolution": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-evolution.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-evolution.html",
     accessories: [accessories.hitPedals],
   },
   "poolbiking-berlin": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-berlin.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-berlin.html",
     accessories: [accessories.hitPedals],
   },
   "poolbiking-paris": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-paris.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-paris.html",
     accessories: [accessories.doubleSaddle],
   },
   "poolbiking-core": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-core.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-core.html",
     accessories: [accessories.bottleHolder, accessories.biggerWheels],
   },
   "poolbiking-monaco": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-monaco.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-monaco.html",
     accessories: [accessories.multiExerciseBar, accessories.bottleHolder],
   },
   "poolbiking-orbital": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-orbital.html",
-    accessories: [accessories.bottleHolder, accessories.sacrificialAnode, accessories.biggerWheels],
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-orbital.html",
+    accessories: [
+      accessories.bottleHolder,
+      accessories.sacrificialAnode,
+      accessories.biggerWheels,
+    ],
   },
   "poolbiking-tenerife": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-tenerife.html",
-    accessories: [accessories.doubleSaddle, accessories.hitPedals, accessories.biggerWheels],
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-tenerife.html",
+    accessories: [
+      accessories.doubleSaddle,
+      accessories.hitPedals,
+      accessories.biggerWheels,
+    ],
   },
   "poolbiking-ibiza": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-ibiza.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-ibiza.html",
   },
   "poolbiking-veracruz": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolbiking-veracruz.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolbiking-veracruz.html",
   },
   "poolmat-set": {
     manufacturerPage: "https://www.poolbiking.com/en/products/poolmat.html",
@@ -177,25 +206,32 @@ export const productPresentation: Record<string, ProductPresentation> = {
     manufacturerPage: "https://www.poolbiking.com/en/products/pooljumping.html",
   },
   "poolfit-basic": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolfit-basic.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolfit-basic.html",
   },
   "poolfit-premium": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/poolfit-premium.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/poolfit-premium.html",
   },
   "pooltrekking-acapulco": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/pooltrekking-acapulco.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/pooltrekking-acapulco.html",
   },
   "pooltrekking-medical": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/pooltrekking-medical.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/pooltrekking-medical.html",
   },
   "pooltrekking-miami": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/pooltrekking-miami.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/pooltrekking-miami.html",
   },
   "meta-400": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/elevator_meta-400.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/elevator_meta-400.html",
   },
   "meta-pk": {
-    manufacturerPage: "https://www.poolbiking.com/en/products/elevator_meta-pk.html",
+    manufacturerPage:
+      "https://www.poolbiking.com/en/products/elevator_meta-pk.html",
   },
   "pool-step": {
     manufacturerPage: "https://www.poolbiking.com/en/products/step.html",
