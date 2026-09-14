@@ -31,6 +31,21 @@ async function fillInquiry(user: ReturnType<typeof userEvent.setup>) {
 }
 
 describe("customer journeys", () => {
+  it("keeps the opening focused on one heading and one equipment action", () => {
+    const { container } = render(<App />);
+    const hero = within(container.querySelector(".pb-hero") as HTMLElement);
+    expect(hero.getByRole("heading", { level: 1 }).textContent).toBe(
+      "Move Together",
+    );
+    expect(hero.getAllByRole("link")).toHaveLength(1);
+    expect(
+      hero
+        .getByRole("link", { name: "Explore equipment" })
+        .getAttribute("href"),
+    ).toBe("#/equipment");
+    expect(hero.queryByRole("button", { name: "See it in motion" })).toBeNull();
+  });
+
   it("changes the finder results and preserves facility and model choices in the inquiry link", async () => {
     const user = userEvent.setup();
     render(<App />);

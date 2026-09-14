@@ -1912,3 +1912,131 @@ body {
     text-underline-offset: 9px;
   }
 }
+
+/* A single viewport-sized opening, independent of the photograph's aspect ratio. */
+.pb-home .pb-hero {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+}
+.pb-home .pb-hero-layout {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: 110px;
+  padding-bottom: 70px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.pb-home .pb-hero-content {
+  width: 100%;
+  max-width: 900px;
+  padding: 0;
+  text-align: center;
+}
+.pb-home .pb-hero .pb-title {
+  font-size: clamp(44px, 6.4vw, 100px);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
+}
+.pb-home .pb-hero-lede {
+  max-width: 510px;
+  margin: 24px auto 0;
+  font-size: clamp(15px, 1.4vw, 18px);
+  line-height: 1.6;
+}
+.pb-home .pb-hero-actions {
+  justify-content: center;
+  margin-top: 30px;
+}
+.pb-home .pb-hero-media::after {
+  background: linear-gradient(
+    180deg,
+    #002837bb,
+    #00283766 35%,
+    #00283780 70%,
+    #002837b3
+  );
+  pointer-events: none;
+}
+.pb-hero-film {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.7s ease;
+}
+.pb-hero-film.is-playing {
+  opacity: 1;
+}
+.pb-hero-film iframe {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100vw, 177.778vh);
+  width: max(100vw, 177.778dvh);
+  height: max(100vh, 56.25vw);
+  height: max(100dvh, 56.25vw);
+  transform: translate(-50%, -50%);
+  border: 0;
+}
+.pb-film-toggle {
+  position: absolute;
+  z-index: 3;
+  right: 28px;
+  bottom: 26px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #ffffff80;
+  border-radius: 50%;
+  background: #00283780;
+  color: #fff;
+  cursor: pointer;
+}
+.pb-intro-video {
+  margin-bottom: 22px;
+}
+.pb-intro-video .pb-watch-button {
+  color: var(--pb-ink);
+}
+.pb-intro-video .pb-watch-button > span {
+  border-color: var(--pb-aqua);
+}
+@media (max-width: 760px) {
+  .pb-home .pb-hero-layout {
+    display: flex;
+    padding-top: 96px;
+    padding-bottom: 76px;
+  }
+  .pb-home .pb-hero-content {
+    padding: 0;
+  }
+  .pb-home .pb-hero .pb-title {
+    font-size: clamp(42px, 10vw, 68px);
+  }
+  .pb-home .pb-hero-lede {
+    max-width: 330px;
+  }
+  .pb-film-toggle {
+    right: 18px;
+    bottom: 18px;
+  }
+}
+@media (max-height: 500px) and (min-width: 600px) {
+  .pb-home .pb-hero-layout {
+    padding-top: 90px;
+    padding-bottom: 24px;
+  }
+  .pb-home .pb-hero .pb-title {
+    font-size: 44px;
+  }
+  .pb-home .pb-hero-lede {
+    margin-top: 12px;
+  }
+  .pb-home .pb-hero-actions {
+    margin-top: 16px;
+  }
+}

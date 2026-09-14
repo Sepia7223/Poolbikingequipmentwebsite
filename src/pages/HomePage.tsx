@@ -1,13 +1,11 @@
-import brandLogo from "../content/brand/poolbiking-barcelona.png";
 import { Link } from "react-router-dom";
-import { ArrowDown, ArrowRight, Check, ShieldCheck, Waves } from "lucide-react";
+import { ArrowRight, Check, ShieldCheck, Waves } from "lucide-react";
 import { equipmentData } from "../data/equipment";
 import { EquipmentFinder } from "../components/EquipmentFinder";
 import { ProductCard } from "../components/ProductCard";
 import { ProjectFAQ } from "../components/ProjectFAQ";
 import { VideoDialog } from "../components/VideoDialog";
-import heroImage from "../content/optimized/pool-session.webp";
-import heroMobile from "../content/optimized/pool-session-mobile.webp";
+import { HeroVideo } from "../components/HeroVideo";
 import equipmentPhoto from "../content/optimized/pool-cycling.webp";
 import trainingImage from "../content/optimized/instructor-training.webp";
 
@@ -27,40 +25,13 @@ export function HomePage() {
   return (
     <div className="pb-home">
       <section className="pb-hero">
-        <div className="pb-hero-media">
-          <picture>
-            <source media="(max-width: 760px)" srcSet={heroMobile} />
-            <img
-              src={heroImage}
-              alt="An instructor leads a group cycling on Poolbiking equipment in an outdoor resort pool"
-              {...{ fetchpriority: "high" }}
-              width="1920"
-              height="948"
-            />
-          </picture>
-        </div>
+        <HeroVideo />
         <div className="pb-container pb-hero-layout">
           <div className="pb-hero-content">
-            <img
-              className="pb-hero-logo"
-              src={brandLogo}
-              alt="POOLBIKING Barcelona"
-              width="880"
-              height="500"
-            />
-            <div className="pb-eyebrow pb-eyebrow-light">
-              Professional aquatic fitness · Caribbean
-            </div>
-            <h1 className="pb-title">
-              Bring your pool
-              <br />
-              <em>to life.</em>
-            </h1>
+            <h1 className="pb-title">Move Together</h1>
             <p className="pb-hero-lede">
-              Turn time in the water into something people look forward to.
-              Discover aquatic bikes, platforms and accessories for hotels,
-              senior living and fitness facilities. See the equipment in action
-              and explore a setup for your people.
+              Aquatic fitness for hotels, senior living and every body in the
+              water.
             </p>
             <div className="pb-hero-actions">
               <Link
@@ -69,15 +40,7 @@ export function HomePage() {
               >
                 Explore equipment <ArrowRight size={18} />
               </Link>
-              <VideoDialog />
             </div>
-            <button
-              type="button"
-              className="pb-hero-discover"
-              onClick={exploreSolutions}
-            >
-              <ArrowDown size={16} /> Let’s find the right fit for your pool
-            </button>
           </div>
         </div>
       </section>
@@ -127,6 +90,9 @@ export function HomePage() {
             </h2>
           </div>
           <div>
+            <div className="pb-intro-video">
+              <VideoDialog />
+            </div>
             <p className="pb-copy">
               A morning ride with your guests. A new group class. A space for
               supervised movement. The right equipment brings a purpose to the
