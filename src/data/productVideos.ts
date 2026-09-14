@@ -20,8 +20,9 @@ const pooltrekkingVideo: ProductVideo = {
 };
 
 export const productVideos: Record<string, ProductVideo> = {
-  // Aquabikes. Use a model-specific video when a reliable direct video is available.
-  // Closely related variants share the POOLBIKING overview rather than linking to a search page.
+  // Model-specific videos are used whenever a reliable direct link is available.
+  // Closely related variants use a direct POOLBIKING brand/family video rather than
+  // sending visitors to a YouTube search-results page.
   "poolbiking-berlin": poolbikingOverview,
   "poolbiking-one-2-0": poolbikingOverview,
   "poolbiking-one-plus": poolbikingOverview,
@@ -66,10 +67,21 @@ export const productVideos: Record<string, ProductVideo> = {
   "pooltrekking-medical": pooltrekkingVideo,
   "pooltrekking-miami": pooltrekkingVideo,
 
-  // Related aquatic training products. A direct POOLBIKING overview is more useful
-  // than sending visitors to a YouTube search-results page.
-  "poolmat-set": poolbikingOverview,
-  "pooljumping-trampoline": poolbikingOverview,
+  "poolmat-set": {
+    url: "https://www.youtube.com/watch?v=dtw3NufvTUk",
+    label: "Watch Poolmat video",
+    source: "POOLMAT product video",
+    direct: true,
+  },
+  "pooljumping-trampoline": {
+    url: "https://www.youtube.com/watch?v=5ONbdL3_ov4",
+    label: "Watch Pooljumping video",
+    source: "POOLJUMPING product video",
+    direct: true,
+  },
+
+  // Other aquatic training accessories currently use the direct POOLBIKING overview
+  // until a verified product-specific clip is available.
   "poolbag": poolbikingOverview,
   "poolball": poolbikingOverview,
   "poolfit-basic": poolbikingOverview,
