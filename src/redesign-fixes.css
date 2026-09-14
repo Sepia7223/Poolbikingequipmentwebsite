@@ -32,9 +32,51 @@ figure.pb-gallery-item { margin: 0; }
   color: #fff !important;
 }
 
+.pb-product-card {
+  position: relative;
+  scroll-margin-top: 110px;
+}
+
+.pb-product-image-link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .pb-product-media img {
   max-width: 88%;
   max-height: 88%;
+}
+
+.pb-product-card .pb-product-body {
+  color: inherit;
+}
+
+.pb-product-card .pb-product-body:focus-visible,
+.pb-product-image-link:focus-visible,
+.pb-video-pill:focus-visible {
+  outline: 3px solid rgba(14,165,163,.25);
+  outline-offset: -3px;
+}
+
+.pb-search-wrap {
+  position: relative;
+  display: block;
+}
+
+.pb-search-wrap > svg {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7b8e96;
+  pointer-events: none;
+}
+
+.pb-search-wrap .pb-search {
+  padding-left: 42px;
 }
 
 .pb-detail-media img {
@@ -59,14 +101,15 @@ figure.pb-gallery-item { margin: 0; }
   position: absolute;
   top: 16px;
   right: 16px;
-  z-index: 2;
+  z-index: 4;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  min-height: 30px;
-  padding: 0 10px;
+  min-height: 34px;
+  padding: 0 11px;
   border-radius: 999px;
-  background: rgba(255,255,255,.94);
+  background: rgba(255,255,255,.96);
   color: var(--pb-navy);
   border: 1px solid rgba(11,31,42,.10);
   box-shadow: 0 6px 20px rgba(11,31,42,.08);
@@ -74,6 +117,14 @@ figure.pb-gallery-item { margin: 0; }
   font-weight: 800;
   letter-spacing: .08em;
   text-transform: uppercase;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.pb-video-pill:hover {
+  transform: translateY(-1px);
+  background: var(--pb-navy);
+  color: white;
+  box-shadow: 0 10px 24px rgba(11,31,42,.14);
 }
 
 .pb-button-video {
@@ -91,7 +142,7 @@ figure.pb-gallery-item { margin: 0; }
   display: flex;
   align-items: flex-start;
   gap: 9px;
-  margin-top: 14px;
+  margin: -18px 0 24px;
   color: var(--pb-muted);
   font-size: 12px;
   line-height: 1.5;
@@ -101,6 +152,120 @@ figure.pb-gallery-item { margin: 0; }
   flex: 0 0 auto;
   margin-top: 1px;
   color: var(--pb-aqua-deep);
+}
+
+/* Manufacturer information inspired by POOLBIKING's product pages. */
+.pb-manufacturer-panel {
+  margin: 30px 0 8px;
+  padding: 30px;
+  border: 1px solid var(--pb-line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, #fbfefe 0%, #f4fbfb 100%);
+}
+
+.pb-detail-kicker {
+  margin-bottom: 8px;
+  color: var(--pb-aqua-deep);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.pb-manufacturer-panel > h2,
+.pb-accessories-block > h2 {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  font-size: 22px;
+  letter-spacing: -.025em;
+}
+
+.pb-detail-block-copy {
+  margin: 9px 0 0;
+  max-width: 690px;
+  color: var(--pb-muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.pb-manufacturer-badges {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.pb-manufacturer-badge {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(11,31,42,.08);
+  border-radius: 16px;
+  background: white;
+}
+
+.pb-manufacturer-badge-media {
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 14px;
+}
+
+.pb-manufacturer-badge-media img {
+  width: auto;
+  height: auto;
+  max-width: 150px;
+  max-height: 86px;
+  object-fit: contain;
+}
+
+.pb-manufacturer-badge h3,
+.pb-accessory-card h3 {
+  margin: 0 0 6px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.pb-manufacturer-badge p,
+.pb-accessory-card p {
+  margin: 0;
+  color: var(--pb-muted);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.pb-accessory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.pb-accessory-card {
+  overflow: hidden;
+  border: 1px solid var(--pb-line);
+  border-radius: 16px;
+  background: white;
+}
+
+.pb-accessory-media {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+  background: #f7fbfb;
+}
+
+.pb-accessory-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pb-accessory-copy {
+  padding: 16px;
 }
 
 /* Editorial hierarchy refinements */
@@ -267,6 +432,21 @@ figure.pb-gallery-item { margin: 0; }
   .pb-text-link {
     justify-self: start;
   }
+
+  /* Portrait tablets need two useful catalogue columns, not three cramped cards. */
+  .pb-grid-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pb-detail-media {
+    width: min(100%, 720px);
+    margin: 0 auto;
+  }
+
+  .pb-manufacturer-badges,
+  .pb-accessory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 760px) {
@@ -296,8 +476,105 @@ figure.pb-gallery-item { margin: 0; }
     padding: 38px 28px;
   }
 
+  .pb-filterbar > .pb-search-wrap {
+    width: 100%;
+  }
+
   .pb-video-pill {
     top: 12px;
     right: 12px;
+    min-height: 40px;
+    padding: 0 13px;
+  }
+
+  .pb-detail-media {
+    min-height: 360px !important;
+    padding: 20px !important;
+    border-radius: 22px;
+  }
+
+  .pb-detail-media img {
+    max-height: 320px;
+  }
+
+  .pb-manufacturer-panel {
+    padding: 22px;
+    border-radius: 18px;
+  }
+
+  .pb-manufacturer-badge-media {
+    height: 78px;
+  }
+
+  .pb-manufacturer-badge-media img {
+    max-height: 72px;
+    max-width: 130px;
+  }
+
+  .pb-accessory-media {
+    height: 132px;
+  }
+}
+
+@media (max-width: 620px) {
+  .pb-detail-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .pb-detail-actions .pb-button {
+    width: 100%;
+  }
+
+  .pb-manufacturer-badges,
+  .pb-accessory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pb-manufacturer-badge {
+    display: grid;
+    grid-template-columns: 92px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+  }
+
+  .pb-manufacturer-badge-media {
+    height: 72px;
+    margin: 0;
+  }
+
+  .pb-manufacturer-badge-media img {
+    max-width: 86px;
+    max-height: 68px;
+  }
+}
+
+@media (max-width: 420px) {
+  .pb-detail-media {
+    min-height: 300px !important;
+    padding: 16px !important;
+  }
+
+  .pb-detail-media img {
+    max-height: 270px;
+  }
+
+  .pb-manufacturer-panel {
+    padding: 18px;
+  }
+
+  .pb-manufacturer-badge {
+    grid-template-columns: 76px minmax(0, 1fr);
+    padding: 14px;
+  }
+
+  .pb-manufacturer-badge-media img {
+    max-width: 72px;
+    max-height: 62px;
+  }
+
+  .pb-product-meta {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
