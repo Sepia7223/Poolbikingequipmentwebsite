@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, PlayCircle } from "lucide-react";
 import type { Equipment } from "../data/equipment";
 import { productVideos } from "../data/productVideos";
+import { CompareButton } from "./Comparison";
 
 export interface CatalogueState {
   category: string;
@@ -43,16 +44,27 @@ export function ProductCard({ item, catalogueState }: ProductCardProps) {
         </Link>
       </div>
 
-      <Link to={`/equipment/${item.id}`} state={linkState} className="pb-product-body">
+      <Link
+        to={`/equipment/${item.id}`}
+        state={linkState}
+        className="pb-product-body"
+      >
         <h3>{item.name}</h3>
         <p>{item.shortDescription}</p>
         <div className="pb-product-meta">
-          <span>{item.warrantyYears ? `${item.warrantyYears}-year warranty` : item.category}</span>
+          <span>
+            {item.warrantyYears
+              ? `${item.warrantyYears}-year warranty`
+              : item.category}
+          </span>
           <span className="pb-product-arrow">
             View details <ArrowRight size={13} />
           </span>
         </div>
       </Link>
+      <div className="pb-product-compare">
+        <CompareButton id={item.id} />
+      </div>
     </article>
   );
 }

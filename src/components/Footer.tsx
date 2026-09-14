@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import logo from "../content/Logo's/Poolbiking CW.png";
-
-const CONTACT_EMAIL = "info@seraphic.me";
-const CONTACT_PHONE_DISPLAY = "+5999 5142050";
-const CONTACT_PHONE_HREF = "tel:+59995142050";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_HREF,
+} from "../data/contact";
 
 export function Footer() {
   return (
@@ -19,8 +20,8 @@ export function Footer() {
               </span>
             </Link>
             <p>
-              POOLBIKING aquatic fitness equipment for hotels, resorts,
-              fitness facilities, rehabilitation programs and other pool-based projects
+              POOLBIKING aquatic fitness equipment for hotels, resorts, fitness
+              facilities, rehabilitation programs and other pool-based projects
               across the Caribbean.
             </p>
             <div className="pb-footer-links" style={{ marginTop: 18 }}>
@@ -33,6 +34,7 @@ export function Footer() {
             <div className="pb-footer-heading">Explore</div>
             <div className="pb-footer-links">
               <Link to="/equipment">Products</Link>
+              <Link to="/compare">Compare equipment</Link>
               <Link to="/gallery">Gallery</Link>
               <Link to="/about">About</Link>
               <Link to="/contact">Request a quote</Link>
@@ -42,17 +44,27 @@ export function Footer() {
           <div>
             <div className="pb-footer-heading">Applications</div>
             <div className="pb-footer-links">
-              <Link to="/contact">Hotels & resorts</Link>
-              <Link to="/contact">Fitness facilities</Link>
-              <Link to="/contact">Rehabilitation</Link>
+              <Link to="/contact?interest=Hotel+%2F+resort">
+                Hotels & resorts
+              </Link>
+              <Link to="/contact?interest=Fitness+facility">
+                Fitness facilities
+              </Link>
+              <Link to="/contact?interest=Rehabilitation">Rehabilitation</Link>
               <Link to="/contact">Product support</Link>
             </div>
           </div>
         </div>
 
         <div className="pb-footer-bottom">
-          <span>© {new Date().getFullYear()} Poolbiking Caribbean. All rights reserved.</span>
-          <span>POOLBIKING products are designed and manufactured in Barcelona, Spain.</span>
+          <span>
+            © {new Date().getFullYear()} Poolbiking Caribbean. All rights
+            reserved.
+          </span>
+          <span>
+            POOLBIKING products are designed and manufactured in Barcelona,
+            Spain.
+          </span>
         </div>
       </div>
     </footer>

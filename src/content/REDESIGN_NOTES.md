@@ -22,3 +22,13 @@
 3. Review any model specifications that may have changed since the repository product data was assembled.
 4. Replace or enhance individual low-resolution product images where higher-quality manufacturer originals are available.
 5. Connect the chosen hosting provider and perform a final mobile/desktop visual QA pass on the deployed URL.
+
+## Customer engagement pass
+
+- Added a shorter, photographic homepage and interactive facility/environment finder.
+- Added persistent, three-model comparisons and model-aware inquiries.
+- Restored visible explanations of the email-based contact flow, with review and copy fallback.
+- Added click-to-load manufacturer video, project FAQs and gallery captions.
+- Replaced active-page marketing imports with lighter WebP copies; originals are preserved.
+- Added type checking and automated customer journey tests to the redesign CI workflow.
+- Browser layout and external video checks still need a preview-host pass; the remote browser could not open this workspace's local development server.

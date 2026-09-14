@@ -1,209 +1,303 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Check, ShieldCheck, Waves } from "lucide-react";
+import { ArrowDown, ArrowRight, Check, ShieldCheck, Waves } from "lucide-react";
 import { equipmentData } from "../data/equipment";
-import heroImage from "../content/Marketing/IMG_3066retocado.jpg";
-import fitnessImage from "../content/Marketing/IMG_3053.JPG";
-import hotelsImage from "../content/Marketing/IMG_3055.JPG";
-import rehabImage from "../content/Marketing/IMG_3056retocado.jpg";
-import trainingImage from "../content/Marketing/formacio-melia-076-poolbiking.jpg";
-
-const solutions = [
-  {
-    title: "Hotels & Resorts",
-    text: "Add structured aquatic fitness to hotel and resort programs with equipment designed for regular professional use.",
-    image: hotelsImage,
-    interest: "Hotel / resort",
-  },
-  {
-    title: "Fitness",
-    text: "Add low-impact, high-resistance training to aquatic programs with equipment engineered for recurring professional use.",
-    image: fitnessImage,
-    interest: "Fitness facility",
-  },
-  {
-    title: "Rehabilitation",
-    text: "Use the support and resistance of water for controlled movement, conditioning and low-impact rehabilitation programs.",
-    image: rehabImage,
-    interest: "Rehabilitation",
-  },
-];
+import { EquipmentFinder } from "../components/EquipmentFinder";
+import { ProductCard } from "../components/ProductCard";
+import { ProjectFAQ } from "../components/ProjectFAQ";
+import { VideoDialog } from "../components/VideoDialog";
+import heroImage from "../content/optimized/pool-session.webp";
+import heroMobile from "../content/optimized/pool-session-mobile.webp";
+import equipmentPhoto from "../content/optimized/pool-cycling.webp";
+import trainingImage from "../content/optimized/instructor-training.webp";
 
 export function HomePage() {
-  const featured = equipmentData
-    .filter((item) => ["poolbiking-one-2-0", "poolbiking-one-plus", "poolbiking-evolution"].includes(item.id));
+  const featured = [
+    "poolbiking-one-2-0",
+    "poolbiking-one-plus",
+    "poolbiking-evolution",
+  ].map((id) => equipmentData.find((item) => item.id === id)!);
+  const exploreSolutions = () =>
+    document
+      .getElementById("solutions")
+      ?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+      });
 
   return (
-    <>
+    <div className="pb-home">
       <section className="pb-hero">
         <div className="pb-hero-media">
-          <img src={heroImage} alt="Aquatic cycling session with Poolbiking equipment" />
+          <picture>
+            <source media="(max-width: 760px)" srcSet={heroMobile} />
+            <img
+              src={heroImage}
+              alt="An instructor leads a group cycling on Poolbiking equipment in an outdoor resort pool"
+              {...{ fetchpriority: "high" }}
+              width="1920"
+              height="948"
+            />
+          </picture>
         </div>
-        <div className="pb-container">
+        <div className="pb-container pb-hero-layout">
           <div className="pb-hero-content">
-            <div className="pb-eyebrow pb-eyebrow-light">Poolbiking Caribbean</div>
-            <h1 className="pb-title">POOLBIKING equipment for hotels, fitness facilities and rehabilitation pools.</h1>
+            <div className="pb-eyebrow pb-eyebrow-light">
+              Professional aquatic fitness · Caribbean
+            </div>
+            <h1 className="pb-title">
+              Make your pool
+              <br />a place to <em>move.</em>
+            </h1>
             <p className="pb-hero-lede">
-              Aquatic bikes and training equipment for commercial and specialist pool programs across the Caribbean.
+              Turn time in the water into something people look forward to.
+              Explore POOLBIKING equipment for your hotel, fitness facility or
+              specialist pool.
             </p>
             <div className="pb-hero-actions">
-              <Link to="/equipment" className="pb-button pb-button-aqua pb-button-lg">
-                Explore products <ArrowRight size={18} />
+              <Link
+                to="/equipment"
+                className="pb-button pb-button-aqua pb-button-lg"
+              >
+                Explore equipment <ArrowRight size={18} />
               </Link>
-              <Link to="/contact" className="pb-button pb-button-outline-light pb-button-lg">
-                Request a quote
-              </Link>
+              <VideoDialog />
             </div>
-            <div className="pb-hero-note"><span /> Designed and manufactured in Barcelona. Sales and project support for Caribbean customers.</div>
+            <button
+              type="button"
+              className="pb-hero-discover"
+              onClick={exploreSolutions}
+            >
+              <ArrowDown size={16} /> Let’s find the right fit for your pool
+            </button>
           </div>
+          <Link to="/gallery" className="pb-hero-caption">
+            <span className="pb-live-dot" />
+            <div>
+              <strong>Real equipment. Real movement.</strong>
+              <span>
+                Explore the POOLBIKING photo gallery <ArrowRight size={14} />
+              </span>
+            </div>
+          </Link>
         </div>
       </section>
 
-      <div className="pb-statbar">
-        <div className="pb-container pb-stats">
-          <div className="pb-stat"><strong>AISI 316L</strong><span>Stainless-steel construction on core bike models</span></div>
-          <div className="pb-stat"><strong>2–7 years</strong><span>Warranty coverage depending on model</span></div>
-          <div className="pb-stat"><strong>60+ countries</strong><span>POOLBIKING equipment used worldwide</span></div>
-          <div className="pb-stat"><strong>Since 2005</strong><span>Designed and manufactured in Barcelona</span></div>
+      <div className="pb-proof-strip">
+        <div className="pb-container">
+          <p>
+            A different way
+            <br />
+            <strong>to use your pool.</strong>
+          </p>
+          <div>
+            <Waves size={23} />
+            <span>
+              Water-powered
+              <br />
+              <strong>resistance</strong>
+            </span>
+          </div>
+          <div>
+            <ShieldCheck size={23} />
+            <span>
+              Equipment for
+              <br />
+              <strong>professional use</strong>
+            </span>
+          </div>
+          <div>
+            <Check size={23} />
+            <span>
+              Guidance for
+              <br />
+              <strong>your pool project</strong>
+            </span>
+          </div>
         </div>
       </div>
 
-      <section className="pb-section pb-solutions-section" id="solutions">
-        <div className="pb-container">
-          <div className="pb-section-head">
-            <div>
-              <div className="pb-eyebrow">Choose by use</div>
-              <h2 className="pb-title pb-title-md">Match the equipment to the pool and the program.</h2>
-            </div>
-            <p className="pb-copy">
-              Start with the facility type. We can then compare models by fit, resistance, durability and intended use.
-            </p>
-          </div>
-
-          <div className="pb-grid-3 pb-solution-grid">
-            {solutions.map((solution) => (
-              <Link
-                key={solution.title}
-                className="pb-solution-card"
-                to={`/contact?interest=${encodeURIComponent(solution.interest)}`}
-              >
-                <img src={solution.image} alt={solution.title} />
-                <div className="pb-solution-content">
-                  <div className="pb-solution-kicker">Facility type</div>
-                  <h3>{solution.title}</h3>
-                  <p>{solution.text}</p>
-                  <span className="pb-solution-link">Discuss this project <ArrowRight size={15} /></span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-section pb-section-soft">
-        <div className="pb-container">
-          <div className="pb-section-head pb-section-head-tight">
-            <div>
-              <div className="pb-eyebrow">Aquatic bikes</div>
-              <h2 className="pb-title pb-title-md">Three models to start the comparison.</h2>
-            </div>
-            <Link to="/equipment" className="pb-text-link">View the full range <ArrowRight size={16} /></Link>
-          </div>
-
-          <div className="pb-grid-3 pb-featured-products">
-            {featured.map((item) => (
-              <Link key={item.id} to={`/equipment/${item.id}`} className="pb-product-card">
-                <div className="pb-product-media">
-                  <span className="pb-product-pill">{item.category}</span>
-                  <img src={item.image} alt={item.name} />
-                </div>
-                <div className="pb-product-body">
-                  <h3>{item.name}</h3>
-                  <p>{item.shortDescription}</p>
-                  <div className="pb-product-meta">
-                    <span>{item.warrantyYears ? `${item.warrantyYears}-year warranty` : "Professional equipment"}</span>
-                    <span className="pb-product-arrow">View model <ArrowRight size={13} /></span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="pb-section">
-        <div className="pb-container pb-feature-split">
-          <div className="pb-feature-photo">
-            <img src={trainingImage} alt="POOLBIKING professional training session" />
+      <section className="pb-section pb-intro-section">
+        <div className="pb-container pb-intro-grid">
+          <div>
+            <div className="pb-eyebrow">More possibilities in every pool</div>
+            <h2 className="pb-title pb-title-md">
+              The water is ready.
+              <br />
+              What will you do with it?
+            </h2>
           </div>
           <div>
-            <div className="pb-eyebrow">Why POOLBIKING</div>
-            <h2 className="pb-title pb-title-md">Built for repeated use in aquatic facilities.</h2>
             <p className="pb-copy">
-              POOLBIKING designs its equipment for professional pool environments, with an emphasis on rider fit, corrosion resistance and straightforward daily operation.
+              A morning ride with your guests. A new group class. A space for
+              supervised movement. The right equipment brings a purpose to the
+              pool — and gives people a reason to return.
             </p>
-
-            <div className="pb-feature-points">
-              <div className="pb-feature-point">
-                <div className="pb-feature-icon"><ShieldCheck size={19} /></div>
-                <div><strong>Pool-ready materials</strong><span>Selected bike models use AISI 316L stainless steel and components intended for aquatic environments.</span></div>
-              </div>
-              <div className="pb-feature-point">
-                <div className="pb-feature-icon"><Waves size={19} /></div>
-                <div><strong>Resistance from the water</strong><span>Pedalling in water creates progressive resistance for low-impact cardio and conditioning work.</span></div>
-              </div>
-              <div className="pb-feature-point">
-                <div className="pb-feature-icon"><Check size={19} /></div>
-                <div><strong>Models for different settings</strong><span>The range includes options for general fitness, intensive training, hotels, public pools, beaches and rehabilitation.</span></div>
-              </div>
-            </div>
+            <button
+              type="button"
+              className="pb-text-link"
+              onClick={exploreSolutions}
+            >
+              Explore your possibilities <ArrowRight size={16} />
+            </button>
           </div>
         </div>
       </section>
 
-      <section className="pb-section pb-section-sand">
+      <EquipmentFinder />
+
+      <section className="pb-section pb-home-products">
         <div className="pb-container">
           <div className="pb-section-head pb-section-head-tight">
             <div>
-              <div className="pb-eyebrow">Project support</div>
-              <h2 className="pb-title pb-title-md">From product selection to delivery planning.</h2>
+              <div className="pb-eyebrow">Meet the equipment</div>
+              <h2 className="pb-title pb-title-md">Find your kind of ride.</h2>
             </div>
-            <p className="pb-copy">You can contact us before choosing a model. We will narrow the range around the pool, users and intended program.</p>
+            <Link to="/equipment" className="pb-text-link">
+              Explore the full collection <ArrowRight size={16} />
+            </Link>
           </div>
+          <div className="pb-grid-3 pb-featured-products">
+            {featured.map((item, index) => (
+              <div className="pb-featured-item" key={item.id}>
+                <div className="pb-model-context">
+                  <span>0{index + 1}</span>
+                  {
+                    [
+                      "A straightforward start",
+                      "More adjustment. More flexibility.",
+                      "A reinforced frame for demanding use",
+                    ][index]
+                  }
+                </div>
+                <ProductCard item={item} />
+              </div>
+            ))}
+          </div>
+          <p className="pb-collection-note">
+            Every pool is different. Compare the details, then let’s talk
+            through your setup.
+          </p>
+        </div>
+      </section>
 
-          <div className="pb-process pb-process-cards">
+      <section className="pb-experience-section">
+        <div className="pb-experience-photo">
+          <img
+            src={equipmentPhoto}
+            alt="A row of stainless-steel Poolbiking bikes beside an outdoor pool"
+            loading="lazy"
+            width="1200"
+            height="800"
+          />
+        </div>
+        <div className="pb-experience-copy">
+          <div className="pb-eyebrow pb-eyebrow-light">Made for the water</div>
+          <h2 className="pb-title pb-title-md">
+            Purpose in
+            <br />
+            every detail.
+          </h2>
+          <p>
+            From the saddle adjustment to the pedals, the details shape the
+            ride. Explore the materials, movement and fit of each model before
+            you choose.
+          </p>
+          <div className="pb-experience-point">
+            <span>01</span>
             <div>
-              <span className="pb-step-number">01</span>
-              <h3>Tell us about the facility.</h3>
-              <p>Share the pool environment, intended users, program and approximate number of units.</p>
-            </div>
-            <div>
-              <span className="pb-step-number">02</span>
-              <h3>Compare suitable models.</h3>
-              <p>We narrow the range by fit, resistance, construction and operational requirements.</p>
-            </div>
-            <div>
-              <span className="pb-step-number">03</span>
-              <h3>Plan the order.</h3>
-              <p>Once the model and quantity are confirmed, we can move into quotation and delivery planning.</p>
+              <h3>Fit that makes a difference</h3>
+              <p>
+                Compare saddle and handlebar adjustments for the people using
+                your pool.
+              </p>
             </div>
           </div>
+          <div className="pb-experience-point">
+            <span>02</span>
+            <div>
+              <h3>Resistance you can feel</h3>
+              <p>
+                Different pedal and blade designs create different training
+                experiences in the water.
+              </p>
+            </div>
+          </div>
+          <Link to="/equipment" className="pb-button pb-button-white">
+            Get to know the range <ArrowRight size={17} />
+          </Link>
         </div>
       </section>
 
       <section className="pb-section">
-        <div className="pb-container">
-          <div className="pb-cta pb-cta-clean">
-            <div className="pb-cta-inner">
+        <div className="pb-container pb-project-story">
+          <div className="pb-project-image">
+            <img
+              src={trainingImage}
+              alt="Poolbiking riders taking part in an instructor-led training session"
+              loading="lazy"
+              width="1200"
+              height="800"
+            />
+            <span>Equipment is just the beginning.</span>
+          </div>
+          <div>
+            <div className="pb-eyebrow">Let’s plan your pool project</div>
+            <h2 className="pb-title pb-title-md">
+              From the first idea
+              <br />
+              to the right setup.
+            </h2>
+            <div className="pb-story-steps">
               <div>
-                <div className="pb-eyebrow pb-eyebrow-light">Request a quote</div>
-                <h2>Tell us what kind of pool project you are planning.</h2>
-                <p>We can recommend a starting point for hotels, fitness facilities, rehabilitation programs and other professional aquatic settings.</p>
+                <span>01</span>
+                <div>
+                  <h3>Tell us about your pool</h3>
+                  <p>The location, the people and what you’d like to offer.</p>
+                </div>
               </div>
-              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Contact Poolbiking Caribbean <ArrowRight size={18} /></Link>
+              <div>
+                <span>02</span>
+                <div>
+                  <h3>Explore the possibilities</h3>
+                  <p>
+                    Compare equipment around your program and practical needs.
+                  </p>
+                </div>
+              </div>
+              <div>
+                <span>03</span>
+                <div>
+                  <h3>Bring the details together</h3>
+                  <p>Discuss quantities, pricing and delivery planning.</p>
+                </div>
+              </div>
             </div>
+            <Link to="/contact" className="pb-text-link">
+              Start a conversation <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
-    </>
+
+      <ProjectFAQ />
+
+      <section className="pb-section pb-final-section">
+        <div className="pb-container pb-final-cta">
+          <div className="pb-eyebrow pb-eyebrow-light">
+            Your next chapter starts in the water
+          </div>
+          <h2 className="pb-title">
+            Let’s make more
+            <br />
+            of your pool.
+          </h2>
+          <p>Have a project in mind? We’d love to hear about it.</p>
+          <Link to="/contact" className="pb-button pb-button-aqua pb-button-lg">
+            Tell us about your project <ArrowRight size={18} />
+          </Link>
+        </div>
+      </section>
+    </div>
   );
 }
