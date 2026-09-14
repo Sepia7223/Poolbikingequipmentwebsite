@@ -1,10 +1,21 @@
 import { useEffect } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { ArrowLeft, ArrowRight, CheckCircle2, ExternalLink, PlayCircle } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CheckCircle2,
+  ExternalLink,
+  PlayCircle,
+} from "lucide-react";
 import { ProductCard, type CatalogueState } from "../components/ProductCard";
 import { equipmentData } from "../data/equipment";
-import { getProductBadges, productPresentation } from "../data/productPresentation";
+import {
+  getProductBadges,
+  productPresentation,
+} from "../data/productPresentation";
 import { productVideos } from "../data/productVideos";
+import { CompareButton } from "../components/Comparison";
+import { buildInquiryUrl } from "../data/discovery";
 
 interface ProductLocationState {
   catalogueState?: CatalogueState;
@@ -14,7 +25,8 @@ export function ProductDetailPage() {
   const { id } = useParams();
   const location = useLocation();
   const product = equipmentData.find((item) => item.id === id);
-  const catalogueState = (location.state as ProductLocationState | null)?.catalogueState;
+  const catalogueState = (location.state as ProductLocationState | null)
+    ?.catalogueState;
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
@@ -25,15 +37,21 @@ export function ProductDetailPage() {
       <section className="pb-detail">
         <div className="pb-container">
           <h1 className="pb-title pb-title-md">Product not found.</h1>
-          <p className="pb-copy">The requested product is not in the current catalogue.</p>
-          <Link to="/equipment" className="pb-button" style={{ marginTop: 28 }}>Back to products</Link>
+          <p className="pb-copy">
+            The requested product is not in the current catalogue.
+          </p>
+          <Link to="/equipment" className="pb-button" style={{ marginTop: 28 }}>
+            Back to products
+          </Link>
         </div>
       </section>
     );
   }
 
   const related = equipmentData
-    .filter((item) => item.category === product.category && item.id !== product.id)
+    .filter(
+      (item) => item.category === product.category && item.id !== product.id,
+    )
     .slice(0, 3);
   const video = productVideos[product.id];
   const presentation = productPresentation[product.id];
@@ -71,8 +89,13 @@ export function ProductDetailPage() {
             <p className="pb-detail-summary">{product.description}</p>
 
             <div className="pb-detail-actions">
-              <Link to="/contact" className="pb-button pb-button-aqua pb-button-lg">Request pricing <ArrowRight size={18} /></Link>
-              <Link to="/contact" className="pb-button pb-button-outline pb-button-lg">Ask about this model</Link>
+              <Link
+                to={buildInquiryUrl([product.id])}
+                className="pb-button pb-button-aqua pb-button-lg"
+              >
+                Request pricing <ArrowRight size={18} />
+              </Link>
+              <CompareButton id={product.id} />
               {video && (
                 <a
                   href={video.url}
@@ -80,7 +103,8 @@ export function ProductDetailPage() {
                   rel="noreferrer"
                   className="pb-button pb-button-video pb-button-lg"
                 >
-                  <PlayCircle size={19} /> {video.label} <ExternalLink size={15} />
+                  <PlayCircle size={19} /> {video.label}{" "}
+                  <ExternalLink size={15} />
                 </a>
               )}
             </div>
@@ -93,7 +117,10 @@ export function ProductDetailPage() {
             )}
 
             {product.warrantyYears && (
-              <div className="pb-status">International warranty: {product.warrantyYears} years for this model.</div>
+              <div className="pb-status">
+                International warranty: {product.warrantyYears} years for this
+                model.
+              </div>
             )}
 
             {badges.length > 0 && (
@@ -101,11 +128,16 @@ export function ProductDetailPage() {
                 <div className="pb-detail-kicker">Manufacturer information</div>
                 <h2>POOLBIKING systems used on this model</h2>
                 <p className="pb-detail-block-copy">
-                  Warranty marks and technology information are based on POOLBIKING manufacturer material for the current product range.
+                  Warranty marks and technology information are based on
+                  POOLBIKING manufacturer material for the current product
+                  range.
                 </p>
                 <div className="pb-manufacturer-badges">
                   {badges.map((badge) => (
-                    <article className="pb-manufacturer-badge" key={badge.title}>
+                    <article
+                      className="pb-manufacturer-badge"
+                      key={badge.title}
+                    >
                       <div className="pb-manufacturer-badge-media">
                         <img src={badge.image} alt="" loading="lazy" />
                       </div>
@@ -131,35 +163,41 @@ export function ProductDetailPage() {
               </div>
             </div>
 
-            {presentation?.accessories && presentation.accessories.length > 0 && (
-              <div className="pb-detail-block pb-accessories-block">
-                <div className="pb-detail-kicker">Available complements</div>
-                <h2>Accessories listed by POOLBIKING</h2>
-                <p className="pb-detail-block-copy">
-                  These are manufacturer-listed options for this model. Ask us about current Caribbean availability when requesting a quote.
-                </p>
-                <div className="pb-accessory-grid">
-                  {presentation.accessories.map((accessory) => (
-                    <article className="pb-accessory-card" key={accessory.name}>
-                      <div className="pb-accessory-media">
-                        <img
-                          src={accessory.image}
-                          alt={accessory.name}
-                          loading="lazy"
-                          onError={(event) => {
-                            event.currentTarget.style.display = "none";
-                          }}
-                        />
-                      </div>
-                      <div className="pb-accessory-copy">
-                        <h3>{accessory.name}</h3>
-                        <p>{accessory.note}</p>
-                      </div>
-                    </article>
-                  ))}
+            {presentation?.accessories &&
+              presentation.accessories.length > 0 && (
+                <div className="pb-detail-block pb-accessories-block">
+                  <div className="pb-detail-kicker">Available complements</div>
+                  <h2>Accessories listed by POOLBIKING</h2>
+                  <p className="pb-detail-block-copy">
+                    These are manufacturer-listed options for this model. Ask us
+                    about current Caribbean availability when requesting a
+                    quote.
+                  </p>
+                  <div className="pb-accessory-grid">
+                    {presentation.accessories.map((accessory) => (
+                      <article
+                        className="pb-accessory-card"
+                        key={accessory.name}
+                      >
+                        <div className="pb-accessory-media">
+                          <img
+                            src={accessory.image}
+                            alt={accessory.name}
+                            loading="lazy"
+                            onError={(event) => {
+                              event.currentTarget.style.display = "none";
+                            }}
+                          />
+                        </div>
+                        <div className="pb-accessory-copy">
+                          <h3>{accessory.name}</h3>
+                          <p>{accessory.note}</p>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
             <div className="pb-detail-block">
               <h2>Specifications</h2>
@@ -180,7 +218,11 @@ export function ProductDetailPage() {
             <h2 className="pb-title pb-title-sm">Related equipment.</h2>
             <div className="pb-grid-3" style={{ marginTop: 34 }}>
               {related.map((item) => (
-                <ProductCard key={item.id} item={item} catalogueState={catalogueState} />
+                <ProductCard
+                  key={item.id}
+                  item={item}
+                  catalogueState={catalogueState}
+                />
               ))}
             </div>
           </div>

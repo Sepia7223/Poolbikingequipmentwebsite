@@ -28,8 +28,11 @@ export function EquipmentPage() {
     const normalized = query.trim().toLowerCase();
     const filtered = equipmentData.filter((item) => {
       const categoryMatch = category === "All" || item.category === category;
-      const searchMatch = !normalized || [item.name, item.shortDescription, item.description]
-        .some((value) => value.toLowerCase().includes(normalized));
+      const searchMatch =
+        !normalized ||
+        [item.name, item.shortDescription, item.description].some((value) =>
+          value.toLowerCase().includes(normalized),
+        );
       return categoryMatch && searchMatch;
     });
 
@@ -61,9 +64,10 @@ export function EquipmentPage() {
       <section className="pb-page-hero">
         <div className="pb-container">
           <div className="pb-eyebrow pb-eyebrow-light">Product catalogue</div>
-          <h1 className="pb-title">POOLBIKING bikes, platforms and aquatic accessories.</h1>
+          <h1 className="pb-title">Make your next move.</h1>
           <p className="pb-copy">
-            Browse equipment for hotel programs, commercial fitness, rehabilitation and other pool-based training.
+            Explore aquatic bikes, platforms and accessories. Add up to three
+            models to compare the details side by side.
           </p>
         </div>
       </section>
@@ -77,6 +81,7 @@ export function EquipmentPage() {
                   key={item}
                   type="button"
                   className={`pb-chip ${category === item ? "is-active" : ""}`}
+                  aria-pressed={category === item}
                   onClick={() => setCategory(item)}
                 >
                   {item}
@@ -94,15 +99,54 @@ export function EquipmentPage() {
               />
             </label>
           </div>
+          <div className="pb-catalogue-summary">
+            <p role="status">
+              {products.length} {products.length === 1 ? "model" : "models"}
+              {category !== "All" ? ` · ${category}` : " to explore"}
+              {query.trim() ? ` matching “${query.trim()}”` : ""}
+            </p>
+            {(category !== "All" || query) && (
+              <button
+                type="button"
+                className="pb-text-button"
+                onClick={() => {
+                  setCategory("All");
+                  setQuery("");
+                }}
+              >
+                Clear filters
+              </button>
+            )}
+          </div>
 
           {products.length > 0 ? (
             <div className="pb-grid-3">
               {products.map((item) => (
-                <ProductCard key={item.id} item={item} catalogueState={catalogueState} />
+                <ProductCard
+                  key={item.id}
+                  item={item}
+                  catalogueState={catalogueState}
+                />
               ))}
             </div>
           ) : (
-            <div className="pb-empty">No equipment matches that search.</div>
+            <div className="pb-empty">
+              <h2>No matches just yet.</h2>
+              <p>
+                Try a model name such as “One”, or reset the filters to explore
+                the full range.
+              </p>
+              <button
+                type="button"
+                className="pb-button pb-button-aqua"
+                onClick={() => {
+                  setCategory("All");
+                  setQuery("");
+                }}
+              >
+                Show all equipment
+              </button>
+            </div>
           )}
         </div>
       </section>
@@ -112,11 +156,21 @@ export function EquipmentPage() {
           <div className="pb-cta">
             <div className="pb-cta-inner">
               <div>
-                <div className="pb-eyebrow pb-eyebrow-light">Need help choosing a model?</div>
+                <div className="pb-eyebrow pb-eyebrow-light">
+                  Need help choosing a model?
+                </div>
                 <h2>Tell us how and where the equipment will be used.</h2>
-                <p>Facility type, pool environment, rider profile and training goal help narrow the options.</p>
+                <p>
+                  Facility type, pool environment, rider profile and training
+                  goal help narrow the options.
+                </p>
               </div>
-              <Link to="/contact" className="pb-button pb-button-white pb-button-lg">Contact us <ArrowRight size={18} /></Link>
+              <Link
+                to="/contact"
+                className="pb-button pb-button-white pb-button-lg"
+              >
+                Contact us <ArrowRight size={18} />
+              </Link>
             </div>
           </div>
         </div>

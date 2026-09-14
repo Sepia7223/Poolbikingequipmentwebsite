@@ -1,6 +1,6 @@
 import { ArrowRight, Building2, Dumbbell, HeartPulse } from "lucide-react";
 import { Link } from "react-router-dom";
-import image from "../content/Marketing/IMG_3055.JPG";
+import image from "../content/optimized/pool-cycling.webp";
 
 export function AboutPage() {
   return (
@@ -31,7 +31,7 @@ export function AboutPage() {
             <Link to="/equipment" className="pb-button" style={{ marginTop: 30 }}>Explore equipment <ArrowRight size={17} /></Link>
           </div>
           <div className="pb-about-photo">
-            <img src={image} alt="Professional Poolbiking equipment in a hospitality environment" />
+            <img src={image} alt="Professional Poolbiking equipment in a hospitality environment" loading="lazy" />
           </div>
         </div>
       </section>
