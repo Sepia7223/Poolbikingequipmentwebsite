@@ -5,6 +5,7 @@ import warranty5 from "../content/Waranty Logo/garantia-5_en.svg";
 import warranty7 from "../content/Waranty Logo/garantia-7_en.svg";
 import pedalSeal from "../content/Logo's/segell_pedal_230_en.png";
 import perfectGeometry from "../content/Logo's/poolbiking_perfect_geometry.png";
+import professionalEquipment from "../content/Logo's/poolbiking_professional_equipment.svg";
 import progressiveResistance from "../content/Logo's/full_progressive_resistance.jpg";
 import ultraStrong from "../content/Logo's/ultra_strong.svg";
 import type { Equipment } from "./equipment";
@@ -105,6 +106,14 @@ export function getProductBadges(product: Equipment): ProductBadge[] {
         image: progressiveResistance,
       },
     );
+  } else {
+    badges.push({
+      title: "Professional aquatic equipment",
+      copy: product.specifications.material.toLowerCase().includes("aisi")
+        ? `Professional equipment using ${product.specifications.material}.`
+        : "Part of POOLBIKING's professional aquatic training equipment range.",
+      image: professionalEquipment,
+    });
   }
 
   if (ultraStrongModels.has(product.id)) {
