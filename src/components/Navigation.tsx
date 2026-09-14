@@ -53,7 +53,7 @@ export function Navigation() {
   return (
     <nav
       aria-label="Main navigation"
-      className={`pb-nav is-solid ${scrolled ? "is-scrolled" : ""}`}
+      className={`pb-nav ${location.pathname === "/" && !scrolled && !open ? "is-transparent" : "is-solid"} ${scrolled ? "is-scrolled" : ""}`}
     >
       <div className="pb-container pb-nav-inner">
         <Link

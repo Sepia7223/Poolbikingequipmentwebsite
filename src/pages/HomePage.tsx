@@ -79,15 +79,6 @@ export function HomePage() {
               <ArrowDown size={16} /> Let’s find the right fit for your pool
             </button>
           </div>
-          <Link to="/gallery" className="pb-hero-caption">
-            <span className="pb-live-dot" />
-            <div>
-              <strong>Real equipment. Real movement.</strong>
-              <span>
-                Explore the POOLBIKING photo gallery <ArrowRight size={14} />
-              </span>
-            </div>
-          </Link>
         </div>
       </section>
 
