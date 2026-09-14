@@ -1,22 +1,60 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowRight, PlayCircle, Search } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ArrowRight, Search } from "lucide-react";
+import { ProductCard, type CatalogueState } from "../components/ProductCard";
 import { categories, equipmentData } from "../data/equipment";
-import { productVideos } from "../data/productVideos";
+
+interface CatalogueRestoreState extends CatalogueState {
+  restoreProductId?: string;
+}
+
+const categoryPriority: Record<string, number> = {
+  Bikes: 0,
+  Platforms: 1,
+  Accessories: 2,
+};
 
 export function EquipmentPage() {
-  const [category, setCategory] = useState("All");
-  const [query, setQuery] = useState("");
+  const location = useLocation();
+  const restoreState = (location.state as CatalogueRestoreState | null) ?? null;
+  const [category, setCategory] = useState(
+    restoreState?.category && categories.includes(restoreState.category)
+      ? restoreState.category
+      : "All",
+  );
+  const [query, setQuery] = useState(restoreState?.query ?? "");
 
   const products = useMemo(() => {
     const normalized = query.trim().toLowerCase();
-    return equipmentData.filter((item) => {
+    const filtered = equipmentData.filter((item) => {
       const categoryMatch = category === "All" || item.category === category;
       const searchMatch = !normalized || [item.name, item.shortDescription, item.description]
         .some((value) => value.toLowerCase().includes(normalized));
       return categoryMatch && searchMatch;
     });
+
+    if (category !== "All") return filtered;
+
+    return [...filtered].sort((a, b) => {
+      const aPriority = categoryPriority[a.category] ?? 99;
+      const bPriority = categoryPriority[b.category] ?? 99;
+      return aPriority - bPriority;
+    });
   }, [category, query]);
+
+  useEffect(() => {
+    if (!restoreState?.restoreProductId) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      document
+        .getElementById(`product-card-${restoreState.restoreProductId}`)
+        ?.scrollIntoView({ block: "center", behavior: "auto" });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [restoreState?.restoreProductId, products.length]);
+
+  const catalogueState: CatalogueState = { category, query };
 
   return (
     <>
@@ -30,7 +68,7 @@ export function EquipmentPage() {
         </div>
       </section>
 
-      <section className="pb-section">
+      <section className="pb-section" id="product-catalogue">
         <div className="pb-container">
           <div className="pb-filterbar">
             <div className="pb-filters" aria-label="Product categories">
@@ -45,11 +83,10 @@ export function EquipmentPage() {
                 </button>
               ))}
             </div>
-            <label style={{ position: "relative" }}>
-              <Search size={17} style={{ position: "absolute", left: 15, top: 14, color: "#7b8e96" }} />
+            <label className="pb-search-wrap">
+              <Search size={17} aria-hidden="true" />
               <input
                 className="pb-search"
-                style={{ paddingLeft: 42 }}
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search equipment"
@@ -61,21 +98,7 @@ export function EquipmentPage() {
           {products.length > 0 ? (
             <div className="pb-grid-3">
               {products.map((item) => (
-                <Link key={item.id} to={`/equipment/${item.id}`} className="pb-product-card">
-                  <div className="pb-product-media">
-                    <span className="pb-product-pill">{item.category}</span>
-                    {productVideos[item.id] && <span className="pb-video-pill"><PlayCircle size={13} /> Video</span>}
-                    <img src={item.image} alt={item.name} loading="lazy" />
-                  </div>
-                  <div className="pb-product-body">
-                    <h3>{item.name}</h3>
-                    <p>{item.shortDescription}</p>
-                    <div className="pb-product-meta">
-                      <span>{item.warrantyYears ? `${item.warrantyYears}-year warranty` : item.category}</span>
-                      <span className="pb-product-arrow">View details <ArrowRight size={13} style={{ display: "inline", verticalAlign: "middle" }} /></span>
-                    </div>
-                  </div>
-                </Link>
+                <ProductCard key={item.id} item={item} catalogueState={catalogueState} />
               ))}
             </div>
           ) : (
