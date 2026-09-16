@@ -45,6 +45,7 @@ export interface Equipment {
   };
   inStock: boolean;
   warrantyYears?: number;
+  warrantyNote?: string;
 }
 
 export const equipmentData: Equipment[] = [
@@ -453,7 +454,7 @@ export const equipmentData: Equipment[] = [
     name: "Pooltrekking Acapulco",
     category: "Platforms",
     shortDescription: "Professional aquatic treadmill with top grip and foldable frame.",
-    description: "Zero-impact treadmill with antibacterial belt, front stability bar, suction-cup feet and foldable design for easy storage.",
+    description: "Aquatic treadmill for low-impact walking with antibacterial belt, front stability bar, suction-cup feet and foldable design for easy storage.",
     image: acapulcoImg,
     features: [
       "Antibacterial belt with top-grip surface",
@@ -494,7 +495,7 @@ export const equipmentData: Equipment[] = [
       resistanceLevels: "Self-paced belt resistance in water"
     },
     inStock: true,
-    warrantyYears: 4
+    warrantyNote: "Confirm written coverage: the manufacturer’s Medical page has conflicting warranty information."
   },
   {
     id: "pooltrekking-miami",

@@ -1,44 +1,71 @@
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import { Navigation } from "./components/Navigation";
 import { Footer } from "./components/Footer";
+import { FindYourFitPage } from "./pages/FindYourFitPage";
 import { HomePage } from "./pages/HomePage";
 import { EquipmentPage } from "./pages/EquipmentPage";
 import { ProductDetailPage } from "./pages/ProductDetailPage";
-import { RentalPage } from "./pages/RentalPage";
-import { SalesPage } from "./pages/SalesPage";
 import { AboutPage } from "./pages/AboutPage";
-import { ContactPage } from "./pages/ContactPage";
 import { GalleryPage } from "./pages/GalleryPage";
-import { MaintenancePage } from "./pages/MaintenancePage";
-import { TrainingPage } from "./pages/TrainingPage";
-import { CustomSolutionsPage } from "./pages/CustomSolutionsPage";
-import { SupportPage } from "./pages/SupportPage";
-import { Toaster } from "./components/ui/sonner";
+import { ContactPage } from "./pages/ContactPage";
+import { PageMotion } from "./components/PageMotion";
+import { ComparisonProvider, ComparisonTray } from "./components/Comparison";
 
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
-        <Navigation />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/equipment" element={<EquipmentPage />} />
-            <Route path="/equipment/:id" element={<ProductDetailPage />} />
-            <Route path="/rental" element={<RentalPage />} />
-            <Route path="/sales" element={<SalesPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/services/maintenance" element={<MaintenancePage />} />
-            <Route path="/services/training" element={<TrainingPage />} />
-            <Route path="/services/custom-solutions" element={<CustomSolutionsPage />} />
-            <Route path="/services/support" element={<SupportPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-          </Routes>
-        </main>
-        <Footer />
-        <Toaster />
-      </div>
+      <ComparisonProvider>
+        <div className="pb-shell">
+          <a
+            className="pb-skip-link"
+            href="#main-content"
+            onClick={(event) => {
+              event.preventDefault();
+              document.getElementById("main-content")?.focus();
+              document.getElementById("main-content")?.scrollIntoView();
+            }}
+          >
+            Skip to content
+          </a>
+          <Navigation />
+          <PageMotion />
+          <main id="main-content" tabIndex={-1}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/find-your-fit" element={<FindYourFitPage />} />
+              <Route path="/equipment" element={<EquipmentPage />} />
+              <Route path="/equipment/:id" element={<ProductDetailPage />} />
+              <Route
+                path="/compare"
+                element={<Navigate to="/equipment#compare" replace />}
+              />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/gallery" element={<GalleryPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route
+                path="/sales"
+                element={<Navigate to="/contact" replace />}
+              />
+              <Route
+                path="/rental"
+                element={<Navigate to="/contact" replace />}
+              />
+              <Route
+                path="/services/*"
+                element={<Navigate to="/contact" replace />}
+              />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+          <Footer />
+          <ComparisonTray />
+        </div>
+      </ComparisonProvider>
     </Router>
   );
 }

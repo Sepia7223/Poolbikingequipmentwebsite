@@ -1,336 +1,344 @@
-import { useState } from "react";
-import { motion } from "motion/react";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Textarea } from "../components/ui/textarea";
-import { Label } from "../components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../components/ui/card";
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react";
-import { toast } from "sonner@2.0.3";
-import { ImageWithFallback } from "../components/figma/ImageWithFallback";
-import heroBg from "../content/Marketing/formacio-melia-076-poolbiking.jpg";
+import { useEffect, useRef, useState, type FormEvent } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { ArrowRight, CheckCircle2, Copy, Mail, Phone, X } from "lucide-react";
+import { equipmentData } from "../data/equipment";
+import { buildInquiryBody, sanitizeProductIds } from "../data/discovery";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_HREF,
+} from "../data/contact";
+
+const interests = [
+  "Hotel / resort",
+  "Senior living / care residence",
+  "Fitness facility",
+  "Rehabilitation",
+  "Private facility",
+  "Product purchase",
+  "Other aquatic project",
+];
+const validIds = equipmentData.map((item) => item.id);
 
 export function ContactPage() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    company: "",
-    interest: "rental",
-    message: ""
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchParams] = useSearchParams();
+  const requestedProducts = searchParams.get("products") || "";
+  const requestedInterest = searchParams.get("interest") || "";
+  const [selectedIds, setSelectedIds] = useState(() =>
+    sanitizeProductIds(requestedProducts.split(","), validIds),
+  );
+  const [interest, setInterest] = useState(
+    interests.includes(requestedInterest)
+      ? requestedInterest
+      : "Hotel / resort",
+  );
+  const [prepared, setPrepared] = useState<{
+    subject: string;
+    body: string;
+  } | null>(null);
+  const [copyStatus, setCopyStatus] = useState("");
+  const review = useRef<HTMLDivElement>(null);
+  const messagePreview = useRef<HTMLTextAreaElement>(null);
+  const selectedProducts = selectedIds.map(
+    (id) => equipmentData.find((item) => item.id === id)!,
+  );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    console.log("Form submitted:", formData);
-    toast.success("Thank you! We'll contact you soon.");
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      company: "",
-      interest: "rental",
-      message: ""
+  useEffect(() => {
+    setSelectedIds(sanitizeProductIds(requestedProducts.split(","), validIds));
+    setPrepared(null);
+  }, [requestedProducts]);
+  useEffect(() => {
+    setInterest(
+      interests.includes(requestedInterest)
+        ? requestedInterest
+        : "Hotel / resort",
+    );
+    setPrepared(null);
+  }, [requestedInterest]);
+  useEffect(() => {
+    if (prepared) review.current?.focus();
+  }, [prepared]);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const fields = Object.fromEntries(
+      new FormData(event.currentTarget),
+    ) as Record<string, string>;
+    setPrepared({
+      subject: `Poolbiking Caribbean inquiry — ${fields.interest}`,
+      body: buildInquiryBody(
+        fields,
+        selectedProducts.map((item) => item.name),
+      ),
     });
-    setIsSubmitting(false);
+    setCopyStatus("");
   };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const contactInfo = [
-    {
-      icon: Phone,
-      title: "Phone",
-      details: "+1 (555) 123-4567",
-      subdetails: "Mon-Fri, 9am-6pm EST"
-    },
-    {
-      icon: Mail,
-      title: "Email",
-      details: "info@aquacyclepro.com",
-      subdetails: "We respond within 24 hours"
-    },
-    {
-      icon: MapPin,
-      title: "Location",
-      details: "123 Aquatic Way",
-      subdetails: "Miami, FL 33101"
-    },
-    {
-      icon: Clock,
-      title: "Business Hours",
-      details: "Monday - Friday: 9am - 6pm",
-      subdetails: "Saturday: 10am - 4pm"
+  const copyInquiry = async () => {
+    if (!prepared) return;
+    try {
+      await navigator.clipboard.writeText(
+        `${prepared.subject}\n\n${prepared.body}`,
+      );
+      setCopyStatus(
+        "Inquiry copied. Paste it into an email and send it when you’re ready.",
+      );
+    } catch {
+      messagePreview.current?.focus();
+      messagePreview.current?.select();
+      setCopyStatus(
+        "Copy isn’t available here. The message is selected so you can copy it manually.",
+      );
     }
-  ];
+  };
 
   return (
-    <div className="pt-16 min-h-screen">
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="relative text-white py-20 overflow-hidden"
-      >
-        <div className="absolute inset-0">
-          <ImageWithFallback src={heroBg} alt="Contact Poolbiking" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/65 to-cyan-900/45" />
+    <>
+      <section className="pb-page-hero">
+        <div className="pb-container">
+          <div className="pb-eyebrow pb-eyebrow-light">
+            Let’s talk about your equipment
+          </div>
+          <h1 className="pb-title">
+            Choose equipment
+            <br />
+            with confidence.
+          </h1>
+          <p className="pb-copy">
+            Tell us who will use the equipment and what support they need. We’ll
+            help you compare models, pricing and delivery in the Caribbean.
+          </p>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center"
-          >
-            <h1 className="text-5xl md:text-6xl mb-6">Get in Touch</h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Ready to start your poolbiking journey? We're here to help
+      </section>
+      <section className="pb-section">
+        <div className="pb-container pb-contact-grid">
+          <aside className="pb-contact-card">
+            <div className="pb-eyebrow pb-eyebrow-light">
+              A conversation, not a commitment
+            </div>
+            <h2>Let’s find your starting point.</h2>
+            <p>
+              Whether you have a shortlist or a first idea, we can talk through
+              the equipment, your facility and delivery planning.
             </p>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Card className="shadow-2xl">
-              <CardHeader>
-                <CardTitle className="text-3xl">Send us a message</CardTitle>
-                <CardDescription className="text-base">
-                  Fill out the form and we'll get back to you within 24 hours
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.1 }}
-                    >
-                      <Label htmlFor="name">Name *</Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        placeholder="John Doe"
-                      />
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.15 }}
-                    >
-                      <Label htmlFor="email">Email *</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="john@example.com"
-                      />
-                    </motion.div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.2 }}
-                    >
-                      <Label htmlFor="phone">Phone</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="(555) 123-4567"
-                      />
-                    </motion.div>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.25 }}
-                    >
-                      <Label htmlFor="company">Company</Label>
-                      <Input
-                        id="company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleChange}
-                        placeholder="Your Company"
-                      />
-                    </motion.div>
-                  </div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                  >
-                    <Label htmlFor="interest">I'm interested in</Label>
-                    <select
-                      id="interest"
-                      name="interest"
-                      value={formData.interest}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    >
-                      <option value="rental">Equipment Rental</option>
-                      <option value="purchase">Equipment Purchase</option>
-                      <option value="both">Both Rental & Purchase</option>
-                      <option value="information">General Information</option>
-                      <option value="support">Technical Support</option>
-                    </select>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.35 }}
-                  >
-                    <Label htmlFor="message">Message *</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      placeholder="Tell us about your needs..."
-                      rows={5}
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <Button
-                      type="submit"
-                      className="w-full group"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? (
-                        <span>Sending...</span>
-                      ) : (
-                        <>
-                          <Send className="mr-2 h-5 w-5 group-hover:translate-x-1 transition" />
-                          Send Message
-                        </>
-                      )}
-                    </Button>
-                  </motion.div>
-                </form>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Contact Information */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6"
-          >
-            <div>
-              <h2 className="text-3xl mb-6">Contact Information</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                Have questions? Our team is ready to help you find the perfect poolbiking solution.
-              </p>
+            <div className="pb-contact-list">
+              <div className="pb-contact-line">
+                <Phone size={20} />
+                <div>
+                  <strong>Give us a call</strong>
+                  <a href={CONTACT_PHONE_HREF}>
+                    <span>{CONTACT_PHONE_DISPLAY}</span>
+                  </a>
+                </div>
+              </div>
+              <div className="pb-contact-line">
+                <Mail size={20} />
+                <div>
+                  <strong>Email us directly</strong>
+                  <a href={`mailto:${CONTACT_EMAIL}`}>
+                    <span>{CONTACT_EMAIL}</span>
+                  </a>
+                </div>
+              </div>
+              <div className="pb-contact-line">
+                <CheckCircle2 size={20} />
+                <div>
+                  <strong>A useful first conversation</strong>
+                  <span>
+                    Your pool, intended users, equipment options and project
+                    location.
+                  </span>
+                </div>
+              </div>
             </div>
-
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 + (index * 0.1) }}
-                  whileHover={{ x: 10 }}
-                >
-                  <Card className="hover:shadow-lg transition">
-                    <CardContent className="flex items-start gap-4 pt-6">
-                      <motion.div
-                        whileHover={{ rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                        className="flex-shrink-0"
-                      >
-                        <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <info.icon className="h-6 w-6 text-blue-600" />
-                        </div>
-                      </motion.div>
-                      <div>
-                        <h3 className="text-lg mb-1">{info.title}</h3>
-                        <p className="text-xl">{info.details}</p>
-                        <p className="text-sm text-gray-600">{info.subdetails}</p>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
+          </aside>
+          <div>
+            <div className="pb-eyebrow">Your project</div>
+            <h2 className="pb-title pb-title-sm">Make it your own.</h2>
+            <p className="pb-copy pb-contact-intro">
+              Just the essentials to get started. Fields marked * are required.
+            </p>
+            {selectedProducts.length > 0 && (
+              <div className="pb-inquiry-shortlist">
+                <h3>Equipment you’re interested in</h3>
+                {selectedProducts.map((item) => (
+                  <div key={item.id}>
+                    <img src={item.image} alt="" />
+                    <Link to={`/equipment/${item.id}`}>{item.name}</Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedIds((ids) =>
+                          ids.filter((id) => id !== item.id),
+                        );
+                        setPrepared(null);
+                      }}
+                      aria-label={`Remove ${item.name} from inquiry`}
+                    >
+                      <X size={17} />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+            <form
+              className="pb-form"
+              onSubmit={handleSubmit}
+              onChange={() => {
+                setPrepared(null);
+                setCopyStatus("");
+              }}
             >
-              <Card className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white border-0">
-                <CardContent className="pt-6">
-                  <h3 className="text-2xl mb-4">Why Choose Us?</h3>
-                  <ul className="space-y-2">
-                    <li className="flex items-start gap-2">
-                      <span>✓</span>
-                      <span>15+ years of industry experience</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span>✓</span>
-                      <span>Premium quality equipment</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span>✓</span>
-                      <span>Flexible rental and purchase options</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span>✓</span>
-                      <span>24/7 customer support</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span>✓</span>
-                      <span>Serving customers in 50+ countries</span>
-                    </li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </motion.div>
+              <div className="pb-form-row">
+                <div className="pb-field">
+                  <label htmlFor="name">Name *</label>
+                  <input
+                    id="name"
+                    name="name"
+                    required
+                    autoComplete="name"
+                    maxLength={120}
+                    placeholder="Your name"
+                  />
+                </div>
+                <div className="pb-field">
+                  <label htmlFor="email">Email *</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    autoComplete="email"
+                    maxLength={200}
+                    placeholder="you@company.com"
+                  />
+                </div>
+              </div>
+              <div className="pb-form-row">
+                <div className="pb-field">
+                  <label htmlFor="company">Company / facility</label>
+                  <input
+                    id="company"
+                    name="company"
+                    autoComplete="organization"
+                    maxLength={160}
+                    placeholder="Hotel, gym, clinic…"
+                  />
+                </div>
+                <div className="pb-field">
+                  <label htmlFor="phone">Phone</label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    autoComplete="tel"
+                    maxLength={40}
+                    placeholder="Include your country code"
+                  />
+                </div>
+              </div>
+              <div className="pb-form-row">
+                <div className="pb-field">
+                  <label htmlFor="location">Island / country</label>
+                  <input
+                    id="location"
+                    name="location"
+                    autoComplete="country-name"
+                    maxLength={120}
+                    placeholder="Where is your project?"
+                  />
+                </div>
+                <div className="pb-field">
+                  <label htmlFor="interest">Primary interest *</label>
+                  <select
+                    id="interest"
+                    name="interest"
+                    value={interest}
+                    onChange={(event) => setInterest(event.target.value)}
+                    required
+                  >
+                    {interests.map((item) => (
+                      <option key={item}>{item}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="pb-field">
+                <label htmlFor="quantity">Approximate number of units</label>
+                <select id="quantity" name="quantity" defaultValue="">
+                  <option value="">Not sure yet — help me plan</option>
+                  <option>1–2</option>
+                  <option>3–5</option>
+                  <option>6–10</option>
+                  <option>11–20</option>
+                  <option>More than 20</option>
+                </select>
+              </div>
+              <div className="pb-field">
+                <label htmlFor="message">
+                  What would you like to explore? *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  maxLength={2500}
+                  placeholder="Tell us which equipment you’re considering, who will use it and their mobility or exercise needs."
+                />
+              </div>
+              <p className="pb-form-note" id="email-explanation">
+                This form prepares an email for you to review and send. Your
+                inquiry is only sent when you send it from your email app.
+              </p>
+              <button
+                type="submit"
+                className="pb-button pb-button-aqua pb-button-lg"
+                aria-describedby="email-explanation"
+              >
+                Prepare email inquiry <ArrowRight size={17} />
+              </button>
+            </form>
+            {prepared && (
+              <div
+                ref={review}
+                tabIndex={-1}
+                className="pb-inquiry-review"
+                aria-labelledby="inquiry-ready"
+              >
+                <h3 id="inquiry-ready">Your inquiry is ready to review.</h3>
+                <p>
+                  It hasn’t been sent yet. Open your email app or copy the
+                  message and email it to{" "}
+                  <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                </p>
+                <label htmlFor="inquiry-preview">Prepared message</label>
+                <textarea
+                  ref={messagePreview}
+                  id="inquiry-preview"
+                  readOnly
+                  value={prepared.body}
+                  rows={9}
+                />
+                <div>
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(prepared.subject)}&body=${encodeURIComponent(prepared.body)}`}
+                    className="pb-button pb-button-aqua"
+                  >
+                    <Mail size={17} /> Open email app
+                  </a>
+                  <button
+                    type="button"
+                    className="pb-button pb-button-outline"
+                    onClick={copyInquiry}
+                  >
+                    <Copy size={17} /> Copy inquiry
+                  </button>
+                </div>
+                <p role="status">{copyStatus}</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 }
