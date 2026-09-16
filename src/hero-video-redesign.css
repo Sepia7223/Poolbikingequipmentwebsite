@@ -1,0 +1,209 @@
+/* Homepage hero: full-frame film with a centered lower-third CTA.
+   The film is deliberately contained rather than cropped/zoomed. */
+.pb-home .pb-hero {
+  height: 100svh;
+  min-height: 720px;
+  max-height: 960px;
+  margin-top: 0;
+  align-items: flex-end;
+  background: #071c25;
+}
+
+.pb-home .pb-hero-media {
+  background: #071c25;
+}
+
+.pb-home .pb-hero-media picture {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  transition: opacity .45s ease;
+}
+
+.pb-home .pb-hero-media.is-video-visible picture {
+  opacity: 0;
+}
+
+/* Override the older cover-style YouTube sizing. 100% x 100% lets the
+   player preserve the source frame inside the hero instead of zooming it. */
+.pb-home .pb-hero-film,
+.pb-home .pb-hero-film.is-playing {
+  position: absolute;
+  inset: 0;
+}
+
+.pb-home .pb-hero-film iframe {
+  position: absolute;
+  inset: 0;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: 100% !important;
+  transform: none !important;
+  border: 0;
+}
+
+.pb-home .pb-hero-media::after {
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(4, 20, 28, .18) 0%, rgba(4, 20, 28, .04) 38%, rgba(4, 20, 28, .22) 62%, rgba(4, 20, 28, .88) 100%),
+    linear-gradient(90deg, rgba(4, 20, 28, .14), transparent 22%, transparent 78%, rgba(4, 20, 28, .14));
+}
+
+.pb-home .pb-hero-layout {
+  position: relative;
+  z-index: 2;
+  min-height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.pb-home .pb-hero-content {
+  position: relative;
+  z-index: 2;
+  width: min(920px, 92%);
+  max-width: none;
+  padding: 0 0 clamp(64px, 9vh, 104px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pb-home .pb-hero .pb-title {
+  max-width: 900px;
+  font-size: clamp(52px, 6.2vw, 90px);
+  line-height: .98;
+  letter-spacing: -.055em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.pb-home .pb-hero-lede {
+  max-width: 650px;
+  margin-top: 22px;
+  font-size: clamp(16px, 1.45vw, 20px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .9);
+  text-wrap: balance;
+}
+
+.pb-home .pb-hero-actions {
+  width: 100%;
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pb-home .pb-hero-actions .pb-button {
+  min-width: 190px;
+}
+
+.pb-home .pb-film-toggle {
+  z-index: 4;
+  right: 28px;
+  bottom: 28px;
+  background: rgba(8, 35, 46, .46);
+  border-color: rgba(255, 255, 255, .44);
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 1000px) {
+  .pb-home .pb-hero {
+    min-height: 680px;
+    max-height: 860px;
+  }
+
+  .pb-home .pb-hero-content {
+    width: min(780px, 92%);
+    padding-bottom: 72px;
+  }
+}
+
+@media (max-width: 760px) {
+  .pb-home .pb-hero {
+    height: auto;
+    min-height: 690px;
+    max-height: none;
+  }
+
+  .pb-home .pb-hero-media img {
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .pb-home .pb-hero-media::after {
+    background: linear-gradient(180deg, rgba(4, 20, 28, .14) 0%, rgba(4, 20, 28, .08) 42%, rgba(4, 20, 28, .88) 100%);
+  }
+
+  .pb-home .pb-hero-layout {
+    min-height: 690px;
+  }
+
+  .pb-home .pb-hero-content {
+    width: 100%;
+    padding: 0 0 54px;
+  }
+
+  .pb-home .pb-hero .pb-title {
+    max-width: 620px;
+    font-size: clamp(44px, 13vw, 66px);
+  }
+
+  .pb-home .pb-hero-lede {
+    max-width: 500px;
+    margin-top: 18px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .pb-home .pb-hero-actions {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 520px) {
+  .pb-home .pb-hero {
+    min-height: 650px;
+  }
+
+  .pb-home .pb-hero-layout {
+    min-height: 650px;
+  }
+
+  .pb-home .pb-hero-content {
+    padding-bottom: 42px;
+  }
+
+  .pb-home .pb-hero .pb-title {
+    font-size: clamp(42px, 14vw, 60px);
+  }
+
+  .pb-home .pb-hero-actions .pb-button {
+    width: min(100%, 310px);
+  }
+}
+
+@media (max-height: 720px) and (min-width: 761px) {
+  .pb-home .pb-hero {
+    min-height: 620px;
+  }
+
+  .pb-home .pb-hero-content {
+    padding-bottom: 50px;
+  }
+
+  .pb-home .pb-hero .pb-title {
+    font-size: clamp(48px, 6vw, 74px);
+  }
+
+  .pb-home .pb-hero-lede {
+    margin-top: 16px;
+  }
+
+  .pb-home .pb-hero-actions {
+    margin-top: 20px;
+  }
+}

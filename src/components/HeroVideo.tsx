@@ -2,9 +2,11 @@ import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import heroImage from "../content/optimized/pool-session.webp";
 import heroMobile from "../content/optimized/pool-session-mobile.webp";
+
 export const HERO_CLIP = {
   videoId: "Tob5KZO1TrY",
   startSeconds: 0,
+  endSeconds: 26,
 };
 
 type Player = {
@@ -15,6 +17,7 @@ type Player = {
   loadVideoById(clip: typeof HERO_CLIP): void;
   setOption(module: string, option: string, value: unknown): void;
 };
+
 type YouTubeAPI = {
   Player: new (
     element: HTMLElement,
@@ -31,22 +34,27 @@ type YouTubeAPI = {
     },
   ) => Player;
 };
+
 declare global {
   interface Window {
     YT?: YouTubeAPI;
     onYouTubeIframeAPIReady?: () => void;
   }
 }
+
 let apiPromise: Promise<YouTubeAPI> | undefined;
+
 function loadPlayer() {
   if (window.YT?.Player) return Promise.resolve(window.YT);
-  if (!apiPromise)
+
+  if (!apiPromise) {
     apiPromise = new Promise((resolve, reject) => {
       const previous = window.onYouTubeIframeAPIReady;
       window.onYouTubeIframeAPIReady = () => {
         previous?.();
         if (window.YT) resolve(window.YT);
       };
+
       const script = document.createElement("script");
       script.src = "https://www.youtube.com/iframe_api";
       script.async = true;
@@ -57,6 +65,8 @@ function loadPlayer() {
       };
       document.head.appendChild(script);
     });
+  }
+
   return apiPromise;
 }
 
@@ -68,6 +78,7 @@ export function HeroVideo() {
   const [playing, setPlaying] = useState(false);
   const [paused, setPaused] = useState(false);
   const pausedRef = useRef(false);
+
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const connection = (
@@ -75,22 +86,27 @@ export function HeroVideo() {
     ).connection;
     const update = () =>
       setAllowed(!preference.matches && !connection?.saveData);
+
     update();
     preference.addEventListener("change", update);
     return () => preference.removeEventListener("change", update);
   }, []);
+
   useEffect(() => {
     if (!allowed || !container.current) {
       setPlaying(false);
       return;
     }
+
     let disposed = false;
     const parent = container.current;
     const mount = document.createElement("div");
     parent.appendChild(mount);
+
     loadPlayer()
       .then((YT) => {
         if (disposed) return;
+
         player.current = new YT.Player(mount, {
           host: "https://www.youtube-nocookie.com",
           videoId: HERO_CLIP.videoId,
@@ -100,10 +116,12 @@ export function HeroVideo() {
             controls: 0,
             playsinline: 1,
             start: HERO_CLIP.startSeconds,
+            end: HERO_CLIP.endSeconds,
             cc_load_policy: 0,
             disablekb: 1,
             fs: 0,
             rel: 0,
+            modestbranding: 1,
             origin: window.location.origin,
           },
           events: {
@@ -124,8 +142,6 @@ export function HeroVideo() {
                 player.current?.loadVideoById(HERO_CLIP);
                 return;
               }
-              // Keep the last video frame visible while buffering or looping.
-              // Only failures should restore the fallback photograph.
               if (data === 1 || data === 2) setPlaying(true);
             },
             onApiChange: () => {
@@ -140,6 +156,7 @@ export function HeroVideo() {
       .catch(() => {
         if (!disposed) setPlaying(false);
       });
+
     return () => {
       disposed = true;
       player.current?.destroy();
@@ -147,6 +164,7 @@ export function HeroVideo() {
       parent.replaceChildren();
     };
   }, [allowed]);
+
   return (
     <>
       <div
@@ -168,6 +186,7 @@ export function HeroVideo() {
           className={`pb-hero-film ${playing ? "is-playing" : ""}`}
         />
       </div>
+
       {allowed && playing && (
         <button
           type="button"
