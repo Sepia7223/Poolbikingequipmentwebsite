@@ -59,6 +59,13 @@ it("keeps a photo until playback starts and offers a working pause control", asy
   expect(mute).toHaveBeenCalled();
   expect(playVideo).toHaveBeenCalled();
   act(() => events.onStateChange({ data: 1 }));
+  expect(
+    view.container.querySelector(".pb-hero-media.is-video-visible"),
+  ).toBeTruthy();
+  act(() => events.onStateChange({ data: 3 }));
+  expect(
+    view.container.querySelector(".pb-hero-media.is-video-visible"),
+  ).toBeTruthy();
   fireEvent.click(
     screen.getByRole("button", { name: "Pause background video" }),
   );
@@ -72,6 +79,9 @@ it("keeps a photo until playback starts and offers a working pause control", asy
   act(() => events.onStateChange({ data: 0 }));
   expect(loadVideoById).toHaveBeenCalledWith(HERO_CLIP);
   act(() => events.onError());
+  expect(
+    view.container.querySelector(".pb-hero-media.is-video-visible"),
+  ).toBeNull();
   expect(view.container.querySelector(".pb-hero-film.is-playing")).toBeNull();
   view.unmount();
   expect(destroy).toHaveBeenCalled();

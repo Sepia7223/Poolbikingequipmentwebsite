@@ -1976,8 +1976,10 @@ body {
   top: 50%;
   width: max(100vw, 177.778vh);
   width: max(100vw, 177.778dvh);
+  width: max(100cqw, 177.778cqh);
   height: max(100vh, 56.25vw);
   height: max(100dvh, 56.25vw);
+  height: max(100cqh, 56.25cqw);
   transform: translate(-50%, -50%);
   border: 0;
 }
@@ -2041,13 +2043,6 @@ body {
   }
 }
 
-/* Show the complete clip instead of enlarging it to crop the viewport. */
-.pb-hero-film iframe {
-  width: min(100vw, 177.778vh);
-  width: min(100vw, 177.778dvh);
-  height: min(100vh, 56.25vw);
-  height: min(100dvh, 56.25vw);
-}
 .pb-photo-hero {
   position: relative;
   isolation: isolate;
@@ -2146,4 +2141,19 @@ body {
   .pb-card-warranty {
     left: 16px;
   }
+}
+
+/* One continuous media surface under the transparent navigation.
+   Cover at the smallest possible scale; no additional zoom is applied. */
+.pb-home .pb-hero-media {
+  container-type: size;
+  overflow: hidden;
+  background: #002837;
+}
+.pb-home .pb-hero-media picture {
+  opacity: 1;
+  transition: opacity 0.25s ease;
+}
+.pb-home .pb-hero-media.is-video-visible picture {
+  opacity: 0;
 }

@@ -126,7 +126,9 @@ export function HeroVideo() {
                 player.current?.loadVideoById(HERO_CLIP);
                 return;
               }
-              setPlaying(data === 1 || data === 2);
+              // Keep the last video frame visible while buffering or looping.
+              // Only failures should restore the fallback photograph.
+              if (data === 1 || data === 2) setPlaying(true);
             },
             onApiChange: () => {
               if (!disposed) player.current?.setOption("captions", "track", {});
@@ -149,7 +151,10 @@ export function HeroVideo() {
   }, [allowed]);
   return (
     <>
-      <div className="pb-hero-media" aria-hidden="true">
+      <div
+        className={`pb-hero-media ${playing ? "is-video-visible" : ""}`}
+        aria-hidden="true"
+      >
         <picture>
           <source media="(max-width: 760px)" srcSet={heroMobile} />
           <img
