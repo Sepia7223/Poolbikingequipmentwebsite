@@ -35,9 +35,9 @@ it("keeps a photo until playback starts and offers a working pause control", asy
         options: ConstructorParameters<NonNullable<Window["YT"]>["Player"]>[1],
       ) {
         events = options.events;
-        expect(options.videoId).toBe("QXIk80bnOsA");
-        expect(options.playerVars.start).toBe(14);
-        expect(options.playerVars.end).toBe(50);
+        expect(options.videoId).toBe("Tob5KZO1TrY");
+        expect(options.playerVars.start).toBe(0);
+        expect(options.playerVars.end).toBeUndefined();
       }
     },
   };

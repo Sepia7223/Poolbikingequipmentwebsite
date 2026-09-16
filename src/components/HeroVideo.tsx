@@ -3,9 +3,8 @@ import { Pause, Play } from "lucide-react";
 import heroImage from "../content/optimized/pool-session.webp";
 import heroMobile from "../content/optimized/pool-session-mobile.webp";
 export const HERO_CLIP = {
-  videoId: "QXIk80bnOsA",
-  startSeconds: 14,
-  endSeconds: 50,
+  videoId: "Tob5KZO1TrY",
+  startSeconds: 0,
 };
 
 type Player = {
@@ -101,7 +100,6 @@ export function HeroVideo() {
             controls: 0,
             playsinline: 1,
             start: HERO_CLIP.startSeconds,
-            end: HERO_CLIP.endSeconds,
             cc_load_policy: 0,
             disablekb: 1,
             fs: 0,
