@@ -119,6 +119,11 @@ export function ProductDetailPage() {
               </div>
             )}
 
+            {product.warrantyNote && (
+              <div className="pb-warranty-detail">
+                <p>{product.warrantyNote}</p>
+              </div>
+            )}
             {product.warrantyYears && (
               <div className="pb-warranty-detail">
                 <WarrantyBadge years={product.warrantyYears} />

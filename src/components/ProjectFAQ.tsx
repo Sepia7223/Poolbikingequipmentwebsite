@@ -3,6 +3,16 @@ import { ArrowRight, Plus } from "lucide-react";
 
 const questions = [
   {
+    title: "Why consider aquatic equipment for older adults?",
+    answer:
+      "Water can make movement more manageable by supporting part of the body’s weight. Adjustable bikes and supported walking equipment offer different ways to exercise. A care professional should assess the resident’s abilities, water access and supervision needs before a model is chosen.",
+  },
+  {
+    title: "What makes the equipment suitable for repeated use?",
+    answer:
+      "Compare the actual model’s frame, supports and adjustment points. The One Plus and Evolution specify 316L stainless steel; Evolution adds reinforcement. The manufacturer recommends moving-part inspections and model-specific care. Ask us to confirm written coverage and parts arrangements with your quotation.",
+  },
+  {
     title: "Where should I start if I’m new to aquatic fitness?",
     answer:
       "Start with your facility type in the equipment finder. It gives you a small selection to explore. You can compare models or contact us before deciding — you don’t need a finished equipment list.",
@@ -25,7 +35,7 @@ const questions = [
   {
     title: "Can I ask for help without choosing a model?",
     answer:
-      "Yes. Tell us what you want to offer, who will use the pool and where the project is based. We can help you narrow the range and identify the practical details to check.",
+      "Yes. Tell us what you want to offer, who will use the equipment and where your facility is based. We can help you narrow the range and identify the practical details to check.",
   },
 ];
 
@@ -41,8 +51,8 @@ export function ProjectFAQ() {
             Clear next steps.
           </h2>
           <p className="pb-copy">
-            A pool project has a few moving parts. Let’s make choosing the
-            equipment easier.
+            Understand the equipment, its care requirements and the support your
+            users need before choosing a model.
           </p>
           <Link to="/contact" className="pb-text-link">
             Ask us a question <ArrowRight size={16} />

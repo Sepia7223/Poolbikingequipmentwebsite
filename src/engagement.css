@@ -2157,3 +2157,116 @@ body {
 .pb-home .pb-hero-media.is-video-visible picture {
   opacity: 0;
 }
+
+/* Product evidence and accessible exercise are central to the equipment story. */
+#why-equipment,
+#senior-living {
+  scroll-margin-top: 100px;
+}
+.pb-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+}
+.pb-benefit-grid article {
+  padding: 28px;
+  background: white;
+  border-top: 3px solid var(--pb-aqua);
+  border-radius: 0 0 10px 10px;
+}
+.pb-benefit-grid svg {
+  color: var(--pb-aqua-deep);
+  width: 30px;
+  height: 30px;
+}
+.pb-benefit-grid h3,
+.pb-senior-points h3,
+.pb-equipment-care h3 {
+  font-size: 21px;
+  margin: 18px 0 12px;
+  line-height: 1.3;
+}
+.pb-benefit-grid p,
+.pb-equipment-care p,
+.pb-senior-points p,
+.pb-research-note p {
+  color: var(--pb-muted);
+  line-height: 1.75;
+  font-size: 15px;
+}
+.pb-benefit-grid a,
+.pb-equipment-care a,
+.pb-evidence-link,
+.pb-research-note a {
+  color: #00658e;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 13px;
+}
+.pb-equipment-care {
+  border-top: 1px solid var(--pb-line);
+  margin-top: 36px;
+  padding-top: 12px;
+  max-width: 900px;
+}
+.pb-senior-grid {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  align-items: center;
+  gap: 64px;
+}
+.pb-senior-product img {
+  width: 100%;
+  max-height: 470px;
+  object-fit: contain;
+  margin-bottom: 24px;
+}
+.pb-senior-product .pb-text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.pb-senior-grid .pb-copy {
+  margin: 24px 0 10px;
+}
+.pb-senior-points {
+  margin: 28px 0;
+}
+.pb-research-note {
+  margin-top: 40px;
+  padding: 24px 28px;
+  border: 1px solid var(--pb-line);
+  border-radius: 10px;
+}
+.pb-research-note summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.pb-research-note p {
+  margin-top: 18px;
+  max-width: 960px;
+}
+@media (max-width: 900px) {
+  .pb-benefit-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .pb-senior-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .pb-senior-product img {
+    max-height: 340px;
+  }
+}
+.pb-catalogue-guidance {
+  color: var(--pb-muted);
+  font-size: 15px;
+  line-height: 1.7;
+  margin: 0 0 28px;
+}
+.pb-catalogue-guidance a {
+  color: var(--pb-aqua-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

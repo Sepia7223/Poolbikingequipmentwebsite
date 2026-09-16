@@ -11,7 +11,7 @@ export function AboutPage() {
         image={heroPhoto}
         eyebrow="About Poolbiking Caribbean"
         title="POOLBIKING equipment for Caribbean facilities."
-        description="POOLBIKING aquatic equipment for hotels, senior living, fitness facilities and pool-based projects across the region."
+        description="POOLBIKING aquatic equipment for hotels, senior living, fitness facilities and aquatic exercise programs across the region."
       />
 
       <section className="pb-section">
@@ -29,7 +29,7 @@ export function AboutPage() {
             </p>
             <p className="pb-copy" style={{ marginTop: 16 }}>
               We help Caribbean customers compare models, choose equipment for
-              their pool and plan quotations and delivery.
+              their users and plan quotations and delivery.
             </p>
             <Link
               to="/equipment"
@@ -53,7 +53,7 @@ export function AboutPage() {
         <div className="pb-container">
           <div className="pb-eyebrow">Typical applications</div>
           <h2 className="pb-title pb-title-md">
-            Equipment for different types of pool programs.
+            Equipment for different movement goals.
           </h2>
           <div className="pb-values">
             <article className="pb-value">
@@ -74,10 +74,10 @@ export function AboutPage() {
             </article>
             <article className="pb-value">
               <HeartPulse size={26} />
-              <h3>Rehabilitation</h3>
+              <h3>Senior living & rehabilitation</h3>
               <p>
-                Controlled aquatic movement and conditioning that uses the
-                buoyancy and resistance of water.
+                Bikes and supported walking equipment to assess with care teams
+                for individually supervised exercise.
               </p>
             </article>
           </div>
@@ -92,10 +92,10 @@ export function AboutPage() {
                 <div className="pb-eyebrow pb-eyebrow-light">
                   Choosing equipment
                 </div>
-                <h2>Tell us about the pool before you request pricing.</h2>
+                <h2>Tell us who the equipment needs to support.</h2>
                 <p>
-                  Facility type, pool conditions, intended users and expected
-                  use are enough to start narrowing the range.
+                  User abilities, exercise goals and expected daily use help us
+                  shortlist models. We also check water depth and compatibility.
                 </p>
               </div>
               <Link

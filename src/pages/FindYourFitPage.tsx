@@ -7,8 +7,8 @@ export function FindYourFitPage() {
       <PhotoHero
         image={image}
         eyebrow="Find your fit"
-        title="Your pool. Your possibilities."
-        description="Explore equipment for your facility, your people and your pool environment."
+        title="Find equipment for your people."
+        description="Compare aquatic bikes, walking equipment and accessories by user needs and facility type."
       />
       <EquipmentFinder />
     </>

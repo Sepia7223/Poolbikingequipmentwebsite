@@ -25,8 +25,8 @@ export function Footer() {
             </Link>
             <p>
               POOLBIKING aquatic fitness equipment for hotels, resorts, fitness
-              facilities, senior living and other pool-based projects across the
-              Caribbean.
+              facilities, senior living and other aquatic exercise programs
+              across the Caribbean.
             </p>
             <div className="pb-footer-links" style={{ marginTop: 18 }}>
               <a href={CONTACT_PHONE_HREF}>{CONTACT_PHONE_DISPLAY}</a>

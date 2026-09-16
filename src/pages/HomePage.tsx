@@ -1,3 +1,4 @@
+import { EquipmentBenefits } from "../components/EquipmentBenefits";
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, ShieldCheck, Waves } from "lucide-react";
 import { equipmentData } from "../data/equipment";
@@ -23,8 +24,8 @@ export function HomePage() {
           <div className="pb-hero-content">
             <h1 className="pb-title">Move Together</h1>
             <p className="pb-hero-lede">
-              Aquatic fitness for hotels, senior living and every body in the
-              water.
+              Professional aquatic bikes and walking equipment for active
+              guests, older adults and supervised exercise.
             </p>
             <div className="pb-hero-actions">
               <Link
@@ -41,9 +42,9 @@ export function HomePage() {
       <div className="pb-proof-strip">
         <div className="pb-container">
           <p>
-            A different way
+            Professional equipment
             <br />
-            <strong>to use your pool.</strong>
+            <strong>for movement in water.</strong>
           </p>
           <div>
             <Waves size={23} />
@@ -66,7 +67,7 @@ export function HomePage() {
             <span>
               Guidance for
               <br />
-              <strong>your pool project</strong>
+              <strong>equipment selection</strong>
             </span>
           </div>
         </div>
@@ -75,11 +76,10 @@ export function HomePage() {
       <section className="pb-section pb-intro-section">
         <div className="pb-container pb-intro-grid">
           <div>
-            <div className="pb-eyebrow">More possibilities in every pool</div>
+            <div className="pb-eyebrow">Aquatic exercise equipment</div>
             <h2 className="pb-title pb-title-md">
-              The water is ready.
-              <br />
-              What will you do with it?
+              Real equipment.
+              <br />A different way to exercise.
             </h2>
           </div>
           <div>
@@ -87,9 +87,10 @@ export function HomePage() {
               <VideoDialog />
             </div>
             <p className="pb-copy">
-              A morning ride with your guests. A new group class. A space for
-              supervised movement. The right equipment brings a purpose to the
-              pool — and gives people a reason to return.
+              POOLBIKING bikes, aquatic treadmills and training accessories
+              bring structured exercise into the water. Compare how each model
+              supports pedalling, walking or resistance work, then choose the
+              features that suit your users.
             </p>
             <Link to="/find-your-fit" className="pb-text-link">
               Explore your possibilities <ArrowRight size={16} />
@@ -102,10 +103,11 @@ export function HomePage() {
         <div className="pb-container pb-audience-grid">
           <article>
             <span className="pb-eyebrow">Hotels & resorts</span>
-            <h2>A pool experience worth exploring.</h2>
+            <h2>Give guests more ways to stay active.</h2>
             <p>
-              From a morning ride to a group session, show your team how aquatic
-              equipment could fit your guest activities.
+              Offer seated cycling and instructor-led aquatic exercise with
+              equipment designed for professional use. Compare adjustment and
+              resistance features for your guest fitness program.
             </p>
             <Link
               className="pb-text-link"
@@ -116,10 +118,11 @@ export function HomePage() {
           </article>
           <article>
             <span className="pb-eyebrow">Senior living & care residences</span>
-            <h2>Movement, with people in mind.</h2>
+            <h2>Support participation as mobility changes.</h2>
             <p>
-              Explore adjustable equipment, supported aquatic walking and
-              pool-access options with your staff and care team.
+              Look beyond a model name: assess handholds, seating, mounting and
+              water access with your care team. Choose equipment around each
+              resident’s abilities and the support available.
             </p>
             <Link
               className="pb-text-link"
@@ -130,6 +133,8 @@ export function HomePage() {
           </article>
         </div>
       </section>
+
+      <EquipmentBenefits />
 
       <section className="pb-section pb-home-products">
         <div className="pb-container">
@@ -160,8 +165,8 @@ export function HomePage() {
             ))}
           </div>
           <p className="pb-collection-note">
-            Every pool is different. Compare the details, then let’s talk
-            through your setup.
+            Compare construction, adjustment and support features to choose
+            equipment for your users and daily workload.
           </p>
         </div>
       </section>
@@ -193,8 +198,8 @@ export function HomePage() {
             <div>
               <h3>Fit that makes a difference</h3>
               <p>
-                Compare saddle and handlebar adjustments for the people using
-                your pool.
+                Compare saddle and handlebar adjustments for your riders,
+                including their reach and ability to mount the bike.
               </p>
             </div>
           </div>
@@ -224,10 +229,12 @@ export function HomePage() {
               width="1200"
               height="800"
             />
-            <span>Equipment is just the beginning.</span>
+            <span>See the equipment in use.</span>
           </div>
           <div>
-            <div className="pb-eyebrow">Let’s plan your pool project</div>
+            <div className="pb-eyebrow">
+              Choose your equipment with confidence
+            </div>
             <h2 className="pb-title pb-title-md">
               From the first idea
               <br />
@@ -237,8 +244,11 @@ export function HomePage() {
               <div>
                 <span>01</span>
                 <div>
-                  <h3>Tell us about your pool</h3>
-                  <p>The location, the people and what you’d like to offer.</p>
+                  <h3>Tell us who will use the equipment</h3>
+                  <p>
+                    Mobility, exercise goals, supervision and expected daily
+                    use.
+                  </p>
                 </div>
               </div>
               <div>

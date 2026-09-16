@@ -4,7 +4,7 @@ export const useCases = [
     id: "resort",
     label: "Hotels & resorts",
     interest: "Hotel / resort",
-    description: "Give guests a new reason to get in the water.",
+    description: "Choose equipment for active guest experiences.",
     products: ["poolbiking-tenerife", "poolbiking-one-plus"],
     reason:
       "Start with resort-focused stability or a bike with extra saddle adjustment for different guests.",
@@ -31,7 +31,7 @@ export const useCases = [
     id: "senior",
     label: "Senior living",
     interest: "Senior living / care residence",
-    description: "Make space for supported movement in the water.",
+    description: "Explore equipment for supported cycling and walking.",
     products: ["pooltrekking-medical", "poolbiking-one-plus"],
     reason:
       "Explore support bars and adjustable seating with your care team. Suitability, access and supervision should be reviewed for each resident.",

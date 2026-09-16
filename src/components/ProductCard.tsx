@@ -58,6 +58,9 @@ export function ProductCard({ item, catalogueState }: ProductCardProps) {
       >
         <h3>{item.name}</h3>
         <p>{item.shortDescription}</p>
+        {item.warrantyNote && (
+          <p className="pb-small-copy">Warranty coverage to confirm</p>
+        )}
       </Link>
       <div className="pb-product-actions">
         <CompareButton id={item.id} />

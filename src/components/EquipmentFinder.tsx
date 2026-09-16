@@ -36,14 +36,14 @@ export function EquipmentFinder() {
           <div>
             <div className="pb-eyebrow">Find your fit</div>
             <h2 className="pb-title pb-title-md" id="finder-title">
-              Your pool. Your people.
+              Your people. Their movement.
               <br />
               Your starting point.
             </h2>
           </div>
           <p className="pb-copy">
-            A little guidance goes a long way. Tell us where you’ll use the
-            equipment to explore a few options.
+            Start with your users and facility type. Explore equipment with the
+            support, adjustment and resistance features you need.
           </p>
         </div>
         <div className="pb-finder">

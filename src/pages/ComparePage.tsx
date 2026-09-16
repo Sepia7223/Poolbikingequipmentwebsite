@@ -25,7 +25,7 @@ const rows: { label: string; value: (item: Equipment) => string }[] = [
     value: (item) =>
       item.warrantyYears
         ? `${item.warrantyYears} years`
-        : "Ask us for coverage",
+        : (item.warrantyNote ?? "Ask us for coverage"),
   },
 ];
 

@@ -76,6 +76,11 @@ export function EquipmentPage() {
 
       <section className="pb-section" id="product-catalogue">
         <div className="pb-container">
+          <p className="pb-catalogue-guidance">
+            Choosing for older adults or frequent daily use?{" "}
+            <Link to="/#why-equipment">Explore construction and care</Link> or{" "}
+            <Link to="/#senior-living">read about supported movement</Link>.
+          </p>
           <div className="pb-filterbar">
             <div className="pb-filters" aria-label="Product categories">
               {categories.map((item) => (

@@ -96,16 +96,16 @@ export function ContactPage() {
       <section className="pb-page-hero">
         <div className="pb-container">
           <div className="pb-eyebrow pb-eyebrow-light">
-            Let’s talk about your pool
+            Let’s talk about your equipment
           </div>
           <h1 className="pb-title">
-            An idea is all
+            Choose equipment
             <br />
-            you need to start.
+            with confidence.
           </h1>
           <p className="pb-copy">
-            Tell us what you have in mind. We’ll help you explore the equipment
-            and the next steps for your Caribbean pool project.
+            Tell us who will use the equipment and what support they need. We’ll
+            help you compare models, pricing and delivery in the Caribbean.
           </p>
         </div>
       </section>
@@ -282,7 +282,7 @@ export function ContactPage() {
                   name="message"
                   required
                   maxLength={2500}
-                  placeholder="Tell us about your pool, who will use it and what you’d like to offer."
+                  placeholder="Tell us which equipment you’re considering, who will use it and their mobility or exercise needs."
                 />
               </div>
               <p className="pb-form-note" id="email-explanation">
