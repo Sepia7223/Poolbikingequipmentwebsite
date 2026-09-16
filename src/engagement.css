@@ -2040,3 +2040,110 @@ body {
     margin-top: 16px;
   }
 }
+
+/* Show the complete clip instead of enlarging it to crop the viewport. */
+.pb-hero-film iframe {
+  width: min(100vw, 177.778vh);
+  width: min(100vw, 177.778dvh);
+  height: min(100vh, 56.25vw);
+  height: min(100dvh, 56.25vw);
+}
+.pb-photo-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #002837;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  padding: 150px 0 80px;
+}
+.pb-photo-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+.pb-photo-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, #002837e6, #00283780 65%, #0028374d),
+    linear-gradient(180deg, #00283799, transparent 45%);
+  z-index: -1;
+}
+.pb-photo-hero .pb-copy {
+  max-width: 650px;
+  color: #f0f7fa;
+}
+.pb-photo-hero .pb-title {
+  max-width: 850px;
+}
+.pb-product-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.pb-product-card .pb-product-body {
+  flex: 1;
+}
+.pb-card-warranty {
+  position: absolute;
+  z-index: 2;
+  left: 22px;
+  top: 72px;
+  pointer-events: none;
+}
+.pb-product-card .pb-card-warranty .pb-warranty-icon {
+  width: 58px;
+  height: 72px;
+  max-width: none;
+  max-height: none;
+  transform: none;
+}
+.pb-product-card .pb-product-image-link {
+  padding-left: 40px;
+}
+.pb-product-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0 22px;
+  padding: 18px 0 22px;
+  border-top: 1px solid var(--pb-line);
+}
+.pb-product-details {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--pb-aqua-deep);
+  min-height: 44px;
+  white-space: nowrap;
+}
+.pb-product-actions .pb-compare-button {
+  min-height: 44px;
+  text-align: left;
+}
+@media (max-width: 760px) {
+  .pb-photo-hero {
+    min-height: 480px;
+    padding: 130px 0 60px;
+  }
+  .pb-photo-hero .pb-title {
+    font-size: clamp(34px, 8vw, 52px);
+  }
+  .pb-product-actions {
+    margin-inline: 18px;
+    gap: 8px;
+  }
+  .pb-card-warranty {
+    left: 16px;
+  }
+}

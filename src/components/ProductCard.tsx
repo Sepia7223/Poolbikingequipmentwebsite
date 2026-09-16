@@ -23,6 +23,11 @@ export function ProductCard({ item, catalogueState }: ProductCardProps) {
   return (
     <article id={`product-card-${item.id}`} className="pb-product-card">
       <div className="pb-product-media">
+        {item.warrantyYears && (
+          <div className="pb-card-warranty">
+            <WarrantyBadge years={item.warrantyYears} />
+          </div>
+        )}
         <span className="pb-product-pill">{item.category}</span>
         {video && (
           <a
@@ -53,19 +58,16 @@ export function ProductCard({ item, catalogueState }: ProductCardProps) {
       >
         <h3>{item.name}</h3>
         <p>{item.shortDescription}</p>
-        <div className="pb-product-meta">
-          {item.warrantyYears ? (
-            <WarrantyBadge years={item.warrantyYears} />
-          ) : (
-            <span>{item.category}</span>
-          )}
-          <span className="pb-product-arrow">
-            View details <ArrowRight size={13} />
-          </span>
-        </div>
       </Link>
-      <div className="pb-product-compare">
+      <div className="pb-product-actions">
         <CompareButton id={item.id} />
+        <Link
+          to={`/equipment/${item.id}`}
+          state={linkState}
+          className="pb-product-details"
+        >
+          View details <ArrowRight size={15} />
+        </Link>
       </div>
     </article>
   );

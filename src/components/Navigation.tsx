@@ -1,19 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Columns3, Menu, X } from "lucide-react";
-import { useComparison } from "./Comparison";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import logo from "../content/brand/poolbiking-fitness.svg";
 
 const links = [
   { label: "Equipment", to: "/equipment" },
-  { label: "Find your fit", to: "/#solutions" },
+  { label: "Find your fit", to: "/find-your-fit" },
   { label: "Gallery", to: "/gallery" },
   { label: "About", to: "/about" },
 ];
 
 export function Navigation() {
   const location = useLocation();
-  const { ids } = useComparison();
+  const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
@@ -27,6 +26,10 @@ export function Navigation() {
 
   useEffect(() => {
     setOpen(false);
+    if (location.pathname === "/" && location.hash === "#solutions") {
+      navigate("/find-your-fit", { replace: true });
+      return;
+    }
     if (location.state?.restoreProductId) return;
     const frame = requestAnimationFrame(() => {
       if (location.hash)
@@ -36,7 +39,13 @@ export function Navigation() {
       else window.scrollTo({ top: 0, behavior: "instant" });
     });
     return () => cancelAnimationFrame(frame);
-  }, [location.pathname, location.hash, location.key, location.state]);
+  }, [
+    location.pathname,
+    location.hash,
+    location.key,
+    location.state,
+    navigate,
+  ]);
 
   useEffect(() => {
     if (!open) return;
@@ -53,7 +62,7 @@ export function Navigation() {
   return (
     <nav
       aria-label="Main navigation"
-      className={`pb-nav ${location.pathname === "/" && !scrolled && !open ? "is-transparent" : "is-solid"} ${scrolled ? "is-scrolled" : ""}`}
+      className={`pb-nav ${["/", "/equipment", "/about", "/find-your-fit"].includes(location.pathname) && !scrolled && !open ? "is-transparent" : "is-solid"} ${scrolled ? "is-scrolled" : ""}`}
     >
       <div className="pb-container pb-nav-inner">
         <Link
@@ -78,23 +87,12 @@ export function Navigation() {
               to={link.to}
               aria-current={location.pathname === link.to ? "page" : undefined}
               className={
-                location.pathname.startsWith(link.to) &&
-                link.to !== "/#solutions"
-                  ? "is-active"
-                  : ""
+                location.pathname.startsWith(link.to) ? "is-active" : ""
               }
             >
               {link.label}
             </Link>
           ))}
-          <Link
-            to="/equipment#compare"
-            className="pb-nav-compare"
-            aria-label={`Compare equipment, ${ids.length} selected`}
-          >
-            <Columns3 size={18} />
-            <span>{ids.length}</span>
-          </Link>
           <Link to="/contact" className="pb-button pb-button-aqua">
             Let’s talk <span aria-hidden="true">↗</span>
           </Link>
@@ -124,7 +122,6 @@ export function Navigation() {
               {link.label}
             </Link>
           ))}
-          <Link to="/equipment#compare">Compare equipment ({ids.length})</Link>
           <Link
             to="/contact"
             className="pb-button pb-button-aqua pb-button-full"

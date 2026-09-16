@@ -2,13 +2,19 @@ import { useEffect, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import heroImage from "../content/optimized/pool-session.webp";
 import heroMobile from "../content/optimized/pool-session-mobile.webp";
-import { productVideos } from "../data/productVideos";
+export const HERO_CLIP = {
+  videoId: "QXIk80bnOsA",
+  startSeconds: 14,
+  endSeconds: 50,
+};
 
 type Player = {
   mute(): void;
   playVideo(): void;
   pauseVideo(): void;
   destroy(): void;
+  loadVideoById(clip: typeof HERO_CLIP): void;
+  setOption(module: string, option: string, value: unknown): void;
 };
 type YouTubeAPI = {
   Player: new (
@@ -21,6 +27,7 @@ type YouTubeAPI = {
         onReady(event: { target: Player }): void;
         onStateChange(event: { data: number }): void;
         onError(): void;
+        onApiChange(): void;
       };
     },
   ) => Player;
@@ -82,22 +89,20 @@ export function HeroVideo() {
     const parent = container.current;
     const mount = document.createElement("div");
     parent.appendChild(mount);
-    const id = new URL(
-      productVideos["poolbiking-one-2-0"].url,
-    ).searchParams.get("v")!;
     loadPlayer()
       .then((YT) => {
         if (disposed) return;
         player.current = new YT.Player(mount, {
           host: "https://www.youtube-nocookie.com",
-          videoId: id,
+          videoId: HERO_CLIP.videoId,
           playerVars: {
             autoplay: 1,
             mute: 1,
             controls: 0,
             playsinline: 1,
-            loop: 1,
-            playlist: id,
+            start: HERO_CLIP.startSeconds,
+            end: HERO_CLIP.endSeconds,
+            cc_load_policy: 0,
             disablekb: 1,
             fs: 0,
             rel: 0,
@@ -112,10 +117,19 @@ export function HeroVideo() {
                 iframe.title = "POOLBIKING background film";
               }
               target.mute();
+              target.setOption("captions", "track", {});
               if (!pausedRef.current) target.playVideo();
             },
             onStateChange: ({ data }) => {
-              if (!disposed) setPlaying(data === 1 || data === 2);
+              if (disposed) return;
+              if (data === 0 && !pausedRef.current) {
+                player.current?.loadVideoById(HERO_CLIP);
+                return;
+              }
+              setPlaying(data === 1 || data === 2);
+            },
+            onApiChange: () => {
+              if (!disposed) player.current?.setOption("captions", "track", {});
             },
             onError: () => {
               if (!disposed) setPlaying(false);

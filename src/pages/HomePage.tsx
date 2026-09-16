@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, ShieldCheck, Waves } from "lucide-react";
 import { equipmentData } from "../data/equipment";
-import { EquipmentFinder } from "../components/EquipmentFinder";
 import { ProductCard } from "../components/ProductCard";
 import { ProjectFAQ } from "../components/ProjectFAQ";
 import { VideoDialog } from "../components/VideoDialog";
@@ -15,12 +14,6 @@ export function HomePage() {
     "poolbiking-one-plus",
     "poolbiking-evolution",
   ].map((id) => equipmentData.find((item) => item.id === id)!);
-  const exploreSolutions = () =>
-    document.getElementById("solutions")?.scrollIntoView({
-      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-    });
 
   return (
     <div className="pb-home">
@@ -98,13 +91,9 @@ export function HomePage() {
               supervised movement. The right equipment brings a purpose to the
               pool — and gives people a reason to return.
             </p>
-            <button
-              type="button"
-              className="pb-text-link"
-              onClick={exploreSolutions}
-            >
+            <Link to="/find-your-fit" className="pb-text-link">
               Explore your possibilities <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -141,7 +130,6 @@ export function HomePage() {
           </article>
         </div>
       </section>
-      <EquipmentFinder />
 
       <section className="pb-section pb-home-products">
         <div className="pb-container">
@@ -278,23 +266,6 @@ export function HomePage() {
       </section>
 
       <ProjectFAQ />
-
-      <section className="pb-section pb-final-section">
-        <div className="pb-container pb-final-cta">
-          <div className="pb-eyebrow pb-eyebrow-light">
-            Your next chapter starts in the water
-          </div>
-          <h2 className="pb-title">
-            Let’s make more
-            <br />
-            of your pool.
-          </h2>
-          <p>Have a project in mind? We’d love to hear about it.</p>
-          <Link to="/contact" className="pb-button pb-button-aqua pb-button-lg">
-            Tell us about your project <ArrowRight size={18} />
-          </Link>
-        </div>
-      </section>
     </div>
   );
 }

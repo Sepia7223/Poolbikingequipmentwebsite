@@ -1,3 +1,6 @@
+import { useComparison } from "../components/Comparison";
+import { PhotoHero } from "../components/PhotoHero";
+import heroPhoto from "../content/optimized/pool-cycling.webp";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRight, Search } from "lucide-react";
@@ -18,6 +21,7 @@ const categoryPriority: Record<string, number> = {
 
 export function EquipmentPage() {
   const location = useLocation();
+  const { ids } = useComparison();
   const restoreState = (location.state as CatalogueRestoreState | null) ?? null;
   const [category, setCategory] = useState(
     restoreState?.category && categories.includes(restoreState.category)
@@ -63,16 +67,12 @@ export function EquipmentPage() {
 
   return (
     <>
-      <section className="pb-page-hero">
-        <div className="pb-container">
-          <div className="pb-eyebrow pb-eyebrow-light">Product catalogue</div>
-          <h1 className="pb-title">Make your next move.</h1>
-          <p className="pb-copy">
-            Explore aquatic bikes, platforms and accessories. Add up to three
-            models to compare the details side by side.
-          </p>
-        </div>
-      </section>
+      <PhotoHero
+        image={heroPhoto}
+        eyebrow="Product catalogue"
+        title="Make your next move."
+        description="Explore aquatic bikes, platforms and accessories. Add up to three models to compare the details side by side."
+      />
 
       <section className="pb-section" id="product-catalogue">
         <div className="pb-container">
@@ -102,6 +102,13 @@ export function EquipmentPage() {
             </label>
           </div>
           <div className="pb-catalogue-summary">
+            <Link
+              to="/equipment#compare"
+              className="pb-text-link"
+              aria-label={`Compare equipment, ${ids.length} selected`}
+            >
+              Compare selected ({ids.length}/3)
+            </Link>
             <p role="status">
               {products.length} {products.length === 1 ? "model" : "models"}
               {category !== "All" ? ` · ${category}` : " to explore"}

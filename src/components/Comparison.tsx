@@ -84,12 +84,7 @@ export function ComparisonTray() {
   const products = ids.map(
     (id) => equipmentData.find((item) => item.id === id)!,
   );
-  if (
-    !ids.length ||
-    pathname === "/compare" ||
-    pathname === "/contact" ||
-    hash === "#compare"
-  )
+  if (!ids.length || !pathname.startsWith("/equipment") || hash === "#compare")
     return null;
   return (
     <aside className="pb-compare-tray" aria-label="Your equipment comparison">

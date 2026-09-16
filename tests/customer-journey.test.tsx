@@ -39,6 +39,12 @@ describe("customer journeys", () => {
     );
     expect(hero.getAllByRole("link")).toHaveLength(1);
     expect(
+      screen.queryByText("Your next chapter starts in the water"),
+    ).toBeNull();
+    expect(
+      screen.queryByRole("button", { name: "Hotels & resorts" }),
+    ).toBeNull();
+    expect(
       hero
         .getByRole("link", { name: "Explore equipment" })
         .getAttribute("href"),
@@ -49,6 +55,10 @@ describe("customer journeys", () => {
   it("changes the finder results and preserves facility and model choices in the inquiry link", async () => {
     const user = userEvent.setup();
     render(<App />);
+    await user.click(
+      screen.getByRole("link", { name: "Find your fit", exact: true }),
+    );
+    expect(window.location.hash).toBe("#/find-your-fit");
     await user.click(
       screen.getByRole("button", { name: "Fitness facilities" }),
     );
@@ -69,6 +79,7 @@ describe("customer journeys", () => {
 
   it("lets a residence explore access accessories and keeps that context in its inquiry", async () => {
     const user = userEvent.setup();
+    window.location.hash = "#/find-your-fit";
     render(<App />);
     await user.click(
       screen.getByRole("button", { name: "Senior living", exact: true }),
@@ -107,6 +118,7 @@ describe("customer journeys", () => {
 
   it("caps comparisons at three, restores them after remount and supports removal", async () => {
     const user = userEvent.setup();
+    window.location.hash = "#/equipment";
     const first = render(<App />);
     await user.click(
       screen.getByRole("button", {

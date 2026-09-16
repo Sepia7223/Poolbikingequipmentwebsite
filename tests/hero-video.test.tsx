@@ -6,7 +6,7 @@ import {
   screen,
   waitFor,
 } from "@testing-library/react";
-import { HeroVideo } from "../src/components/HeroVideo";
+import { HeroVideo, HERO_CLIP } from "../src/components/HeroVideo";
 
 afterEach(() => {
   delete window.YT;
@@ -16,7 +16,9 @@ it("keeps a photo until playback starts and offers a working pause control", asy
   const mute = vi.fn(),
     playVideo = vi.fn(),
     pauseVideo = vi.fn(),
-    destroy = vi.fn();
+    destroy = vi.fn(),
+    loadVideoById = vi.fn(),
+    setOption = vi.fn();
   let events: ConstructorParameters<
     NonNullable<Window["YT"]>["Player"]
   >[1]["events"];
@@ -26,11 +28,16 @@ it("keeps a photo until playback starts and offers a working pause control", asy
       playVideo = playVideo;
       pauseVideo = pauseVideo;
       destroy = destroy;
+      loadVideoById = loadVideoById;
+      setOption = setOption;
       constructor(
         _node: HTMLElement,
         options: ConstructorParameters<NonNullable<Window["YT"]>["Player"]>[1],
       ) {
         events = options.events;
+        expect(options.videoId).toBe("QXIk80bnOsA");
+        expect(options.playerVars.start).toBe(14);
+        expect(options.playerVars.end).toBe(50);
       }
     },
   };
@@ -38,7 +45,16 @@ it("keeps a photo until playback starts and offers a working pause control", asy
   await waitFor(() => expect(events).toBeDefined());
   expect(view.container.querySelector(".pb-hero-film.is-playing")).toBeNull();
   act(() =>
-    events.onReady({ target: { mute, playVideo, pauseVideo, destroy } }),
+    events.onReady({
+      target: {
+        mute,
+        playVideo,
+        pauseVideo,
+        destroy,
+        loadVideoById,
+        setOption,
+      },
+    }),
   );
   expect(mute).toHaveBeenCalled();
   expect(playVideo).toHaveBeenCalled();
@@ -51,6 +67,10 @@ it("keeps a photo until playback starts and offers a working pause control", asy
     screen.getByRole("button", { name: "Play background video" }),
   );
   expect(playVideo).toHaveBeenCalledTimes(2);
+  act(() => events.onApiChange());
+  expect(setOption).toHaveBeenCalledWith("captions", "track", {});
+  act(() => events.onStateChange({ data: 0 }));
+  expect(loadVideoById).toHaveBeenCalledWith(HERO_CLIP);
   act(() => events.onError());
   expect(view.container.querySelector(".pb-hero-film.is-playing")).toBeNull();
   view.unmount();

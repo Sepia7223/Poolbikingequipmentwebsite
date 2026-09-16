@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
 import { Footer } from "./components/Footer";
+import { FindYourFitPage } from "./pages/FindYourFitPage";
 import { HomePage } from "./pages/HomePage";
 import { EquipmentPage } from "./pages/EquipmentPage";
 import { ProductDetailPage } from "./pages/ProductDetailPage";
@@ -36,6 +37,7 @@ export default function App() {
           <main id="main-content" tabIndex={-1}>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/find-your-fit" element={<FindYourFitPage />} />
               <Route path="/equipment" element={<EquipmentPage />} />
               <Route path="/equipment/:id" element={<ProductDetailPage />} />
               <Route
